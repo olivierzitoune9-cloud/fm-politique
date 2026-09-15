@@ -18,5 +18,5 @@ Phase 0 clôturée ce jour : dépôt git initialisé, .gitignore couvrant .env*,
 
 - Année Burger citée 2006 dans la base, corrigée en 2009 avec données 2006.
 - Chiffres Stenner 39, 2, 59 et Seligman 75 pour cent non retrouvés tels quels, jamais à coder.
-- Textes intégraux Bandura, Klemperer, Aron, dossiers Hongrie et Pologne encore non relus.
+- Suite du 2026-09-15 : cinq reliquats relus. Bandura huit mécanismes, Klemperer euphémismes, Rákosi salami avec mythe du plan parfait nuancé par Rieber, Pologne 65 ans et 40 pour cent via Venise, Aron Clausewitz avec diversion rare. Phase 1 première passe bouclée, fiches détaillées par mécanisme encore dues avant /ontologie.
 - graphify-out/ toujours vide, graphify update à faire quand l'outil sera disponible.
