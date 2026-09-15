@@ -1,55 +1,317 @@
 "use client";
 
-// Partie jouable minimale : le joueur choisit un coup par tick, le monde répond.
-// Vue filtrée uniquement, jamais l'état exact. Pur moteur local, sans réseau.
-import { useState } from "react";
-import { creerMonde, pas, ACTIONS_JOUABLES, type Monde, type ActionJouable } from "../../../src/sim/engine";
-import { filtrerVueJoueur } from "../../../src/sim/joueur";
-import { genererAgenda, genererCourriels } from "../../../src/sim/courrier";
+// Écran de partie V1 : semaine datée, actions hebdo, interactions avec personnages nommés,
+// vue filtrée du monde, fins multiples. Sauvegarde locale automatique, sans réseau.
+import { useEffect, useState } from "react";
+import { AMBITIONS, libelleStatut, type ConfigCarriere } from "../../../src/sim/carriere";
+import { ACTIONS_JEU, type CategorieAction } from "../../../src/sim/actions";
+import { INTERACTIONS, type InteractionId } from "../../../src/sim/interactions";
+import { nomComplet, libelleMetier } from "../../../src/sim/personnages";
+import { creerPartie, jouerSemaine, vuePartie, type Partie, type TourSemaine } from "../../../src/sim/partie";
+import { genererCourriels } from "../../../src/sim/courrier";
+import { raconterChronologie } from "../../../src/sim/narrative/raconteur";
 import { FRANCE_2026 } from "../../../src/sim/data/france-2026";
+import { deserialiser, serialiser } from "../../../src/sim/sauvegarde";
 
-const LIBELLES: Record<ActionJouable, string> = {
-  "preparer-silencieux": "Préparer en silence",
-  "etiquetage-modere": "Étiquetage modéré",
-  "etiquetage-agressif": "Étiquetage agressif",
-  "chercher-coalition": "Chercher une coalition",
-  "attaquer-institution": "Attaquer une institution",
+const CLE_CONFIG = "fm-politique:config";
+const CLE_SAVE = "fm-politique:sauvegarde";
+
+const LIBELLES_CATEGORIE: Record<CategorieAction, string> = {
+  terrain: "Terrain",
+  media: "Média",
+  coalition: "Coalition",
+  institution: "Institution",
+  preparation: "Préparation",
 };
 
-export default function PartiePage() {
-  const [monde, setMonde] = useState<Monde>(() => creerMonde(42));
-  const vue = filtrerVueJoueur(monde);
-  const mails = genererCourriels(monde.evenements, monde.decisions);
-  const agenda = genererAgenda(monde.tick);
+const ORDRE_CATEGORIES: CategorieAction[] = ["terrain", "media", "coalition", "institution", "preparation"];
 
-  function jouer(optionId: ActionJouable) {
-    setMonde((m) => pas(m, { optionId }));
+export default function PartiePage() {
+  const [partie, setPartie] = useState<Partie | null>(null);
+  const [erreur, setErreur] = useState<string | null>(null);
+  const [chargement, setChargement] = useState(true);
+  const [actionId, setActionId] = useState<string>(ACTIONS_JEU[0].id);
+  const [persoId, setPersoId] = useState<string>("");
+  const [interactionId, setInteractionId] = useState<InteractionId>("convaincre");
+  const [promesse, setPromesse] = useState("");
+
+  useEffect(() => {
+    try {
+      const conf = sessionStorage.getItem(CLE_CONFIG);
+      if (conf !== null) {
+        sessionStorage.removeItem(CLE_CONFIG);
+        const idee = JSON.parse(conf) as { graine: number; config: ConfigCarriere };
+        setPartie(creerPartie(idee.graine, idee.config));
+      } else {
+        const save = localStorage.getItem(CLE_SAVE);
+        if (save !== null) setPartie(deserialiser(save));
+        else setErreur("Aucune partie en cours. Crée un personnage pour commencer.");
+      }
+    } catch (e) {
+      setErreur(e instanceof Error ? e.message : String(e));
+    }
+    setChargement(false);
+  }, []);
+
+  if (chargement) return <p className="source">Chargement…</p>;
+
+  if (partie === null) {
+    return (
+      <div className="grille">
+        <p className="erreur">{erreur ?? "Aucune partie."}</p>
+        <a className="lien-jouer" href="/nouvelle-partie">
+          Créer un personnage
+        </a>
+      </div>
+    );
+  }
+
+  const vue = vuePartie(partie);
+  const c = vue.carriere;
+  const mails = genererCourriels(partie.monde.evenements, partie.monde.decisions);
+  const chrono = raconterChronologie(partie.monde.evenements, partie.monde.decisions);
+  const ambition = AMBITIONS.find((a) => a.id === c.ambition)!;
+  const persoChoisi = vue.personnages.find((p) => p.id === persoId) ?? null;
+
+  function peut(a: { coutTemps: number; coutArgent: number }): boolean {
+    return a.coutTemps <= c.ressources.temps + 1e-9 && a.coutArgent <= c.ressources.argent + 1e-9;
+  }
+
+  function avancer() {
+    if (partie === null) return;
+    const tour: TourSemaine = { actionId };
+    if (persoId !== "") {
+      tour.interaction = { persoId, interactionId, promesse: promesse.trim().length > 0 ? promesse.trim() : undefined };
+    }
+    try {
+      const suivante = jouerSemaine(partie, tour);
+      setPartie(suivante);
+      setErreur(null);
+      localStorage.setItem(CLE_SAVE, serialiser(suivante));
+      setPromesse("");
+    } catch (e) {
+      setErreur(e instanceof Error ? e.message : String(e));
+    }
   }
 
   function recommencer() {
-    setMonde(creerMonde(42));
+    if (partie === null) return;
+    const fraiche = creerPartie(partie.graine, {
+      nom: c.nom,
+      origine: c.origine as ConfigCarriere["origine"],
+      traits: c.traits,
+      ideologie: c.ideologie,
+      ambition: c.ambition,
+    });
+    setPartie(fraiche);
+    localStorage.setItem(CLE_SAVE, serialiser(fraiche));
+    setErreur(null);
   }
 
   return (
     <div className="grille">
       <section className="carte">
-        <h2>Partie démo, seed 42, tick {vue.tick}</h2>
+        <h2>
+          {c.nom}, {libelleStatut(c.statut)} — semaine {vue.semaine}
+        </h2>
+        <p>
+          {vue.libelleSemaine}. Ambition : <strong>{ambition.libelle}</strong>.
+        </p>
         <p className="source">{vue.avertissement}</p>
-        <div className="boutons">
-          {ACTIONS_JOUABLES.map((a) => (
-            <button key={a} onClick={() => jouer(a)} type="button">
-              {LIBELLES[a]}
-            </button>
-          ))}
-          <button className="secondaire" onClick={recommencer} type="button">
-            Recommencer
-          </button>
+        <div className="barres-progression">
+          <span>Soutiens</span><span className="barre"><span style={{ width: `${Math.round(c.progression.soutiens * 100)}%` }} /></span><span>{(c.progression.soutiens * 100).toFixed(0)}</span>
+          <span>Légitimité</span><span className="barre"><span style={{ width: `${Math.round(c.progression.legitime * 100)}%` }} /></span><span>{(c.progression.legitime * 100).toFixed(0)}</span>
+          <span>Organisation</span><span className="barre"><span style={{ width: `${Math.round(c.progression.organisation * 100)}%` }} /></span><span>{(c.progression.organisation * 100).toFixed(0)}</span>
+          <span>Notoriété</span><span className="barre"><span style={{ width: `${Math.round(c.progression.notoriete * 100)}%` }} /></span><span>{(c.progression.notoriete * 100).toFixed(0)}</span>
+          <span>Réputation</span><span className="barre"><span style={{ width: `${Math.round(c.progression.reputation * 100)}%` }} /></span><span>{(c.progression.reputation * 100).toFixed(0)}</span>
         </div>
+        <p className="cout">
+          Temps {(c.ressources.temps * 100).toFixed(0)} %, argent {(c.ressources.argent * 100).toFixed(0)}, audience{" "}
+          {(c.ressources.audience * 100).toFixed(0)}, militants {(c.ressources.militants * 100).toFixed(0)}, risque
+          d'enquête {(c.risqueEnquete * 100).toFixed(0)}.
+        </p>
       </section>
+
+      {vue.fin !== null && (
+        <section className="ecran-fin">
+          <h2>Fin de partie : {vue.fin.titre}</h2>
+          <p>{vue.fin.detail}</p>
+          <p className="source">
+            {vue.fin.victoire ? "Objectif atteint." : "La carrière s'arrête ici."} Semaine {vue.fin.tick}.
+          </p>
+          <div className="boutons">
+            <button onClick={recommencer} type="button">
+              Rejouer avec la même graine
+            </button>
+            <a className="lien-jouer secondaire-lien" href="/nouvelle-partie">
+              Nouveau personnage
+            </a>
+          </div>
+        </section>
+      )}
+
+      {erreur !== null && <p className="erreur">{erreur}</p>}
+
+      {vue.fin === null && (
+        <div className="grille grille-3">
+          <section className="carte">
+            <h2>Une action cette semaine</h2>
+            {ORDRE_CATEGORIES.map((cat) => (
+              <div key={cat}>
+                <h3 style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "10px 0 6px" }}>
+                  {LIBELLES_CATEGORIE[cat]}
+                </h3>
+                {ACTIONS_JEU.filter((a) => a.categorie === cat).map((a) => {
+                  const possible = peut(a);
+                  return (
+                    <label
+                      key={a.id}
+                      className={`action-option${actionId === a.id ? " choisi" : ""}${possible ? "" : " desactivee"}`}
+                    >
+                      <input
+                        type="radio"
+                        name="action"
+                        disabled={!possible}
+                        checked={actionId === a.id}
+                        onChange={() => setActionId(a.id)}
+                        style={{ marginRight: 6 }}
+                      />
+                      <span className="titre">{a.libelle}</span>{" "}
+                      <span className="cout">
+                        (temps {Math.round(a.coutTemps * 100)}
+                        {a.coutArgent > 0 ? `, argent ${Math.round(a.coutArgent * 100)}` : ""}
+                        {a.regle ? `, ${a.regle}` : ""})
+                      </span>
+                      <div className="desc">{a.description}</div>
+                    </label>
+                  );
+                })}
+              </div>
+            ))}
+            <div className="boutons">
+              <button onClick={avancer} type="button">
+                Semaine suivante
+              </button>
+              <button className="secondaire" onClick={recommencer} type="button">
+                Recommencer
+              </button>
+            </div>
+          </section>
+
+          <section className="carte">
+            <h2>Une interaction cette semaine</h2>
+            <div className="grille grille-2" style={{ gap: 8 }}>
+              {vue.personnages.map((p) => (
+                <div
+                  key={p.id}
+                  className={`perso${persoId === p.id ? " choisi" : ""}`}
+                  onClick={() => setPersoId(persoId === p.id ? "" : p.id)}
+                >
+                  <div className="identite">{nomComplet(p)}</div>
+                  <div className="meta">
+                    {libelleMetier(p.metier)}, {p.organisation}, {p.age} ans
+                  </div>
+                  <div className="meta">
+                    {p.traits.map((t) => (
+                      <span className="badge" key={t}>
+                        {t}
+                      </span>
+                    ))}
+                    <span className="badge mauve">relation {p.relation.toFixed(2)}</span>
+                    {p.cautionActive !== null && <span className="badge">caution R14 active</span>}
+                  </div>
+                  {p.memoire.length > 0 && (
+                    <div className="meta">
+                      {p.memoire.slice(-3).map((m, n) => (
+                        <span key={n} className={`badge${m.type === "trahison" ? " grave" : ""}`}>
+                          {m.type} : {m.detail}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="source">
+              Clique un personnage pour viser l'interaction. Relation mémoire : promesses, dettes, trahisons.
+            </p>
+            {persoChoisi !== null && (
+              <div>
+                <div className="rang-radio">
+                  {INTERACTIONS.map((i) => (
+                    <label key={i.id} className={interactionId === i.id ? "choisi" : ""}>
+                      <input
+                        type="radio"
+                        name="interaction"
+                        checked={interactionId === i.id}
+                        onChange={() => setInteractionId(i.id)}
+                        style={{ marginRight: 6 }}
+                      />
+                      {i.libelle} <span className="cout">(temps {Math.round(i.coutTemps * 100)})</span>
+                    </label>
+                  ))}
+                </div>
+                {interactionId === "promettre" && (
+                  <label className="champ">
+                    <label>Ta promesse (texte libre)</label>
+                    <input
+                      type="text"
+                      value={promesse}
+                      onChange={(e) => setPromesse(e.target.value)}
+                      placeholder="un poste, un soutien, un silence…"
+                    />
+                  </label>
+                )}
+                <p className="source">
+                  {INTERACTIONS.find((i) => i.id === interactionId)!.description}
+                </p>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
 
       <div className="grille grille-2">
         <section className="carte">
-          <h2>Ce que tu perçois</h2>
+          <h2>Boîte mail ({mails.length})</h2>
+          {mails.slice(-12).map((m, n) => (
+            <div className="mail" key={n}>
+              <div className="de">
+                t{m.tick} de {m.de}
+              </div>
+              <div>
+                <strong>{m.objet}</strong> : {m.corps}
+              </div>
+            </div>
+          ))}
+          {mails.length === 0 && <p className="source">Pas encore de courrier. Le monde regarde ailleurs, pour l'instant.</p>}
+        </section>
+
+        <section className="carte">
+          <h2>Journal et échéances</h2>
+          <ul className="liste-plat">
+            {vue.journal.map((j, n) => (
+              <li key={n}>
+                <span className="tick">s{j.tick}</span>
+                {j.texte}
+              </li>
+            ))}
+          </ul>
+          <h3 style={{ fontSize: "0.9rem", color: "var(--muted)" }}>Échéances à venir</h3>
+          <ul className="liste-plat">
+            {vue.echeances.map((e) => (
+              <li key={e.id}>
+                <span className="tick">s{e.tick}</span>
+                {e.libelle} <span className="source">({e.statut}, {e.detail})</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <div className="grille grille-2">
+        <section className="carte">
+          <h2>Ce que tu perçois du monde</h2>
           <table className="table-monde">
             <thead>
               <tr>
@@ -74,55 +336,15 @@ export default function PartiePage() {
         </section>
 
         <section className="carte">
-          <h2>Tes coups ({vue.mesDecisions.length})</h2>
-          <ol className="liste-plat">
-            {vue.mesDecisions.map((d, n) => (
+          <h2>Chronologie narrée</h2>
+          <ol className="chrono">
+            {chrono.slice(-15).map((t, n) => (
               <li key={n}>
-                <span className="tick">t{d.tick}</span>
-                {LIBELLES[d.optionId as ActionJouable] ?? d.optionId} vers {d.groupeId}
+                <span className="tick">t{t.tick}</span>
+                <strong>{t.titre}</strong> : {t.corps}
               </li>
             ))}
           </ol>
-        </section>
-      </div>
-
-      <section className="carte">
-        <h2>Chronologie</h2>
-        <ol className="chrono">
-          {vue.chronologie.map((t, n) => (
-            <li key={n}>
-              <span className="tick">t{t.tick}</span>
-              <strong>{t.titre}</strong> : {t.corps}
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <div className="grille grille-2">
-        <section className="carte">
-          <h2>Boîte mail ({mails.length})</h2>
-          {mails.map((m, n) => (
-            <div className="mail" key={n}>
-              <div className="de">
-                t{m.tick} de {m.de}
-              </div>
-              <div>
-                <strong>{m.objet}</strong> : {m.corps}
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <section className="carte">
-          <h2>Agenda</h2>
-          <ul className="liste-plat">
-            {agenda.map((e) => (
-              <li key={e.tick}>
-                <span className="tick">t{e.tick}</span>
-                {e.libelle}
-              </li>
-            ))}
-          </ul>
         </section>
       </div>
 

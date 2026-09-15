@@ -192,3 +192,172 @@ body {
   text-decoration: none;
   font-weight: bold;
 }
+
+.lien-jouer.secondaire-lien {
+  background: var(--encre);
+  margin-left: 8px;
+}
+
+.grille-3 {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 1100px) {
+  .grille-3 {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+}
+
+.champ {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.champ label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.champ input[type="text"],
+.champ input[type="number"],
+.champ select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+}
+
+.champ input[type="range"] {
+  width: 220px;
+}
+
+.rang-radio {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 6px 0 10px;
+}
+
+.rang-radio label {
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background: #fff;
+  font-size: 0.92rem;
+}
+
+.rang-radio label.choisi {
+  border-color: var(--accent);
+  background: var(--accent-doux);
+}
+
+.perso {
+  border-left: 3px solid var(--bordure);
+  padding: 6px 10px;
+  margin-bottom: 10px;
+}
+
+.perso.choisi {
+  border-left-color: var(--accent);
+  background: var(--accent-doux);
+  cursor: pointer;
+}
+
+.perso .identite {
+  font-weight: bold;
+}
+
+.perso .meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  border-radius: 99px;
+  padding: 1px 8px;
+  margin-right: 4px;
+  background: var(--accent-doux);
+  color: var(--encre);
+}
+
+.badge.mauve {
+  background: #e4d8ef;
+}
+
+.badge.grave {
+  background: #f2c9c4;
+}
+
+.barres-progression {
+  display: grid;
+  grid-template-columns: 120px 1fr 46px;
+  gap: 6px 10px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.ecran-fin {
+  border: 2px solid var(--accent);
+  background: var(--accent-doux);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.ecran-fin h2 {
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.erreur {
+  border: 1px solid var(--accent);
+  background: #fbeae7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--encre);
+}
+
+.cout {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.action-option {
+  display: block;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.action-option.choisi {
+  border-color: var(--accent);
+  background: var(--accent-doux);
+}
+
+.action-option.desactivee {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.action-option .titre {
+  font-weight: bold;
+}
+
+.action-option .desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}

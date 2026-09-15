@@ -1,0 +1,41 @@
+import { describe, expect, it } from "vitest";
+import { type ConfigCarriere } from "./carriere.js";
+import { creerPartie, jouerSemaine } from "./partie.js";
+import { deserialiser, serialiser, VERSION_SAUVEGARDE } from "./sauvegarde.js";
+import { VERSION_MOTEUR } from "./engine.js";
+
+const CONFIG: ConfigCarriereLike = {
+  nom: "Test Personne",
+  origine: "bureau",
+  traits: ["empathique"],
+  ideologie: { gaucheDroite: 0, ouvertFerme: 0 },
+  ambition: "elu",
+};
+
+describe("sauvegarde locale versionnée", () => {
+  it("aller-retour : sérialiser puis charger redonne la même partie", () => {
+    const p = jouerSemaine(creerPartie(42, CONFIG), { actionId: "tractage-marche" });
+    const texte = serialiser(p);
+    const charge = deserialiser(texte);
+    expect(charge).toEqual(p);
+  });
+
+  it("refus propre des sauvegardes d'une autre version", () => {
+    const p = creerPartie(42, CONFIG);
+    const mauvais = JSON.parse(serialiser(p));
+    mauvais.version = VERSION_SAUVEGARDE + 1;
+    expect(() => deserialiser(JSON.stringify(mauvais))).toThrow(/version/);
+    const mauvaisMoteur = JSON.parse(serialiser(p));
+    mauvaisMoteur.moteurVersion = "autre";
+    expect(() => deserialiser(JSON.stringify(mauvaisMoteur))).toThrow(/moteur/);
+    expect(() => deserialiser("pas du json")).toThrow(/illisible/);
+    expect(() => deserialiser(JSON.stringify({ version: VERSION_SAUVEGARDE }))).toThrow(/version de partie/);
+  });
+
+  it("la sauvegarde référence bien le moteur vivant", () => {
+    const p = creerPartie(42, CONFIG);
+    const s = JSON.parse(serialiser(p));
+    expect(s.moteurVersion).toBe(VERSION_MOTEUR);
+    expect(s.partie.monde.version).toBe(VERSION_MOTEUR);
+  });
+});

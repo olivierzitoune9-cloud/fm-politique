@@ -36,4 +36,12 @@ Pas de personnages animés requis. Interface informationnelle : tableau de bord,
 
 ## 6. Vocabulaire et éthique du jeu
 
-Le jeu modélise des stratégies autoritaires comme trajectoires possibles sans les recommander ni les récompenser moralement. Aucune jauge de bien ou mal, seulement des conséquences. Les limites scientifiques restent visibles (confiance, incertitude, qualité de source, désaccords). [À CONFIRMER] : mention d'avertissement en ouverture de partie, formulation exacte à valider avec Aaron.
+Le jeu modélise des stratégies autoritaires comme trajectoires possibles sans les recommander ni les récompenser moralement. Aucune jauge de bien ou mal, seulement des conséquences. Les limites scientifiques restent visibles (confiance, incertitude, qualité de source, désaccords).
+
+Avertissement d'ouverture validé le 2026-09-15, affiché à la création de partie : « Simulation émergente : trajectoires possibles, jamais de prédiction du réel ni de recommandation. Certaines trajectoires d'accession au pouvoir, y compris autoritaires, sont simulées pour être comprises, jamais proposées comme des modèles. »
+
+## 6.1 Personnages et objectif (validé le 2026-09-15, session V1 V2)
+
+- Personnages fictifs uniquement, prénoms et noms français aléatoires seedés, jamais de personne réelle. Pas de portraits ni d'images : nom, métier, traits, relation, mémoire. Avec des personnages au delà du politique : chercheurs, historiens, ingénieurs, expertes IA, journalistes, élus, syndicalistes, entrepreneurs, fonctionnaires. Les métiers portent des hooks mécaniques (caution savante R14, amplification numérique R2, accès institutionnel, micro ciblage, fact checking).
+- Les interactions humaines sont fondamentales : convoquer, convaincre, promettre, demander un coup de main, trahir, recoudre. Promesses et trahisons restent en mémoire (E6) et remontent dans les comportements.
+- Le joueur choisit une ambition à la création de partie (élu, chef de parti, proposition imposée, présidentiable), évaluée sur le calendrier réel. Fins multiples, réussite sans définition unique.

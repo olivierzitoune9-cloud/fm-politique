@@ -20,11 +20,20 @@
 - État Phase 8 le 2026-09-15 : arbitrage codé dans src/sim/ai/arbitrage.ts avec 5 options prototype, utilités journalisées, sans API.
 - Phase 9, événements : détection et narration.
 - État Phase 9 le 2026-09-15 : raconteur par gabarits dans src/sim/narrative, 62 tests verts.
-- Phase 10, interface : lecture du monde.
-- Phase 11, tests : simulations massives, absurdités, calibration.
-- État Phase 11 le 2026-09-15 : 200 parties de 30 pas bornées et causales, aucune stratégie écrasante, dans src/sim/calibration.test.ts.
-- État Phase 10 le 2026-09-15 : ui/ build vert avec page tableaux, /partie jouable à 5 coups, boîte mail et agenda. 74 tests verts.
+- État Phase 5 le 2026-09-15 : catalogue R1 à R22 codé et testé, puis branchement élargi en V2.
+- Phase 6, France 2026 : état initial daté et sourcé.
+- État Phase 6 le 2026-09-15 : première passe dans src/sim/data/france-2026.ts et docs/france-2026-etat-initial.md, chômage, Assemblée, gouvernement sourcés. Économie mensuelle branchée en V2.
 - Phase 12, extension : profondeur progressive.
 - État Phase 12 le 2026-09-15 : adversaires réactifs (mémoire des coups joueur, bornée), moteur m0.4.0, serveur dev vérifié ce soir sur 3123.
 
-Prochaines commandes à utiliser dans l'ordre : `/recherche`, `/ontologie`, `/regles`, `/france-2026`, `/moteur`.
+## Phase 13, du prototype au vrai jeu (V1 et V2, session du 2026-09-15)
+
+Vision durable dans docs/vision-v1-v2.md. Jalons :
+
+- J1 V1 carrière, personnages, objectif : personnages fictifs nommés (noms aléatoires seedés, chercheurs, historiens, ingénieurs, experte IA, journalistes, élus, syndicalistes, entrepreneur, fonctionnaire), interactions humaines avec mémoire (promesses, trahisons, dettes), calendrier réel semaine par semaine depuis septembre 2026 avec échéances 2027 et suivantes, ambition choisie à la création, 16 à 20 actions mappées aux règles, ressources hebdo, boîte mail centrale, fins multiples, sauvegarde locale versionnée. Moteur m0.5.0.
+- J2 V2 monde qui vit : partis rivaux avec leaders nommés et arbitrage réel, médias avec biais et audiences, institutions avec autonomie, propositions avec dicibilité (R9), économie mensuelle branchée (R4), maximum de règles branchées avec motif écrit pour les écartées. Moteur m0.6.0.
+- J3 propagation et carte : carte France régions types, adoption par territoire, arbre d'améliorations à points, vecteurs, barre de réponse adverse. Session suivante.
+- J4 info imparfaite à la FM : sondages commandables avec coûts et biais, rapporteurs, éditorialisation. Session suivante.
+- J5 V1 complète : calibration élargie, audits, tutoriel par courrier, déploiement. Session suivante.
+
+Prochaine commande dans l'ordre : /moteur sur J1 puis J2, puis /audit-parcours-joueur et /audit-securite-sim au jalon.

@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <h1>
               <span className="jeu">FM politique</span>, lecture du monde
             </h1>
-            <p>Prototype local. Tu lis le monde : tableaux et chronologie, jamais de personnages.</p>
+            <p>Carrière politique hebdomadaire : personnages nommés, calendrier réel, monde qui vit. Prototype local.</p>
           </header>
           <main>{children}</main>
         </div>

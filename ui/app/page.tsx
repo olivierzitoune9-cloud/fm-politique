@@ -18,9 +18,14 @@ export default function Page() {
 
   return (
     <div className="grille">
-      <a className="lien-jouer" href="/partie">
-        Jouer la partie démo : cinq coups par tick, vue filtrée
-      </a>
+      <div>
+        <a className="lien-jouer" href="/nouvelle-partie">
+          Nouvelle partie : crée ton personnage, choisis ton ambition
+        </a>
+        <a className="lien-jouer secondaire-lien" href="/partie">
+          Continuer la partie sauvegardée
+        </a>
+      </div>
 
       <section className="carte">
         <h2>Groupes suivis, seed 42, 20 pas</h2>
