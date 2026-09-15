@@ -12,3 +12,5 @@ coverage/
 .DS_Store
 Thumbs.db
 graphify-out/tmp/
+graphify-out/cache/
+ui/*.tsbuildinfo
