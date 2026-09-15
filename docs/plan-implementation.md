@@ -25,5 +25,6 @@
 - État Phase 11 le 2026-09-15 : 200 parties de 30 pas bornées et causales, aucune stratégie écrasante, dans src/sim/calibration.test.ts.
 - État Phase 10 le 2026-09-15 : ui/ build vert avec page tableaux, /partie jouable à 5 coups, boîte mail et agenda. 74 tests verts.
 - Phase 12, extension : profondeur progressive.
+- État Phase 12 le 2026-09-15 : adversaires réactifs (mémoire des coups joueur, bornée), moteur m0.4.0, serveur dev vérifié ce soir sur 3123.
 
 Prochaines commandes à utiliser dans l'ordre : `/recherche`, `/ontologie`, `/regles`, `/france-2026`, `/moteur`.

@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, Phase 12 et partie de ce soir
+
+Moteur m0.4.0, tests ciblés verts, serveur dev 3123 vérifié 200 sur / et /partie. Full suite à rejouer au prochain point.
+
 ## 2026-09-15, fin de session : UI build vert et courrier
 
 74 tests verts sur 18 fichiers, tsc propre, next build vert. Fix chemins /partie et extensionAlias .js vers .ts.

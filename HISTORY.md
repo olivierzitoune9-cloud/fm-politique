@@ -13,6 +13,11 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, Phase 12 et partie de ce soir
+
+- Adversaires réactifs bornés, moteur m0.4.0. Serveur dev lancé sur 3123, pages / et /partie vérifiées en 200 avec contenu simulé réel.
+- Pourquoi : jouer ce soir sur une base qui répond aux coups, avant toute profondeur supplémentaire.
+
 ## 2026-09-15, fin de session : UI build vert et courrier
 
 - ui/ build Next vert, /partie jouable avec boîte mail et agenda, courrier testé. 74 tests verts sur 18 fichiers.

@@ -10,7 +10,7 @@ import { appliquerDetresse } from "./rules/r4-detresse.js";
 import { appliquerMasseCritique } from "./rules/r5-masse-critique.js";
 import { appliquerPreparation } from "./rules/r22-preparation.js";
 
-export const VERSION_MOTEUR = "m0.3.0";
+export const VERSION_MOTEUR = "m0.4.0";
 
 export const ACTIONS_JOUABLES = [
   "preparer-silencieux",
@@ -215,6 +215,23 @@ function appliquerActeur(
   return { ...groupe, identiteActive: identite, ressourcesActeur: ressources };
 }
 
+// Phase 12. Adversaires réactifs : la mémoire des coups du joueur module les IA.
+// Agressivité répétée du joueur durcit le fonceur et fait prendre ses distances au prudent.
+// Borné à plus ou moins 0.2, déterministe, sans rng.
+export function ajusterAdversaires(monde: Monde): ActeurMonde[] {
+  const agressifs = monde.decisions.filter(
+    (d) => d.acteurId === "joueur" && (d.optionId === "etiquetage-agressif" || d.optionId === "attaquer-institution"),
+  ).length;
+  const dose = Math.min(1, agressifs / 6) * 0.2;
+  return monde.acteurs.map((a) => {
+    if (a.estJoueur) return a;
+    if (a.id === "act.fonceur") {
+      return { ...a, ambition: Math.min(1, a.ambition + dose), aversionRisque: Math.max(0, a.aversionRisque - dose) };
+    }
+    return { ...a, poids: { ...a.poids, coalition: Math.min(1, a.poids.coalition + dose) } };
+  });
+}
+
 export function pas(monde: Monde, coupJoueur?: CoupJoueur): Monde {
   const rng: Rng = creerRng(monde.graine * 100000 + monde.tick + 1);
   const tick = monde.tick + 1;
@@ -235,8 +252,10 @@ export function pas(monde: Monde, coupJoueur?: CoupJoueur): Monde {
   }
 
   // 2 et 3. Décisions puis interactions, un acteur après l'autre dans l'ordre du tableau.
+  // Les adversaires ont intégré la mémoire de tes coups avant d'arbitrer.
+  const acteursAjustes = ajusterAdversaires(monde);
   const etatGroupes = new Map<string, GroupeMonde>(monde.groupes.map((g) => [g.id, { ...g }]));
-  for (const acteur of monde.acteurs) {
+  for (const acteur of acteursAjustes) {
     const g = etatGroupes.get(acteur.groupeId);
     if (g === undefined) continue;
     let optionId: string;

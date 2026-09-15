@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { creerMonde, pas, simuler, ACTIONS_JOUABLES } from "./engine.js";
+import { creerMonde, pas, simuler, ajusterAdversaires, ACTIONS_JOUABLES } from "./engine.js";
 import { filtrerVueJoueur } from "./joueur.js";
 
 describe("joueur jouable", () => {
@@ -38,5 +38,16 @@ describe("joueur jouable", () => {
       expect(d.acteurId).toBe("joueur");
     }
     expect(vue.avertissement.length).toBeGreaterThan(0);
+  });
+
+  it("adversaires réactifs : ton agressivité répétée les fait bouger, en borné", () => {
+    const calme = simuler(5, 8, Array.from({ length: 8 }, () => ({ optionId: "preparer-silencieux" as const })));
+    const brutal = simuler(5, 8, Array.from({ length: 8 }, () => ({ optionId: "etiquetage-agressif" as const })));
+    const adjCalme = ajusterAdversaires(calme);
+    const adjBrutal = ajusterAdversaires(brutal);
+    const fonceurCalme = adjCalme.find((a) => a.id === "act.fonceur")!;
+    const fonceurBrutal = adjBrutal.find((a) => a.id === "act.fonceur")!;
+    expect(fonceurBrutal.ambition).toBeGreaterThanOrEqual(fonceurCalme.ambition);
+    expect(fonceurBrutal.ambition - fonceurCalme.ambition).toBeLessThanOrEqual(0.2);
   });
 });
