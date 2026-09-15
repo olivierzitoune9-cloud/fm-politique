@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, /moteur boucle minimale m0.1.0
+
+Monde à deux groupes avec ordre fixe (chocs seedés, R1, R3, R4, R5, événements, mémoire). 52 tests verts sur 12 fichiers, tsc propre. Un échec initial utile : saturation à 1 après 30 pas sur R1 constant, test recorrigé sur état complet à 12 pas. Leçon : prévoir atténuateurs et contre mobilisation dans la vraie boucle. Critère SPEC tenu : même seed même simulation, deux seeds deux trajectoires avec causes.
+
 ### Erreurs et limites
 
 - Biais d'allocation encore sans arbitrage complet d'acteur, à brancher en Phase 8 IA.
