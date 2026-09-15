@@ -8,6 +8,7 @@ describe("moteur boucle minimale", () => {
     expect(a.tick).toBe(20);
     expect(b.groupes).toEqual(a.groupes);
     expect(b.evenements).toEqual(a.evenements);
+    expect(b.decisions).toEqual(a.decisions);
   });
 
   it("deux seeds donnent des trajectoires différentes mais chacune explicable", () => {
@@ -33,5 +34,26 @@ describe("moteur boucle minimale", () => {
       expect(g.identiteActive).toBeGreaterThanOrEqual(0);
       expect(g.identiteActive).toBeLessThanOrEqual(1);
     }
+  });
+
+  it("IA branchée : chaque tick loge une décision par groupe avec option connue", () => {
+    const m = simuler(42, 5);
+    expect(m.decisions).toHaveLength(10);
+    const options = new Set(m.decisions.map((d) => d.optionId));
+    expect(options.size).toBeGreaterThanOrEqual(1);
+    for (const d of m.decisions) {
+      expect(["preparer-silencieux", "etiquetage-modere", "etiquetage-agressif", "chercher-coalition", "attaquer-institution"]).toContain(d.optionId);
+    }
+  });
+
+  it("IA différenciée : le fonceur ose plus que le prudent", () => {
+    let agressifFonceur = 0;
+    let agressifPrudent = 0;
+    const m = simuler(11, 30);
+    for (const d of m.decisions) {
+      if (d.optionId === "etiquetage-agressif" && d.acteurId === "act.fonceur") agressifFonceur += 1;
+      if (d.optionId === "etiquetage-agressif" && d.acteurId === "act.prudent") agressifPrudent += 1;
+    }
+    expect(agressifFonceur).toBeGreaterThanOrEqual(agressifPrudent);
   });
 });

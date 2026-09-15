@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, moteur m0.2.0 avec IA branchée
+
+58 tests verts sur 13 fichiers, tsc propre. Mapping explicite, décisions logées par tick. Le fonceur ose autant ou plus que le prudent en test seedé.
+
 ## 2026-09-15, IA des acteurs sans API
 
 Arbitrage dans src/sim/ai/arbitrage.ts, 4 tests verts, tsc propre. Pas de règle popularité donc X, le risque est modulé par ambition et aversion.

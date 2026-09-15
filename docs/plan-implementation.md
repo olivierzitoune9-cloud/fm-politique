@@ -12,7 +12,7 @@
 - État Phase 5 le 2026-09-15 : catalogue complet R1 à R22 codé et testé (48 tests verts, tsc propre) dans docs/catalogue-regles.md. Prochaine commande : /moteur pour la boucle minimale.
 - Phase 6, France 2026 : état initial daté et sourcé.
 - Phase 7, moteur : couches DATA à SIMULATION, seeds, boucle minimale.
-- État Phase 7 le 2026-09-15 : boucle m0.1.0 dans src/sim/engine.ts avec 52 tests verts, critère SPEC tenu.
+- État Phase 7 le 2026-09-15 : boucle m0.2.0 avec IA branchée, 58 tests verts, critère SPEC tenu.
 - Phase 8, IA des acteurs : arbitrages explicites.
 - État Phase 8 le 2026-09-15 : arbitrage codé dans src/sim/ai/arbitrage.ts avec 5 options prototype, utilités journalisées, sans API.
 - Phase 9, événements : détection et narration.
