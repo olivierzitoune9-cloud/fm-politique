@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, France 2026 et UI
+
+65 tests verts sur 15 fichiers, tsc propre. UI non buildée, à valider avec npm dans ui/.
+
 ## 2026-09-15, narration par gabarits Phase 9
 
 62 tests verts sur 14 fichiers, tsc propre. Sources internes obligatoires, chronologie triée, preuve que raconter ne modifie pas le monde.
