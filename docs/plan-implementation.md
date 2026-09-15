@@ -9,6 +9,7 @@
 - Phase 4, relations : interactions possibles et verbes système.
 - État Phases 2 à 4 le 2026-09-15 : v1 livrée dans docs/ontologie-v1.md plus docs/dictionnaire-variables-v1.md avec revue adversariale, en attente de validation par Aaron avant règles.
 - Phase 5, règles : catalogue testable issu de la bibliothèque vidéo et de la littérature.
+- État Phase 5 le 2026-09-15 : R1 étiquetage codée et testée (6 tests verts, tsc propre), catalogue ouvert dans docs/catalogue-regles.md.
 - Phase 6, France 2026 : état initial daté et sourcé.
 - Phase 7, moteur : couches DATA à SIMULATION, seeds, boucle minimale.
 - Phase 8, IA des acteurs : arbitrages explicites.
