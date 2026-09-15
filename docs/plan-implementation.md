@@ -35,5 +35,6 @@ Vision durable dans docs/vision-v1-v2.md. Jalons :
 - J3 propagation et carte : carte France régions types, adoption par territoire, arbre d'améliorations à points, vecteurs, barre de réponse adverse. Session suivante.
 - J4 info imparfaite à la FM : sondages commandables avec coûts et biais, rapporteurs, éditorialisation. Session suivante.
 - J5 V1 complète : calibration élargie, audits, tutoriel par courrier, déploiement. Session suivante.
+- J6 design et mise en ligne : LIVRÉE le 2026-09-15 (pôle design créé, doctrine écrite après recherche sourcée, appliquée au code en cinq feuilles, moteur rangé dans ui/sim pour que Vercel puisse construire, build de production vert, procédure écrite dans docs/deploiement.md). Reste la création du dépôt GitHub par Aaron pour la mise en ligne réelle.
 
 Prochaine commande dans l'ordre : /audit-parcours-joueur, puis /moteur sur J3, /audit-securite-sim avant tout déploiement.

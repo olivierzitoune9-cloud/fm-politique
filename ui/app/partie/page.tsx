@@ -3,15 +3,15 @@
 // Écran de partie V1 : semaine datée, actions hebdo, interactions avec personnages nommés,
 // vue filtrée du monde, fins multiples. Sauvegarde locale automatique, sans réseau.
 import { useEffect, useState } from "react";
-import { AMBITIONS, libelleStatut, type ConfigCarriere } from "../../../src/sim/carriere";
-import { ACTIONS_JEU, type CategorieAction } from "../../../src/sim/actions";
-import { INTERACTIONS, type InteractionId } from "../../../src/sim/interactions";
-import { nomComplet, libelleMetier } from "../../../src/sim/personnages";
-import { creerPartie, jouerSemaine, vuePartie, type Partie, type TourSemaine } from "../../../src/sim/partie";
-import { genererCourriels } from "../../../src/sim/courrier";
-import { raconterChronologie } from "../../../src/sim/narrative/raconteur";
-import { FRANCE_2026 } from "../../../src/sim/data/france-2026";
-import { deserialiser, serialiser } from "../../../src/sim/sauvegarde";
+import { AMBITIONS, libelleStatut, type ConfigCarriere } from "../../sim/carriere";
+import { ACTIONS_JEU, type CategorieAction } from "../../sim/actions";
+import { INTERACTIONS, type InteractionId } from "../../sim/interactions";
+import { nomComplet, libelleMetier } from "../../sim/personnages";
+import { creerPartie, jouerSemaine, vuePartie, type Partie, type TourSemaine } from "../../sim/partie";
+import { genererCourriels } from "../../sim/courrier";
+import { raconterChronologie } from "../../sim/narrative/raconteur";
+import { FRANCE_2026 } from "../../sim/data/france-2026";
+import { deserialiser, serialiser } from "../../sim/sauvegarde";
 
 const CLE_CONFIG = "fm-politique:config";
 const CLE_SAVE = "fm-politique:sauvegarde";
@@ -114,8 +114,10 @@ export default function PartiePage() {
   return (
     <div className="grille">
       <section className="carte">
-        <h2>
-          {c.nom}, {libelleStatut(c.statut)} — semaine {vue.semaine}
+        <h2 className="entete-partie">
+          <span className="qui">{c.nom}</span>
+          <span className="statut">{libelleStatut(c.statut)}</span>
+          <span className="semaine">Semaine {vue.semaine}</span>
         </h2>
         <p>
           {vue.libelleSemaine}. Ambition : <strong>{ambition.libelle}</strong>.

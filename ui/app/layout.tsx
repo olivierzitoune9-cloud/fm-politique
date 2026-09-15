@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./styles/composants.css";
+import "./styles/formulaire.css";
+import "./styles/tableau-de-bord.css";
 
 export const metadata: Metadata = {
-  title: "FM politique, lecture du monde",
-  description: "Tableau de bord et chronologie causale, prototype local.",
+  title: "FM politique",
+  description:
+    "Carrière politique hebdomadaire à partir de septembre 2026. Personnages nommés, calendrier réel, monde qui vit.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -11,11 +15,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <body>
         <div className="site">
-          <header className="site-header">
-            <h1>
-              <span className="jeu">FM politique</span>, lecture du monde
-            </h1>
-            <p>Carrière politique hebdomadaire : personnages nommés, calendrier réel, monde qui vit. Prototype local.</p>
+          <header className="site-entete">
+            <a className="marque" href="/">
+              FM politique
+              <span className="partie-nom">dossier de campagne</span>
+            </a>
+            <p className="mention">
+              Simulation ouverte le 7 septembre 2026. Faits, groupes et personnages fictifs, aucune personne réelle
+              n'est mise en scène.
+            </p>
           </header>
           <main>{children}</main>
         </div>

@@ -1,0 +1,202 @@
+/*
+ * Formulaires, contrôles, boutons, liens d'action.
+ * Autorité : docs/design-system-fm-politique.md.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Champs                                                              */
+/* ------------------------------------------------------------------ */
+
+.champ {
+  display: block;
+  margin-bottom: var(--e-3);
+}
+
+.champ > label {
+  display: block;
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  font-weight: 500;
+  line-height: var(--interligne-ui);
+  color: var(--encre-douce);
+  margin-bottom: var(--e-1);
+}
+
+.carte input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.carte select,
+.carte textarea {
+  width: 100%;
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  line-height: var(--interligne-ui);
+  padding: var(--e-2) var(--e-3);
+  color: var(--encre);
+  background: var(--surface);
+  border: 1px solid var(--bordure-forte);
+  border-radius: var(--r-controle);
+  transition: border-color var(--mouvement), background var(--mouvement);
+}
+
+.carte input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+.carte select:focus,
+.carte textarea:focus {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.carte input::placeholder {
+  color: var(--muted);
+}
+
+.carte input[type="checkbox"],
+.carte input[type="radio"] {
+  accent-color: var(--accent);
+  margin-right: var(--e-1);
+}
+
+.carte input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ */
+/* Rangées de choix, pastilles cliquables                              */
+/* ------------------------------------------------------------------ */
+
+.rang-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+}
+
+.rang-radio > label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--e-1);
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  line-height: var(--interligne-ui);
+  padding: var(--e-2) var(--e-3);
+  color: var(--encre-douce);
+  background: var(--surface);
+  border: 1px solid var(--bordure-forte);
+  border-radius: var(--r-controle);
+  cursor: pointer;
+  transition: background var(--mouvement), border-color var(--mouvement), color var(--mouvement);
+}
+
+.rang-radio > label:hover {
+  border-color: var(--accent);
+}
+
+.rang-radio > label.choisi {
+  background: var(--accent-clair);
+  border-color: var(--accent);
+  color: var(--encre);
+}
+
+.rang-radio > label strong {
+  font-weight: 600;
+}
+
+.rang-radio > label .desc {
+  flex-basis: 100%;
+}
+
+.desc {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  line-height: var(--interligne-ui);
+  color: var(--muted);
+  margin-top: var(--e-1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Boutons                                                             */
+/* ------------------------------------------------------------------ */
+
+.boutons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3);
+  margin-top: var(--e-4);
+}
+
+button {
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  font-weight: 600;
+  padding: var(--e-3) var(--e-5);
+  color: var(--fond);
+  background: var(--encre);
+  border: 1px solid var(--encre);
+  border-radius: var(--r-controle);
+  cursor: pointer;
+  transition: background var(--mouvement), border-color var(--mouvement), color var(--mouvement);
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+}
+
+button:disabled {
+  color: var(--muted);
+  background: var(--fond-creux);
+  border-color: var(--bordure);
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ */
+/* Liens d'action                                                      */
+/* ------------------------------------------------------------------ */
+
+a {
+  color: var(--accent);
+}
+
+.lien-jouer {
+  display: inline-block;
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: color var(--mouvement), border-color var(--mouvement);
+}
+
+.lien-jouer:hover {
+  color: var(--encre);
+  border-bottom-color: var(--encre);
+}
+
+.secondaire-lien {
+  color: var(--muted);
+  border-bottom-color: var(--bordure-forte);
+}
+
+.secondaire-lien:hover {
+  color: var(--encre);
+  border-bottom-color: var(--encre);
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus visible, une seule fois pour tout le document                 */
+/* ------------------------------------------------------------------ */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

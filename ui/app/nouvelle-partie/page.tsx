@@ -12,9 +12,9 @@ import {
   TRAITS_JOUEUR,
   type Ambition,
   type Origine,
-} from "../../../src/sim/carriere";
-import { nomJoueurAleatoire } from "../../../src/sim/personnages";
-import { creerRng } from "../../../src/sim/rng";
+} from "../../sim/carriere";
+import { nomJoueurAleatoire } from "../../sim/personnages";
+import { creerRng } from "../../sim/rng";
 
 export interface ConfigIdee {
   graine: number;

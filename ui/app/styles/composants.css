@@ -1,0 +1,136 @@
+/*
+ * Composants de structure du jeu, grilles, cartes, tableaux, barres.
+ * Autorité : docs/design-system-fm-politique.md. Aucune valeur hors des tokens.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Grilles de page                                                     */
+/* ------------------------------------------------------------------ */
+
+.grille {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+}
+
+.grille-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .grille-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Carte, surface de dossier. La profondeur vient du filet.            */
+/* ------------------------------------------------------------------ */
+
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-4) var(--e-4) var(--e-5);
+}
+
+.carte > h2 {
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: var(--e-2);
+  margin: 0 0 var(--e-3);
+  border-bottom: 2px double var(--encre);
+}
+
+.carte > h3 {
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  font-weight: 600;
+  margin: var(--e-4) 0 var(--e-2);
+}
+
+.carte > p:not(.source):not(.cout) {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  max-width: var(--mesure);
+  margin: 0 0 var(--e-3);
+}
+
+.carte > p:last-child {
+  margin-bottom: 0;
+}
+
+.carte ul,
+.carte ol {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tableau dense, chiffres tabulaires, filets fins                     */
+/* ------------------------------------------------------------------ */
+
+.table-monde {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  line-height: var(--interligne-ui);
+}
+
+.table-monde th {
+  text-align: left;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--fond-creux);
+  padding: var(--e-2);
+  border-bottom: 1px solid var(--bordure-forte);
+}
+
+.table-monde td {
+  padding: var(--e-2);
+  border-bottom: 1px solid var(--bordure);
+  font-variant-numeric: tabular-nums;
+}
+
+.table-monde td:first-child {
+  font-weight: 500;
+  color: var(--encre);
+}
+
+.table-monde td:not(:first-child) {
+  text-align: right;
+}
+
+.table-monde tbody tr:hover {
+  background: var(--accent-clair);
+}
+
+/* ------------------------------------------------------------------ */
+/* Barre de donnée, discrète, jamais décorative                        */
+/* ------------------------------------------------------------------ */
+
+.barre {
+  display: inline-block;
+  vertical-align: middle;
+  width: 64px;
+  height: 6px;
+  margin-left: var(--e-2);
+  background: var(--fond-creux);
+  border: 1px solid var(--bordure);
+}
+
+.barre > span {
+  display: block;
+  height: 100%;
+  background: var(--encre-douce);
+}

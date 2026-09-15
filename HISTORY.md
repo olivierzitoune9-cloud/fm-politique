@@ -2,6 +2,16 @@
 
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
 
+## 2026-09-15, pôle design, moteur rangé dans ui/, déploiement préparé
+
+- Pôle design créé : agent `expert-design-sim` (Inès) et journal `docs/journaux-experts/design.md`. Doctrine dans `docs/design-system-fm-politique.md`, écrite après recherche datée et sourcée, à la demande d'Aaron qui refuse la copie de Football Manager ou de Plague Inc comme méthode.
+- Décisions structurantes du design : ce jeu se consulte comme un dossier tenu à jour chaque semaine, pas comme un jeu vidéo ; Spectral (serif de lecture) et Public Sans (linéale d'instrument) embarquées localement en woff2 avec les licences OFL ; accent bleu institutionnel sourd, rouge réservé au scandale et à la perte ; aucune image ni portrait, les personnages se représentent par leurs initiales ; densité par paliers ; le temps est un composant permanent ; le jeu ne peut jamais être pris pour un service officiel de l'État.
+- Application au code : cinq feuilles dans `ui/app/styles/` posées sur les jetons de `globals.css` (composants, listes, formulaire, tableau de bord), en-tête de dossier, accueil en écran-titre, création de personnage habillée, tableau de bord avec bandeau d'identité (nom, statut, semaine), barres de progression, lignes d'action, fiches de personnages et écran de fin.
+- Restructuration : le moteur quitte `src/` pour `ui/sim/`. Raison : Vercel ne construit que le dossier de l'application, un moteur resté hors de `ui/` aurait cassé tous les imports en production. Les tests continuent d'être lancés depuis la racine.
+- Déploiement : chemin retenu par Aaron, GitHub puis Vercel, dépôt créé par lui, Root Directory `ui`, aucun secret et aucune variable d'environnement. Procédure complète dans `docs/deploiement.md`.
+- Méthode : sur cette machine, la politique d'exécution PowerShell bloque npm.ps1 et npx.ps1, il faut appeler npm.cmd et npx.cmd. Consigne d'Aaron : ne plus se servir du terminal quand on peut s'en passer.
+- Vérification : 126 tests verts sur 30 fichiers, 6 pages générées, build de production vert.
+
 ## 2026-09-15, V1 et V2 : du prototype au vrai jeu (commit V1 38696cc, V2 à suivre)
 
 - Recadrage : avertissement validé (SPEC section 6), ontologie v1 validée, fiches requalifiées en carburant, nom reporté, suivi-attentes soldé. Vision durable écrite dans docs/vision-v1-v2.md.

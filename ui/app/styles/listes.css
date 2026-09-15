@@ -1,0 +1,174 @@
+/*
+ * Métadonnées, badges, listes, chronologie, courrier, états.
+ * Autorité : docs/design-system-fm-politique.md.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Métadonnées, sources, unités                                        */
+/* ------------------------------------------------------------------ */
+
+.source {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  line-height: var(--interligne-ui);
+  color: var(--muted);
+}
+
+.tick {
+  display: inline-block;
+  min-width: 3.2em;
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.cout {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--avert);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-1) var(--e-2);
+  margin-top: var(--e-2);
+}
+
+/* ------------------------------------------------------------------ */
+/* Badges. Le rouge est réservé au grave, jamais au neutre.            */
+/* ------------------------------------------------------------------ */
+
+.badge {
+  display: inline-block;
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  line-height: 1.4;
+  padding: 2px var(--e-2);
+  border: 1px solid var(--bordure-forte);
+  border-radius: var(--r-controle);
+  background: var(--fond-creux);
+  color: var(--encre-douce);
+}
+
+.badge.mauve {
+  border-color: var(--accent);
+  background: var(--accent-clair);
+  color: var(--accent);
+}
+
+.badge.grave {
+  border-color: var(--danger);
+  background: var(--danger-clair);
+  color: var(--danger);
+}
+
+.badge.gain {
+  border-color: var(--succes);
+  background: var(--succes-clair);
+  color: var(--succes);
+}
+
+/* ------------------------------------------------------------------ */
+/* Listes plates, une ligne par fait                                   */
+/* ------------------------------------------------------------------ */
+
+.liste-plat {
+  list-style: none;
+  padding: 0;
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  line-height: var(--interligne-ui);
+}
+
+.liste-plat li {
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.liste-plat li:last-child {
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Chronologie, lecture suivie en serif                                */
+/* ------------------------------------------------------------------ */
+
+.chrono {
+  list-style: none;
+  padding: 0;
+}
+
+.chrono li {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  max-width: var(--mesure);
+  padding: var(--e-3) 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.chrono li:last-child {
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Boîte mail, écran central du jeu                                    */
+/* ------------------------------------------------------------------ */
+
+.mail {
+  padding: var(--e-3) 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.mail:last-of-type {
+  border-bottom: 0;
+}
+
+.mail .de {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--e-1);
+}
+
+.mail > div:last-child {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  max-width: var(--mesure);
+}
+
+.mail strong {
+  font-weight: 600;
+  color: var(--encre);
+}
+
+/* ------------------------------------------------------------------ */
+/* États                                                               */
+/* ------------------------------------------------------------------ */
+
+.erreur {
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  line-height: var(--interligne-ui);
+  margin: 0;
+  padding: var(--e-3);
+  border-left: 3px solid var(--danger);
+  background: var(--danger-clair);
+  color: var(--encre);
+}
+
+.vide {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  color: var(--muted);
+  max-width: var(--mesure);
+  margin: 0;
+}

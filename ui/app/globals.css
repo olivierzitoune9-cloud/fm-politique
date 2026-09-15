@@ -1,363 +1,307 @@
+/*
+ * FM politique, feuille unique du jeu.
+ * Autorité : docs/design-system-fm-politique.md (doctrine Inès).
+ * Règle : aucune valeur de couleur, de taille ou d'espacement hors des tokens ci-dessous.
+ * Polices embarquées localement depuis /public/polices, jamais de CDN (licence OFL 1.1).
+ */
+
+@font-face {
+  font-family: "Spectral";
+  src: url("/polices/Spectral-normal-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/polices/Spectral-italic-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/polices/Spectral-normal-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("/polices/PublicSans-normal-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("/polices/PublicSans-normal-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("/polices/PublicSans-normal-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("/polices/PublicSans-normal-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tokens, thème clair « papier de dossier ». */
 :root {
-  --fond: #f4f1ea;
-  --encre: #1c1a17;
-  --accent: #8c1d18;
-  --accent-doux: #f3ddd2;
-  --carte: #fffdf8;
-  --bordure: #ddd3c2;
-  --muted: #6f675c;
+  color-scheme: light dark;
+
+  --fond: #f5f2ea;
+  --fond-creux: #ebe6d9;
+  --surface: #fffdf7;
+  --encre: #191713;
+  --encre-douce: #443f37;
+  --muted: #6f6a5f;
+  --bordure: #ddd5c4;
+  --bordure-forte: #c2b8a3;
+  --accent: #1f4a8c;
+  --accent-clair: #e5ebf6;
+  --danger: #a4232a;
+  --danger-clair: #f7e7e5;
+  --succes: #2f6b46;
+  --succes-clair: #e6efe8;
+  --avert: #8a5a12;
+  --avert-clair: #f6eddb;
+
+  --f-serif: Spectral, Georgia, serif;
+  --f-sans: "Public Sans", system-ui, sans-serif;
+
+  --t-xs: 0.75rem;
+  --t-s: 0.8125rem;
+  --t-m: 0.9375rem;
+  --t-l: 1.0625rem;
+  --t-xl: 1.375rem;
+  --t-2xl: 1.75rem;
+  --t-3xl: 2.5rem;
+
+  --mesure: 66ch;
+  --interligne-lecture: 1.55;
+  --interligne-ui: 1.35;
+
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+
+  --r-controle: 3px;
+  --mouvement: 140ms ease-out;
+}
+
+/* Tokens, thème sombre « veille ». Recomposition à la main, jamais une inversion. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #11131a;
+    --fond-creux: #0c0e13;
+    --surface: #181b23;
+    --encre: #e9e5da;
+    --encre-douce: #c6c1b6;
+    --muted: #948e82;
+    --bordure: #2a2e38;
+    --bordure-forte: #3c4250;
+    --accent: #87aae2;
+    --accent-clair: #1c2536;
+    --danger: #e2837d;
+    --danger-clair: #37211f;
+    --succes: #7cb894;
+    --succes-clair: #16281d;
+    --avert: #d9a95c;
+    --avert-clair: #2e2416;
+  }
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   background: var(--fond);
   color: var(--encre);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--f-sans);
+  font-size: var(--t-m);
+  line-height: var(--interligne-ui);
+  font-variant-numeric: tabular-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-.site {
-  max-width: 1020px;
-  margin: 0 auto;
-  padding: 24px 20px 64px;
-}
-
-.site-header {
-  border-bottom: 3px double var(--encre);
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-}
-
-.site-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  letter-spacing: 0.02em;
-}
-
-.site-header h1 .jeu {
+a {
   color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--mouvement), color var(--mouvement);
+}
+a:hover {
+  border-bottom-color: var(--accent);
 }
 
-.site-header p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-style: italic;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
 }
 
-.grille {
-  display: grid;
-  gap: 16px;
+/* Tout ce qui se lit comme un document passe en serif. */
+.document,
+.document p,
+.courrier,
+.courrier p,
+.chrono li,
+.prose {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  max-width: var(--mesure);
 }
 
-@media (min-width: 800px) {
-  .grille-2 {
-    grid-template-columns: 1fr 1fr;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }
 
-.carte {
-  background: var(--carte);
-  border: 1px solid var(--bordure);
-  border-radius: 10px;
-  padding: 16px 18px;
-  box-shadow: 0 1px 0 var(--bordure);
+/* ------------------------------------------------------------------ */
+/* Coque du site                                                       */
+/* ------------------------------------------------------------------ */
+
+.site {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--e-5) var(--e-5) var(--e-8);
 }
 
-.carte h2 {
-  margin: 0 0 10px;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent);
+.site-entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--e-3);
+  border-bottom: 2px double var(--encre);
+  margin-bottom: var(--e-5);
 }
 
-.table-monde {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+.site-entete .marque {
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-.table-monde th,
-.table-monde td {
-  text-align: left;
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--bordure);
+.site-entete .marque .partie-nom {
+  color: var(--muted);
+  font-weight: 400;
 }
 
-.table-monde th {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.site-entete .mention {
+  font-size: var(--t-xs);
   color: var(--muted);
 }
 
-.barre {
-  height: 8px;
-  background: #e7dfd1;
-  border-radius: 99px;
-  overflow: hidden;
-  min-width: 90px;
+.titre-vue {
+  font-size: var(--t-2xl);
+  margin-bottom: var(--e-2);
 }
 
-.barre > span {
-  display: block;
-  height: 100%;
-  background: var(--accent);
+.sous-titre {
+  color: var(--muted);
+  font-size: var(--t-s);
+  margin: 0 0 var(--e-4);
 }
 
-.boutons {
+/* ------------------------------------------------------------------ */
+/* Niveau 0, écran-titre. Une phrase, deux portes, aucun chiffre.      */
+/* ------------------------------------------------------------------ */
+
+.ecran-titre {
+  min-height: 62vh;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 34ch;
+}
+
+.ecran-titre .phrase {
+  font-family: var(--f-serif);
+  font-size: var(--t-3xl);
+  line-height: 1.18;
+  font-weight: 400;
+  margin: 0 0 var(--e-5);
+  max-width: none;
+}
+
+.ecran-titre .chapeau {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  color: var(--encre-douce);
+  max-width: 46ch;
+  margin: 0 0 var(--e-6);
+}
+
+.portes {
+  display: flex;
+  gap: var(--e-3);
   flex-wrap: wrap;
-  margin: 12px 0;
 }
 
-.boutons button {
-  font-family: inherit;
-  font-size: 0.95rem;
-  padding: 9px 14px;
-  border-radius: 8px;
+.porte {
+  display: inline-block;
+  padding: var(--e-3) var(--e-5);
   border: 1px solid var(--encre);
+  border-radius: var(--r-controle);
   background: var(--encre);
-  color: #fff;
-  cursor: pointer;
+  color: var(--fond);
+  font-weight: 600;
+  font-size: var(--t-m);
+  border-bottom: 1px solid var(--encre);
+  transition: background var(--mouvement), border-color var(--mouvement), color var(--mouvement);
 }
-
-.boutons button:hover {
+.porte:hover {
   background: var(--accent);
   border-color: var(--accent);
+  color: var(--fond);
 }
 
-.boutons button.secondaire {
+.porte.secondaire {
   background: transparent;
   color: var(--encre);
 }
-
-.chrono {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.chrono li {
-  margin-bottom: 8px;
-  line-height: 1.45;
-}
-
-.chrono .tick {
-  display: inline-block;
-  font-size: 0.75rem;
-  background: var(--accent-doux);
-  border-radius: 99px;
-  padding: 1px 8px;
-  margin-right: 6px;
-}
-
-.mail {
-  border-left: 3px solid var(--accent);
-  padding: 6px 10px;
-  margin-bottom: 10px;
-  background: #faf6ee;
-}
-
-.mail .de {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.liste-plat {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.liste-plat li {
-  margin-bottom: 6px;
-}
-
-.source {
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-style: italic;
-}
-
-.lien-jouer {
-  display: inline-block;
-  margin-bottom: 16px;
-  padding: 10px 18px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.lien-jouer.secondaire-lien {
-  background: var(--encre);
-  margin-left: 8px;
-}
-
-.grille-3 {
-  display: grid;
-  gap: 16px;
-}
-
-@media (min-width: 1100px) {
-  .grille-3 {
-    grid-template-columns: 1.2fr 1fr 1fr;
-  }
-}
-
-.champ {
-  display: block;
-  margin-bottom: 14px;
-}
-
-.champ label {
-  display: block;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-
-.champ input[type="text"],
-.champ input[type="number"],
-.champ select {
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 8px 10px;
-  border: 1px solid var(--bordure);
-  border-radius: 8px;
-  background: #fff;
-  width: 100%;
-  max-width: 420px;
-}
-
-.champ input[type="range"] {
-  width: 220px;
-}
-
-.rang-radio {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin: 6px 0 10px;
-}
-
-.rang-radio label {
-  border: 1px solid var(--bordure);
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  background: #fff;
-  font-size: 0.92rem;
-}
-
-.rang-radio label.choisi {
+.porte.secondaire:hover {
+  background: var(--accent-clair);
   border-color: var(--accent);
-  background: var(--accent-doux);
-}
-
-.perso {
-  border-left: 3px solid var(--bordure);
-  padding: 6px 10px;
-  margin-bottom: 10px;
-}
-
-.perso.choisi {
-  border-left-color: var(--accent);
-  background: var(--accent-doux);
-  cursor: pointer;
-}
-
-.perso .identite {
-  font-weight: bold;
-}
-
-.perso .meta {
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-
-.badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  border-radius: 99px;
-  padding: 1px 8px;
-  margin-right: 4px;
-  background: var(--accent-doux);
   color: var(--encre);
 }
 
-.badge.mauve {
-  background: #e4d8ef;
-}
-
-.badge.grave {
-  background: #f2c9c4;
-}
-
-.barres-progression {
-  display: grid;
-  grid-template-columns: 120px 1fr 46px;
-  gap: 6px 10px;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.ecran-fin {
-  border: 2px solid var(--accent);
-  background: var(--accent-doux);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.ecran-fin h2 {
-  color: var(--accent);
-  margin-top: 0;
-}
-
-.erreur {
-  border: 1px solid var(--accent);
-  background: #fbeae7;
-  border-radius: 8px;
-  padding: 10px 14px;
-  color: var(--encre);
-}
-
-.cout {
-  font-size: 0.78rem;
+.mentions-bas {
+  margin-top: var(--e-6);
+  padding-top: var(--e-3);
+  border-top: 1px solid var(--bordure);
+  font-size: var(--t-xs);
   color: var(--muted);
-}
-
-.action-option {
-  display: block;
-  border: 1px solid var(--bordure);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  background: #fff;
-}
-
-.action-option.choisi {
-  border-color: var(--accent);
-  background: var(--accent-doux);
-}
-
-.action-option.desactivee {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.action-option .titre {
-  font-weight: bold;
-}
-
-.action-option .desc {
-  font-size: 0.85rem;
-  color: var(--muted);
+  max-width: 58ch;
 }

@@ -36,3 +36,21 @@ Limite portée en tête : le rendu final n'a pas encore été vérifié sur un a
 **Suite observée.** Le design system est écrit et la recherche y est datée source par source. L'application réelle au code suit dans la même session.
 
 **Leçon retenue.** Deux choses. D'abord que la bonne question n'était pas « quel jeu copier » mais « quel objet est-ce » : la réponse, un dossier politique tenu à jour chaque semaine, a rendu tout le reste décidable, y compris le refus du rouge partisan et le refus du portrait. Ensuite, une erreur technique que je garde : en réécrivant la section recherche du design system, j'ai écrasé par inadvertance un paragraphe déjà écrit sur le document public français et la linéale. Je l'ai repéré en relisant le fichier et je l'ai restauré sans perte. Leçon : quand je réécris un document vivant, je relis la zone entière avant d'écrire, jamais seulement la portion que je vise.
+
+## 2026-09-15, de la doctrine au code, deux erreurs techniques à garder
+
+**Situation.** Même session, deuxième temps : appliquer la doctrine au code réel, avec la consigne d'Aaron d'aller vite et de ne pas chronométrer.
+
+**Ce que j'ai posé.** Les polices sont embarquées localement dans `ui/public/polices/`, avec les textes de licence OFL à côté et un script de téléchargement reproductible. Puis cinq feuilles, une par responsabilité : `globals.css` (jetons clair et sombre, polices, base, écran-titre, portes), `composants.css` (grilles, cartes, tableaux denses à chiffres tabulaires, barres de donnée), `listes.css` (métadonnées, badges sémantiques, listes, chronologie, boîte mail, états), `formulaire.css` (champs, pastilles de choix, boutons, liens d'action) et `tableau-de-bord.css` (bandeau d'identité, barres de progression, lignes d'action, fiches de personnages, écran de fin). Deux écrans repris de fond en comble, l'en-tête de dossier et l'accueil en écran-titre : une phrase, un chapeau, deux portes, aucun chiffre.
+
+**Le seul écran de jeu, touché au scalpel.** Une modification chirurgicale, sans réécrire la logique : le titre du bandeau de semaine devient un composant d'identité à trois zones, le nom en serif, le statut en petites capitales accentuées, la semaine détachée à droite. Traduction directe de D8 : la semaine ne se cherche jamais.
+
+**Erreurs à garder.** Deux, et elles m'ont coûté cher.
+1. J'ai cru qu'un fichier existait parce que j'avais cru le créer. Deux créations avaient échoué en silence, l'une laissant un fichier réduit à une seule ligne, l'autre un fichier absent. Le build m'a démasqué : module introuvable. Leçon de méthode : un compte rendu de création n'est pas une preuve, je relis le fichier que je viens d'écrire. Et une écriture au delà de six mille caractères échoue, je découpe en feuilles cohérentes plutôt qu'en un seul bloc.
+2. Trois vérifications ont échoué sans message utile et j'ai accusé le mauvais coupable avant de trouver : la politique d'exécution PowerShell du poste interdit `npm.ps1` et `npx.ps1`. Il faut appeler `npm.cmd` et `npx.cmd`. Leçon : quand une commande échoue sans message clair, je vérifie l'enveloppe (interpréteur, droits, chemin) avant de soupçonner le contenu.
+
+**Décision d'Aaron.** Déploiement par GitHub puis Vercel, le dépôt étant créé par lui, pour que chaque envoi redéploie tout seul. Procédure écrite dans `docs/deploiement.md`. Consigne de méthode également : ne plus se servir du terminal quand on peut s'en passer.
+
+**Suite.** Vérification du build en cours à l'écriture de cette entrée, puis commit, puis déploiement.
+
+**Leçon retenue.** Le design n'était pas le problème quand Aaron disait que le jeu ne s'ouvrait pas : les écrans utilisaient encore des classes que la nouvelle feuille ne définissait pas, et l'écran restait donc informe. Un état intermédiaire entre deux mondes ressemble à une panne. J'aurais dû livrer la doctrine et son application d'un seul tenant, jamais l'une sans l'autre.

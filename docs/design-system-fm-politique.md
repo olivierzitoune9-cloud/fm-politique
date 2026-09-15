@@ -1,7 +1,7 @@
 # Design system, FM politique
 
 Statut : doctrine de référence, écrite le 2026-09-15, autorité sur tout choix visuel du jeu.
-Autorité : Inès (agente `expert-design-sim`) tient ce document. L'exécution visuelle vit dans `ui/app/**` et `globals.css`. Ce document ne décrit jamais le moteur.
+Autorité : Inès (agente `expert-design-sim`) tient ce document. L'exécution visuelle vit dans `ui/app/**` et dans `ui/app/styles/` : `composants.css` (grilles, cartes, tableaux denses, barres), `listes.css` (métadonnées, badges, listes, chronologie, courrier, états), `formulaire.css` (champs, choix, boutons, liens d'action), `tableau-de-bord.css` (identité du joueur, progression, lignes d'action, fiches, écran de fin), le tout sur les jetons et les polices de `globals.css`. Ce document ne décrit jamais le moteur.
 Portée : lecture éditoriale, densité, couleur, typographie, composants, états, accès, mouvement.
 
 Lis d'abord `docs/vision-v1-v2.md` (ce que le jeu cherche à être) et `docs/journaux-experts/design.md` (pourquoi ces choix ont été faits, erreurs comprises). Un choix visuel ici est un choix acté, pas une préférence.
@@ -48,7 +48,7 @@ Traduction : ce jeu se joue le soir. Le mode sombre n'est pas un caprice, c'est 
 ## 3. Décisions actées
 
 **D1. Deux polices, deux rôles, aucun mélange.** Spectral (OFL 1.1) pour tout ce qui se lit comme un document : courriers, articles, chronologie, descriptions, dépêches. Public Sans (OFL 1.1) pour tout ce qui se lit comme un instrument : titres, libellés, tableaux, chiffres, boutons, étiquettes. Une serif dans un tableau ou une linéale dans un courrier est un défaut, pas un choix.
-Les deux polices sont embarquées localement dans le projet (`ui/app/polices/`, fichiers woff2), jamais appelées à un CDN. Raison : un jeu doit s'ouvrir sans dépendre d'un tiers, et la licence OFL autorise explicitement l'embarquement.
+Les deux polices sont embarquées localement dans le projet (`ui/public/polices/`, fichiers woff2), jamais appelées à un CDN. Raison : un jeu doit s'ouvrir sans dépendre d'un tiers, et la licence OFL autorise explicitement l'embarquement.
 
 **D2. Chiffres tabulaires partout où des nombres se comparent.** `font-variant-numeric: tabular-nums` sur les tableaux, les ressources, les dates, les pourcentages.
 

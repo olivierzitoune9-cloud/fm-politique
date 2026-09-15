@@ -1,88 +1,44 @@
-// Page serveur : lit le monde simulé, affiche tableaux et chronologie causale.
-// Aucune décision ici, seulement de la lecture. Seed fixe pour la démo.
-import { simuler } from "../../src/sim/engine";
-import { raconterChronologie } from "../../src/sim/narrative/raconteur";
-import { FRANCE_2026 } from "../../src/sim/data/france-2026";
-
-function Barre({ valeur }: { valeur: number }) {
-  return (
-    <span className="barre">
-      <span style={{ width: `${Math.round(valeur * 100)}%` }} />
-    </span>
-  );
-}
+// Page d'accueil, niveau 0 : une phrase, une chapeau, deux portes, puis le pays que l'on rejoint.
+// Aucun chiffre de jeu ici, la lecture du monde vivant se fait dans la partie.
+import { FRANCE_2026 } from "../sim/data/france-2026";
 
 export default function Page() {
-  const monde = simuler(42, 20);
-  const textes = raconterChronologie(monde.evenements, monde.decisions);
-
   return (
-    <div className="grille">
-      <div>
-        <a className="lien-jouer" href="/nouvelle-partie">
-          Nouvelle partie : crée ton personnage, choisis ton ambition
-        </a>
-        <a className="lien-jouer secondaire-lien" href="/partie">
-          Continuer la partie sauvegardée
-        </a>
-      </div>
-
-      <section className="carte">
-        <h2>Groupes suivis, seed 42, 20 pas</h2>
-        <table className="table-monde">
-          <thead>
-            <tr>
-              <th>Groupe</th>
-              <th>Identité</th>
-              <th>Bascule</th>
-              <th>Ordre</th>
-              <th>Adoption</th>
-            </tr>
-          </thead>
-          <tbody>
-            {monde.groupes.map((g) => (
-              <tr key={g.id}>
-                <td>{g.id}</td>
-                <td>
-                  {(g.identiteActive * 100).toFixed(0)} <Barre valeur={g.identiteActive} />
-                </td>
-                <td>
-                  {(g.bascule * 100).toFixed(0)} <Barre valeur={g.bascule} />
-                </td>
-                <td>
-                  {(g.receptiviteOrdre * 100).toFixed(0)} <Barre valeur={g.receptiviteOrdre} />
-                </td>
-                <td>
-                  {(g.adoption * 100).toFixed(0)} <Barre valeur={g.adoption} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <>
+      <section className="ecran-titre">
+        <p className="phrase">Tu n'es personne. Tu as une idée. La France de septembre 2026 ne t'attend pas.</p>
+        <p className="chapeau">
+          Semaine après semaine, tu écris à des gens, tu promets, tu te déplaces, tu te fais connaître ou tu te fais
+          oublier. Le pays continue de vivre sans toi, et il se souvient de ce que tu as dit.
+        </p>
+        <div className="portes">
+          <a className="porte" href="/nouvelle-partie">
+            Commencer une carrière
+          </a>
+          <a className="porte secondaire" href="/partie">
+            Reprendre où j'en étais
+          </a>
+        </div>
+        <p className="mentions-bas">
+          Tu choisis une origine, une idée et une ambition. Le statut d'élu, de chef de parti ou de candidat ne se
+          décrète pas, il se gagne sur le calendrier réel, jusqu'aux échéances de 2027. Les trajectoires autoritaires
+          sont simulées comme les autres et ne sont jamais recommandées.
+        </p>
       </section>
 
       <section className="carte">
-        <h2>France septembre 2026, repères datés</h2>
+        <h2>Le pays que tu rejoins</h2>
         <ul className="liste-plat">
           {FRANCE_2026.map((i) => (
             <li key={i.id}>
-              {i.libelle} : <strong>{i.valeur}</strong> <span className="source">({i.date}, {i.source})</span>
+              {i.libelle} : <strong>{i.valeur}</strong>{" "}
+              <span className="source">
+                ({i.date}, {i.source})
+              </span>
             </li>
           ))}
         </ul>
       </section>
-
-      <section className="carte">
-        <h2>Chronologie causale</h2>
-        <ol className="chrono">
-          {textes.map((t, n) => (
-            <li key={n}>
-              <span className="tick">t{t.tick}</span>
-              <strong>{t.titre}</strong> : {t.corps}
-            </li>
-          ))}
-        </ol>
-      </section>
-    </div>
+    </>
   );
 }

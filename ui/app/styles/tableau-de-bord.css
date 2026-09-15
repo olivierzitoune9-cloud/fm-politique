@@ -1,0 +1,210 @@
+/*
+ * Tableau de bord de la partie, densité par paliers.
+ * Autorité : docs/design-system-fm-politique.md (D5 densité, D8 le temps).
+ */
+
+.grille-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 1100px) {
+  .grille-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grille-2 > .carte,
+.grille-3 > .carte {
+  min-width: 0;
+}
+
+/* Un tableau ne déborde jamais la carte, il se laisse faire défiler. */
+.carte:has(.table-monde) {
+  overflow-x: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bandeau d'identité, le joueur voit toujours où il en est            */
+/* ------------------------------------------------------------------ */
+
+.entete-partie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-2) var(--e-3);
+}
+
+.entete-partie .qui {
+  font-family: var(--f-serif);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--encre);
+}
+
+.entete-partie .statut {
+  font-family: var(--f-sans);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.entete-partie .semaine {
+  margin-left: auto;
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--encre-douce);
+}
+
+/* ------------------------------------------------------------------ */
+/* Barres de progression, lecture d'un coup d'oeil                     */
+/* ------------------------------------------------------------------ */
+
+.barres-progression {
+  display: grid;
+  grid-template-columns: minmax(6.5em, auto) 1fr auto;
+  align-items: center;
+  gap: var(--e-1) var(--e-3);
+  margin: var(--e-3) 0;
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  font-variant-numeric: tabular-nums;
+  color: var(--encre-douce);
+}
+
+.barres-progression .barre {
+  width: 100%;
+  margin: 0;
+  height: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Choix hebdomadaire, une ligne par possibilité                      */
+/* ------------------------------------------------------------------ */
+
+.action-option {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--e-1) var(--e-2);
+  padding: var(--e-2) var(--e-2);
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  line-height: var(--interligne-ui);
+  color: var(--encre-douce);
+  border: 1px solid transparent;
+  border-bottom-color: var(--bordure);
+  cursor: pointer;
+  transition: background var(--mouvement), border-color var(--mouvement);
+}
+
+.action-option:hover {
+  background: var(--accent-clair);
+}
+
+.action-option.choisi {
+  border-color: var(--accent);
+  background: var(--accent-clair);
+}
+
+.action-option.desactivee {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.action-option .titre {
+  font-weight: 500;
+  color: var(--encre);
+}
+
+.action-option .cout {
+  margin-left: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Fiches, personnages et partis rivaux                                */
+/* ------------------------------------------------------------------ */
+
+.perso {
+  display: block;
+  padding: var(--e-2) var(--e-3);
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  line-height: var(--interligne-ui);
+  color: var(--encre-douce);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  cursor: pointer;
+  transition: background var(--mouvement), border-color var(--mouvement);
+}
+
+.perso:hover {
+  border-color: var(--accent);
+}
+
+.perso.choisi {
+  border-color: var(--accent);
+  background: var(--accent-clair);
+}
+
+.perso .identite {
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.perso .meta {
+  margin-top: var(--e-1);
+}
+
+.perso .badge {
+  margin-right: var(--e-1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Écran de fin, une porte de sortie, jamais un jugement moral         */
+/* ------------------------------------------------------------------ */
+
+.ecran-fin {
+  padding: var(--e-4) var(--e-4) var(--e-5);
+  background: var(--fond-creux);
+  border: 1px solid var(--bordure);
+  border-left: 4px solid var(--encre);
+}
+
+.ecran-fin h2 {
+  font-family: var(--f-serif);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--encre);
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin: 0 0 var(--e-2);
+}
+
+.ecran-fin p {
+  font-family: var(--f-serif);
+  font-size: var(--t-l);
+  line-height: var(--interligne-lecture);
+  max-width: var(--mesure);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Courrier, le nom de l'expéditeur doit être un nom                   */
+/* ------------------------------------------------------------------ */
+
+.mail strong {
+  font-weight: 600;
+  color: var(--encre);
+}

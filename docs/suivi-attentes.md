@@ -9,6 +9,7 @@
 | 2026-09-15 | Choisir le nom définitif du jeu (FM politique reste le nom de code) | Aaron, arbitrage session V1 V2 | Aaron | Avant la V1 publique |
 | 2026-09-15 | Degré de réalisme des personnes et médias réels contre fictifs (défaut actuel : tout fictif avec noms aléatoires) | Brief section 41 | Aaron | V2 ou J3 |
 | 2026-09-15 | Fiches détaillées par mécanisme requalifiées en carburant des jalons, plus jamais prérequis | Arbitrage session V1 V2 | Pôle recherche | Au fil des jalons |
+| 2026-09-15 | Créer le dépôt GitHub fm-politique puis l'importer sur Vercel avec Root Directory ui, pour mettre le jeu en ligne et que chaque envoi redéploie | Choix d'Aaron session design | Aaron | Dès que possible |
 
 ## Réglées
 
@@ -21,3 +22,4 @@
 | 2026-09-15 | Poser le hook anti fuite git et la validation des fichiers de config, dépôt initialisé et testé | .githooks/pre-commit, .gitignore, commit 021a13c |
 | 2026-09-15 | Stack prototype : Next.js App Router plus moteur TS pur seedé, sans Supabase ni Stripe | AGENTS.md, CLAUDE.md |
 | 2026-09-15 | Primauté méthode : base transverse Wisâl instanciée, jamais dupliquée | README.md |
+| 2026-09-15 | Design du jeu : recherche réelle et sourcée plutôt que copie de Football Manager ou Plague Inc, pôle design créé et doctrine écrite | docs/design-system-fm-politique.md, docs/journaux-experts/design.md |
