@@ -40,6 +40,15 @@ Tu es un acteur insignifiant (employé de bureau) dont l'idée se propage dans u
 - V2 (moteur m0.6.0) : partis rivaux organisés avec leaders qui arbitrent, médias avec biais et audiences, propositions avec dicibilité, économie mensuelle branchée, maximum de règles R1 à R22 branchées avec motif écrit pour les écartées.
 - Plus tard : J3 propagation et carte, J4 info imparfaite profonde, J5 audits et déploiement.
 
+## Pilier 5, la progression par paliers (règle structurante, actée le 2026-09-16)
+
+- Le joueur ne voit que ce que son rang permet. Chaque règle R1 à R22 reçoit un palier d'accès, dans l'ordre de la chronologie M1 à M23 du document source.
+- Palier 1, l'insignifiant : terrain de proximité, préparation silencieuse, étiquetage modéré, marque, euphémisme. Aucun parti à l'écran, aucun média national, aucune institution. Ils existent et agissent en arrière-plan.
+- Paliers suivants : masse critique, coalition, médias, institution, puis les leviers lourds, salami, soupape, choc, ralliement, culte de la personnalité.
+- Aucune limite de choix, mais des conséquences : on ne bloque pas une action, on sanctionne par la dette, le risque, la réputation et les occasions perdues.
+- Chaque origine porte son vecteur d'accès au pouvoir, et le joueur peut se projeter loin, sur les échéances réelles de 2027, 2029 et 2032.
+- Le texte de mise en garde quitte les écrans de jeu : il vit en mentions discrètes et en documentation interne.
+
 ## Garde-fous
 
 Le moteur reste TypeScript pur, seedé, testé, sans React. Le narratif raconte, ne décide jamais. Les IA arbitrent avec des utilités journalisées. Le hasard est conditionné, jamais une excuse. Aucune donnée réelle codée sans source et niveau de preuve. Trajectoires autoritaires simulées, jamais recommandées ni récompensées moralement.

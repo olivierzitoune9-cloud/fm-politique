@@ -10,6 +10,9 @@
 | 2026-09-15 | Degré de réalisme des personnes et médias réels contre fictifs (défaut actuel : tout fictif avec noms aléatoires) | Brief section 41 | Aaron | V2 ou J3 |
 | 2026-09-15 | Fiches détaillées par mécanisme requalifiées en carburant des jalons, plus jamais prérequis | Arbitrage session V1 V2 | Pôle recherche | Au fil des jalons |
 | 2026-09-15 | Créer le dépôt GitHub fm-politique puis l'importer sur Vercel avec Root Directory ui, pour mettre le jeu en ligne et que chaque envoi redéploie | Choix d'Aaron session design | Aaron | Dès que possible |
+| 2026-09-16 | Corriger les deux défauts qui font croire que le jeu est cassé : « Semaine suivante » sans effet (exception non affichée) et origine choisie absente du statut affiché | docs/retours-joueur-2026-09-16.md, R1 et R2 | Pôle développeur | Prochaine session, en premier |
+| 2026-09-16 | Traiter les retours de jeu du 2026-09-16 : graines expliquées, origines et objectifs élargis, progression par paliers adossée à la chronologie M1 à M23, choix libres mais sanctionnés, texte de mise en garde sorti des écrans | docs/retours-joueur-2026-09-16.md | Pôles moteur, design, narration | Prochaine session |
+| 2026-09-16 | Au prochain /pilote-sim, exécuter d'une traite tous les jalons restants, sans s'arrêter à un jalon par session | Consigne d'Aaron, fin de session | Pilote | Prochaine session |
 
 ## Réglées
 

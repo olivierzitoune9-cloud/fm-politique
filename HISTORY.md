@@ -2,6 +2,15 @@
 
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
 
+## 2026-09-16, retours de jeu d'Aaron, cap vers la progression par paliers
+
+- Recueil intégral dans docs/retours-joueur-2026-09-16.md. Deux défauts vérifiés dans le code, causes lues et non supposées : « Semaine suivante » sans effet parce que l'exception de jouerSemaine n'est affichée nulle part, et origine choisie absente du statut parce que creerCarriere fixe « employe » quelle que soit l'origine.
+- Reproche central retenu comme règle de conception : la progression doit être par étapes, jamais sautée. La chronologie M1 à M23 du document source devient l'escalier d'accès des règles R1 à R22, et le joueur ne voit que son palier. Un jeune enseignant ne doit pas voir les partis rivaux à l'écran.
+- Autre règle actée : aucune limite de choix, mais des conséquences. On ne bloque plus par manque de ressource, on sanctionne par la dette, le risque, la réputation et les occasions perdues.
+- Le texte de mise en garde sort des écrans de jeu, sur demande explicite d'Aaron, et se réfugie en mentions discrètes et en documentation interne. Le test qui le vérifie suit le déplacement.
+- Demande d'élargissement : plus d'origines avec des façons distinctes d'accéder au pouvoir, plus d'objectifs avec projection de long terme, et une explication claire des graines, qui n'existe pas encore.
+- Méthode : au prochain /pilote-sim, exécuter d'une traite tous les jalons restants.
+
 ## 2026-09-15, pôle design, moteur rangé dans ui/, déploiement préparé
 
 - Pôle design créé : agent `expert-design-sim` (Inès) et journal `docs/journaux-experts/design.md`. Doctrine dans `docs/design-system-fm-politique.md`, écrite après recherche datée et sourcée, à la demande d'Aaron qui refuse la copie de Football Manager ou de Plague Inc comme méthode.
