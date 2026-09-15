@@ -1,0 +1,26 @@
+#!/bin/sh
+# FM politique, garde-fou anti-fuite de secrets.
+# Bloque un commit contenant un fichier .env* ou un motif de cle secrete.
+# Active via : git config core.hooksPath .githooks
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+env_files=$(printf '%s\n' "$staged_files" | grep -E '(^|/)\.env' || true)
+if [ -n "$env_files" ]; then
+  echo "COMMIT BLOQUE : un fichier .env est present dans les fichiers ajoutes :"
+  echo "$env_files"
+  echo "Ces fichiers contiennent des secrets et ne doivent jamais etre commites."
+  exit 1
+fi
+
+pattern='sk_live_[a-zA-Z0-9]+|sk_test_[a-zA-Z0-9]+|rk_live_[a-zA-Z0-9]+|whsec_[a-zA-Z0-9]+|sk-ant-[a-zA-Z0-9_-]+|-----BEGIN (RSA |EC )?PRIVATE KEY-----|AKIA[0-9A-Z]{16}|SERVICE_ROLE[A-Z_]*[[:space:]]*=[[:space:]]*[^[:space:]]+'
+
+matches=$(git diff --cached -U0 | grep -E "$pattern" || true)
+if [ -n "$matches" ]; then
+  echo "COMMIT BLOQUE : motif ressemblant a une cle secrete detecte dans les changements :"
+  echo "$matches"
+  echo "Si c'est une fausse alerte, verifie bien le contenu avant de forcer le commit."
+  exit 1
+fi
+
+exit 0

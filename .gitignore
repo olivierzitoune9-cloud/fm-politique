@@ -1,0 +1,14 @@
+# FM politique, prototype local, monde versionné en fichiers, jamais de secrets commités.
+.env*
+.env.*
+!.env.example
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+graphify-out/tmp/
