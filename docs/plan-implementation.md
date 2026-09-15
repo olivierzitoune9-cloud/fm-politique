@@ -7,6 +7,7 @@
 - Phase 2, ontologie : entités stabilisées. Sortie : `docs/ontologie-v0.md` puis v1.
 - Phase 3, variables : dictionnaire avec justifications.
 - Phase 4, relations : interactions possibles et verbes système.
+- État Phases 2 à 4 le 2026-09-15 : v1 livrée dans docs/ontologie-v1.md plus docs/dictionnaire-variables-v1.md avec revue adversariale, en attente de validation par Aaron avant règles.
 - Phase 5, règles : catalogue testable issu de la bibliothèque vidéo et de la littérature.
 - Phase 6, France 2026 : état initial daté et sourcé.
 - Phase 7, moteur : couches DATA à SIMULATION, seeds, boucle minimale.
