@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "FM politique, lecture du monde",
@@ -8,12 +9,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body style={{ fontFamily: "system-ui, sans-serif", margin: 24, maxWidth: 960 }}>
-        <header>
-          <h1>FM politique, lecture du monde</h1>
-          <p>Prototype local. Le joueur lit le monde : tableaux et chronologie, jamais de personnages.</p>
-        </header>
-        <main>{children}</main>
+      <body>
+        <div className="site">
+          <header className="site-header">
+            <h1>
+              <span className="jeu">FM politique</span>, lecture du monde
+            </h1>
+            <p>Prototype local. Tu lis le monde : tableaux et chronologie, jamais de personnages.</p>
+          </header>
+          <main>{children}</main>
+        </div>
       </body>
     </html>
   );

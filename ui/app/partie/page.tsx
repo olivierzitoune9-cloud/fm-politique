@@ -31,98 +31,107 @@ export default function PartiePage() {
   }
 
   return (
-    <div>
-      <section>
+    <div className="grille">
+      <section className="carte">
         <h2>Partie démo, seed 42, tick {vue.tick}</h2>
-        <p>{vue.avertissement}</p>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+        <p className="source">{vue.avertissement}</p>
+        <div className="boutons">
           {ACTIONS_JOUABLES.map((a) => (
             <button key={a} onClick={() => jouer(a)} type="button">
               {LIBELLES[a]}
             </button>
           ))}
-          <button onClick={recommencer} type="button">
+          <button className="secondaire" onClick={recommencer} type="button">
             Recommencer
           </button>
         </div>
       </section>
 
-      <section>
-        <h2>Ce que tu perçois (sondages approximatifs)</h2>
-        <table border={1} cellPadding={6}>
-          <thead>
-            <tr>
-              <th>Groupe</th>
-              <th>Identité</th>
-              <th>Bascule</th>
-              <th>Réceptivité</th>
-              <th>Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vue.groupes.map((g) => (
-              <tr key={g.id}>
-                <td>{g.id}</td>
-                <td>{(g.identiteAffichee * 100).toFixed(0)}</td>
-                <td>{(g.basculeAffichee * 100).toFixed(0)}</td>
-                <td>{(g.receptiviteAffichee * 100).toFixed(0)}</td>
-                <td>{g.source}</td>
+      <div className="grille grille-2">
+        <section className="carte">
+          <h2>Ce que tu perçois</h2>
+          <table className="table-monde">
+            <thead>
+              <tr>
+                <th>Groupe</th>
+                <th>Identité</th>
+                <th>Bascule</th>
+                <th>Réceptivité</th>
               </tr>
+            </thead>
+            <tbody>
+              {vue.groupes.map((g) => (
+                <tr key={g.id}>
+                  <td>{g.id}</td>
+                  <td>{(g.identiteAffichee * 100).toFixed(0)}</td>
+                  <td>{(g.basculeAffichee * 100).toFixed(0)}</td>
+                  <td>{(g.receptiviteAffichee * 100).toFixed(0)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="source">{vue.groupes[0]?.source}</p>
+        </section>
+
+        <section className="carte">
+          <h2>Tes coups ({vue.mesDecisions.length})</h2>
+          <ol className="liste-plat">
+            {vue.mesDecisions.map((d, n) => (
+              <li key={n}>
+                <span className="tick">t{d.tick}</span>
+                {LIBELLES[d.optionId as ActionJouable] ?? d.optionId} vers {d.groupeId}
+              </li>
             ))}
-          </tbody>
-        </table>
-      </section>
+          </ol>
+        </section>
+      </div>
 
-      <section>
-        <h2>Tes coups ({vue.mesDecisions.length})</h2>
-        <ol>
-          {vue.mesDecisions.map((d, n) => (
-            <li key={n}>
-              t{d.tick} : {LIBELLES[d.optionId as ActionJouable] ?? d.optionId} vers {d.groupeId}
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section>
+      <section className="carte">
         <h2>Chronologie</h2>
-        <ol>
+        <ol className="chrono">
           {vue.chronologie.map((t, n) => (
             <li key={n}>
-              <strong>{t.titre}</strong> (t{t.tick}) : {t.corps}
+              <span className="tick">t{t.tick}</span>
+              <strong>{t.titre}</strong> : {t.corps}
             </li>
           ))}
         </ol>
       </section>
 
-      <section>
-        <h2>Boîte mail ({mails.length})</h2>
-        <ul>
+      <div className="grille grille-2">
+        <section className="carte">
+          <h2>Boîte mail ({mails.length})</h2>
           {mails.map((m, n) => (
-            <li key={n}>
-              <strong>{m.objet}</strong> de {m.de} : {m.corps}
-            </li>
+            <div className="mail" key={n}>
+              <div className="de">
+                t{m.tick} de {m.de}
+              </div>
+              <div>
+                <strong>{m.objet}</strong> : {m.corps}
+              </div>
+            </div>
           ))}
-        </ul>
-      </section>
+        </section>
 
-      <section>
-        <h2>Agenda</h2>
-        <ul>
-          {agenda.map((e) => (
-            <li key={e.tick}>
-              t{e.tick} : {e.libelle}
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section className="carte">
+          <h2>Agenda</h2>
+          <ul className="liste-plat">
+            {agenda.map((e) => (
+              <li key={e.tick}>
+                <span className="tick">t{e.tick}</span>
+                {e.libelle}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
-      <section>
+      <section className="carte">
         <h2>Repères France</h2>
-        <ul>
+        <ul className="liste-plat">
           {FRANCE_2026.map((i) => (
             <li key={i.id}>
-              {i.libelle} : {i.valeur} ({i.date})
+              {i.libelle} : <strong>{i.valeur}</strong> <span className="source">({i.date})</span>
             </li>
           ))}
         </ul>
