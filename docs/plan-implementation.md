@@ -14,6 +14,7 @@
 - Phase 7, moteur : couches DATA à SIMULATION, seeds, boucle minimale.
 - État Phase 7 le 2026-09-15 : boucle m0.1.0 dans src/sim/engine.ts avec 52 tests verts, critère SPEC tenu.
 - Phase 8, IA des acteurs : arbitrages explicites.
+- État Phase 8 le 2026-09-15 : arbitrage codé dans src/sim/ai/arbitrage.ts avec 5 options prototype, utilités journalisées, sans API.
 - Phase 9, événements : détection et narration.
 - Phase 10, interface : lecture du monde.
 - Phase 11, tests : simulations massives, absurdités, calibration.

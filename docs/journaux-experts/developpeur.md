@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, IA des acteurs sans API
+
+Arbitrage dans src/sim/ai/arbitrage.ts, 4 tests verts, tsc propre. Pas de règle popularité donc X, le risque est modulé par ambition et aversion.
+
 ## 2026-09-15, /moteur boucle minimale m0.1.0
 
 Monde à deux groupes avec ordre fixe (chocs seedés, R1, R3, R4, R5, événements, mémoire). 52 tests verts sur 12 fichiers, tsc propre. Un échec initial utile : saturation à 1 après 30 pas sur R1 constant, test recorrigé sur état complet à 12 pas. Leçon : prévoir atténuateurs et contre mobilisation dans la vraie boucle. Critère SPEC tenu : même seed même simulation, deux seeds deux trajectoires avec causes.

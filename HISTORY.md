@@ -13,6 +13,11 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, IA des acteurs sans API
+
+- Arbitrage explicite avec 6 objectifs et 5 options, bruit seedé, sans règle rigide. 4 tests verts.
+- Pourquoi : l'IA arbitre, elle ne cause jamais à la place des règles. Aucune dépendance externe.
+
 ## 2026-09-15, /moteur boucle minimale m0.1.0
 
 - src/sim/engine.ts avec deux groupes, ordre fixe et événements causaux. 52 tests verts, tsc propre. Échec initial sur saturation corrigé en test, leçon notée pour la vraie boucle.
