@@ -10,6 +10,9 @@ export default function Page() {
 
   return (
     <div>
+      <p>
+        <a href="/partie">Jouer la partie démo</a> : cinq coups possibles par tick, vue filtrée.
+      </p>
       <section>
         <h2>Groupes suivis (seed 42, 20 pas)</h2>
         <table border={1} cellPadding={6}>

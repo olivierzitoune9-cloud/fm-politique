@@ -13,6 +13,11 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, fin de session : partie jouable et calibration
+
+- Page /partie avec 5 coups, vue filtrée, recommencer. Calibration 200 parties de 30 pas bornées et causales, aucune stratégie écrasante. 71 tests verts sur 17 fichiers, tsc propre.
+- Pourquoi : aller au bout du prototype jouable local avant la profondeur. Reste : npm dans ui/, boîte mail et agenda, profondeur progressive Phase 12.
+
 ## 2026-09-15, joueur jouable moteur m0.3.0
 
 - Acteur joueur insignifiant avec 5 actions mappées aux règles, coups forcés déterministes, vue filtrée arrondie et sourcée avec avertissement. 69 tests verts.

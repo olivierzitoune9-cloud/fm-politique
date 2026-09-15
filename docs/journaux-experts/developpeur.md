@@ -24,6 +24,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 
 22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
 
+## 2026-09-15, fin de session : partie jouable et calibration
+
+71 tests verts sur 17 fichiers, tsc propre. Calibration 4 secondes pour 200 parties, stable.
+
 ## 2026-09-15, joueur jouable m0.3.0
 
 69 tests verts sur 16 fichiers, tsc propre. Trois acteurs par tick, coups joueur forcés, vue arrondie à la dizaine.
