@@ -13,6 +13,11 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, /regles catalogue complet R1 à R22
+
+- 22 règles couvrant M1 à M23, codées en pur dans src/sim/rules, 48 tests Vitest verts et tsc propre. Revue globale passée, constantes interdites respectées.
+- Pourquoi : finir les règles d'un trait comme demandé, en lots vérifiés, pour ouvrir /moteur sur une base complète plutôt qu'au compte gouttes.
+
 ## 2026-09-15, /regles R1 étiquetage codée et testée
 
 - Fiche R1 dans docs/catalogue-regles.md, code pur dans src/sim/rules/r1-etiquetage.ts, RNG seedé et journalisé, 6 tests Vitest verts et tsc propre. Revue adversariale passée : pas de surpuissance, pas de stratégie optimale, pas de morale cachée.

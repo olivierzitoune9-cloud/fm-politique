@@ -20,6 +20,10 @@ Scaffold posé : package.json, tsconfig, src/sim pur sans React, Vitest. R1 éti
 - Stratégie toujours optimale : non, grossier plus peu crédible coûte en réputation et crédibilité.
 - Lecture morale cachée : non, conséquences seulement, pas de bien ni mal.
 
+## 2026-09-15, catalogue complet R1 à R22
+
+22 règles codées couvrant M1 à M23. 48 tests verts sur 11 fichiers, tsc propre. Revue globale dans docs/catalogue-regles.md. Prochaine étape : boucle minimale /moteur avec seeds et chronologie causale.
+
 ### Erreurs et limites
 
 - Biais d'allocation encore sans arbitrage complet d'acteur, à brancher en Phase 8 IA.
