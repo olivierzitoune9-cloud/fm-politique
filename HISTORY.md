@@ -13,6 +13,12 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, audits sécu et parcours avant jalon
+
+- Sécu : prod zéro vulnérabilité, dev 5 signalées sans application sauvage, secrets et hook OK.
+- Parcours : lecture conforme mais joueur absent de la boucle, 4 préconisations avant prototype jouable.
+- Pourquoi : auditer avant le jalon comme l'exige la méthode, sans lisser le trou joueur.
+
 ## 2026-09-15, France 2026 première passe et UI scaffold
 
 - France : chômage 8,3 T2 et 8,1 T1, Assemblée trois blocs 2024, Lecornu depuis 2025-09-09, retraites suspendues. Données datées et testées, hypothèses marquées.
