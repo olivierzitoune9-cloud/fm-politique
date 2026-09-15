@@ -13,7 +13,7 @@
 - Phase 6, France 2026 : état initial daté et sourcé.
 - État Phase 6 le 2026-09-15 : première passe dans src/sim/data/france-2026.ts et docs/france-2026-etat-initial.md, chômage, Assemblée, gouvernement sourcés.
 - Phase 10, interface : lecture du monde.
-- État Phase 10 le 2026-09-15 : scaffold Next dans ui/ avec page tableaux et chronologie, build et dev à valider au prochain point.
+- État Phase 10 le 2026-09-15 : scaffold Next dans ui/ avec page tableaux et chronologie, moteur m0.3.0 jouable avec vue filtrée, page interactive et boîte mail encore dues.
 - Phase 7, moteur : couches DATA à SIMULATION, seeds, boucle minimale.
 - État Phase 7 le 2026-09-15 : boucle m0.2.0 avec IA branchée, 58 tests verts, critère SPEC tenu.
 - Phase 8, IA des acteurs : arbitrages explicites.

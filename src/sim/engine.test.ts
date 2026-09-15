@@ -36,9 +36,9 @@ describe("moteur boucle minimale", () => {
     }
   });
 
-  it("IA branchée : chaque tick loge une décision par groupe avec option connue", () => {
+  it("IA branchée : chaque tick loge une décision par acteur avec option connue", () => {
     const m = simuler(42, 5);
-    expect(m.decisions).toHaveLength(10);
+    expect(m.decisions).toHaveLength(15);
     const options = new Set(m.decisions.map((d) => d.optionId));
     expect(options.size).toBeGreaterThanOrEqual(1);
     for (const d of m.decisions) {
