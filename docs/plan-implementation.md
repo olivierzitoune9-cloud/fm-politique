@@ -16,6 +16,7 @@
 - Phase 8, IA des acteurs : arbitrages explicites.
 - État Phase 8 le 2026-09-15 : arbitrage codé dans src/sim/ai/arbitrage.ts avec 5 options prototype, utilités journalisées, sans API.
 - Phase 9, événements : détection et narration.
+- État Phase 9 le 2026-09-15 : raconteur par gabarits dans src/sim/narrative, 62 tests verts.
 - Phase 10, interface : lecture du monde.
 - Phase 11, tests : simulations massives, absurdités, calibration.
 - Phase 12, extension : profondeur progressive.

@@ -13,6 +13,11 @@ Journal des décisions et changements de fonctionnement qui doivent survivre d'u
 - Sept entités avec champs typés en 0..1, verbes et hors champ : docs/ontologie-v1.md. Dictionnaire justifié : docs/dictionnaire-variables-v1.md. Joueur comme instance d'Acteur, null pour inconnu, interdictions pour règles en fin de v1. Cinq notions proches distinguées : popularite, soutienPopulaire, legitimite, reputation, credibilite.
 - Pourquoi : stabiliser avant toute règle selon /ontologie, sans coder la France en dur. Champs à risque conservés avec règle lectrice annoncée, à vérifier en Phase 5.
 
+## 2026-09-15, narration par gabarits Phase 9
+
+- Raconteur déterministe avec sources internes au monde, sans API. 62 tests verts.
+- Pourquoi : le narratif raconte après coup, il ne décide jamais. Test anti causalité inclus.
+
 ## 2026-09-15, moteur m0.2.0 avec IA branchée
 
 - Deux acteurs (prudent et fonceur) arbitrant chaque tick avec mapping explicite vers R1 et R22, décisions journalisées. 58 tests verts, tsc propre.
