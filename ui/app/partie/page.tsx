@@ -3,9 +3,10 @@
 // Partie jouable minimale : le joueur choisit un coup par tick, le monde répond.
 // Vue filtrée uniquement, jamais l'état exact. Pur moteur local, sans réseau.
 import { useState } from "react";
-import { creerMonde, pas, ACTIONS_JOUABLES, type Monde, type ActionJouable } from "../../src/sim/engine";
-import { filtrerVueJoueur } from "../../src/sim/joueur";
-import { FRANCE_2026 } from "../../src/sim/data/france-2026";
+import { creerMonde, pas, ACTIONS_JOUABLES, type Monde, type ActionJouable } from "../../../src/sim/engine";
+import { filtrerVueJoueur } from "../../../src/sim/joueur";
+import { genererAgenda, genererCourriels } from "../../../src/sim/courrier";
+import { FRANCE_2026 } from "../../../src/sim/data/france-2026";
 
 const LIBELLES: Record<ActionJouable, string> = {
   "preparer-silencieux": "Préparer en silence",
@@ -18,6 +19,8 @@ const LIBELLES: Record<ActionJouable, string> = {
 export default function PartiePage() {
   const [monde, setMonde] = useState<Monde>(() => creerMonde(42));
   const vue = filtrerVueJoueur(monde);
+  const mails = genererCourriels(monde.evenements, monde.decisions);
+  const agenda = genererAgenda(monde.tick);
 
   function jouer(optionId: ActionJouable) {
     setMonde((m) => pas(m, { optionId }));
@@ -90,6 +93,28 @@ export default function PartiePage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section>
+        <h2>Boîte mail ({mails.length})</h2>
+        <ul>
+          {mails.map((m, n) => (
+            <li key={n}>
+              <strong>{m.objet}</strong> de {m.de} : {m.corps}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Agenda</h2>
+        <ul>
+          {agenda.map((e) => (
+            <li key={e.tick}>
+              t{e.tick} : {e.libelle}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section>

@@ -23,7 +23,7 @@
 - Phase 10, interface : lecture du monde.
 - Phase 11, tests : simulations massives, absurdités, calibration.
 - État Phase 11 le 2026-09-15 : 200 parties de 30 pas bornées et causales, aucune stratégie écrasante, dans src/sim/calibration.test.ts.
-- État Phase 10 le 2026-09-15 : scaffold Next dans ui/ avec page tableaux et chronologie, moteur m0.3.0 jouable avec vue filtrée, page /partie interactive avec 5 coups, build et dev à valider.
+- État Phase 10 le 2026-09-15 : ui/ build vert avec page tableaux, /partie jouable à 5 coups, boîte mail et agenda. 74 tests verts.
 - Phase 12, extension : profondeur progressive.
 
 Prochaines commandes à utiliser dans l'ordre : `/recherche`, `/ontologie`, `/regles`, `/france-2026`, `/moteur`.
