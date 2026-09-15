@@ -4,7 +4,7 @@ import { creerPartie, jouerSemaine } from "./partie.js";
 import { deserialiser, serialiser, VERSION_SAUVEGARDE } from "./sauvegarde.js";
 import { VERSION_MOTEUR } from "./engine.js";
 
-const CONFIG: ConfigCarriereLike = {
+const CONFIG: ConfigCarriere = {
   nom: "Test Personne",
   origine: "bureau",
   traits: ["empathique"],

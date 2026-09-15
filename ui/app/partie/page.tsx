@@ -34,6 +34,8 @@ export default function PartiePage() {
   const [persoId, setPersoId] = useState<string>("");
   const [interactionId, setInteractionId] = useState<InteractionId>("convaincre");
   const [promesse, setPromesse] = useState("");
+  const [mediaId, setMediaId] = useState("med.quotidien-regional");
+  const [pousserProp, setPousserProp] = useState(false);
 
   useEffect(() => {
     try {
@@ -79,7 +81,8 @@ export default function PartiePage() {
 
   function avancer() {
     if (partie === null) return;
-    const tour: TourSemaine = { actionId };
+    const tour: TourSemaine = { actionId, mediaId };
+    if (pousserProp) tour.pousserProposition = true;
     if (persoId !== "") {
       tour.interaction = { persoId, interactionId, promesse: promesse.trim().length > 0 ? promesse.trim() : undefined };
     }
@@ -152,6 +155,63 @@ export default function PartiePage() {
 
       {erreur !== null && <p className="erreur">{erreur}</p>}
 
+      <div className="grille grille-3">
+        <section className="carte">
+          <h2>Ta proposition</h2>
+          <p>
+            « <strong>{vue.proposition.texte}</strong> » <span className="source">(statut de preuve : {vue.proposition.statutPreuve})</span>
+          </p>
+          <div className="barres-progression">
+            {Object.entries(vue.proposition.dicibilite).map(([groupe, v]) => (
+              <span key={groupe} style={{ display: "contents" }}>
+                <span>{groupe}</span>
+                <span className="barre">
+                  <span style={{ width: `${Math.round(v * 100)}%` }} />
+                </span>
+                <span>{(v * 100).toFixed(0)}</span>
+              </span>
+            ))}
+          </div>
+          <p className="source">Dicibilité moyenne : {(Object.values(vue.proposition.dicibilite).reduce((s, v) => s + v, 0) / Math.max(1, Object.values(vue.proposition.dicibilite).length) * 100).toFixed(0)} sur 100. Le moteur ne tranche jamais la vérité.</p>
+        </section>
+
+        <section className="carte">
+          <h2>Partis rivaux</h2>
+          {Object.entries(vue.relationsPartis).map(([id, v]) => {
+            const nom = id === "parti.radical" ? "Front de l'ordre (fictif)" : "Alliance parlementaire (fictif)";
+            return (
+              <div key={id} className="perso">
+                <div className="identite">{nom}</div>
+                <div className="meta">
+                  Envers toi : <span className="badge mauve">{v.toFixed(2)}</span>
+                </div>
+              </div>
+            );
+          })}
+          {vue.manoeuvres.map((m, n) => (
+            <div className="mail" key={n}>
+              <div className="de">t{m.tick}</div>
+              <div>{m.texte}</div>
+            </div>
+          ))}
+        </section>
+
+        <section className="carte">
+          <h2>Médias et économie</h2>
+          <ul className="liste-plat">
+            {vue.medias.map((m) => (
+              <li key={m.id}>
+                {m.nom} : vigilance {Math.round(m.vigilance * 100)}, amplification {Math.round(m.amplification * 100)}
+              </li>
+            ))}
+            <li>
+              Chômage du mois : <strong>{vue.chomage.toFixed(1).replace(".", ",")} %</strong>{" "}
+              <span className="source">({vue.sourceChomage})</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
       {vue.fin === null && (
         <div className="grille grille-3">
           <section className="carte">
@@ -196,6 +256,33 @@ export default function PartiePage() {
                 Recommencer
               </button>
             </div>
+            <h3 style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "10px 0 6px" }}>Passage média</h3>
+            {vue.medias.map((m) => (
+              <label key={m.id} className="action-option">
+                <input
+                  type="radio"
+                  name="media"
+                  checked={mediaId === m.id}
+                  onChange={() => setMediaId(m.id)}
+                  style={{ marginRight: 6 }}
+                />
+                <span className="titre">{m.nom}</span>{" "}
+                <span className="cout">
+                  ({m.orientation}, vigilance {Math.round(m.vigilance * 100)}, amplification{" "}
+                  {Math.round(m.amplification * 100)})
+                </span>
+              </label>
+            ))}
+            <label className="action-option">
+              <input
+                type="checkbox"
+                checked={pousserProp}
+                onChange={(e) => setPousserProp(e.target.checked)}
+                style={{ marginRight: 6 }}
+              />
+              <span className="titre">Pousser ta proposition en même temps</span>
+              <div className="desc">Relais à déni, case par case sur l'échelle de dicibilité (R9).</div>
+            </label>
           </section>
 
           <section className="carte">

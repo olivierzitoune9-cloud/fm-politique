@@ -205,6 +205,26 @@ export const ACTIONS_JEU: ActionJeu[] = [
     regle: "R10",
     effets: { legitime: 0.04, reputation: 0.02, notoriete: -0.02 },
   },
+  {
+    id: "promo-proposition",
+    libelle: "Pousser ta proposition",
+    categorie: "media",
+    description: "Relais à déni, case par case sur l'échelle de dicibilité (R9). Jamais de saut frontal.",
+    coutTemps: 0.3,
+    coutArgent: 0.02,
+    regle: "R9",
+    effets: { notoriete: 0.02, legitime: 0.01 },
+  },
+  {
+    id: "designer-bouc",
+    libelle: "Désigner un bouc émissaire",
+    categorie: "media",
+    description: "Cible petite et visible : cohésion contre réputation, jamais automatique (R11).",
+    coutTemps: 0.3,
+    coutArgent: 0,
+    regle: "R11",
+    effets: { soutiens: 0.06, notoriete: 0.05, risque: 0.15, reputation: -0.06 },
+  },
 ];
 
 export function actionParId(id: string): ActionJeu {

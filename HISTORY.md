@@ -2,6 +2,13 @@
 
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
 
+## 2026-09-15, V1 et V2 : du prototype au vrai jeu (commit V1 38696cc, V2 à suivre)
+
+- Recadrage : avertissement validé (SPEC section 6), ontologie v1 validée, fiches requalifiées en carburant, nom reporté, suivi-attentes soldé. Vision durable écrite dans docs/vision-v1-v2.md.
+- V1 (moteur de partie p1, commit 38696cc) : personnages fictifs nommés seedés avec métiers et hooks mécaniques (caution R14, micro ciblage IA, info interne, contacts croisés atténuateur R1), interactions convaincre/promettre/demander/trahir/recoudre avec mémoire E6, calendrier réel semaine depuis 2026-09-07 avec échéances présidentielle et législatives 2027 (fenêtres constitutionnelles, marquées plausibles), 4 ambitions, 18 actions mappées R1 à R22, fins multiples (élu, président, chef-parti, proposition, marginalisé, brûlé, sous enquête, hors course, retour ordinaire), sauvegarde locale versionnée, /nouvelle-partie et /partie refondues. 107 tests verts, build UI vert.
+- V2 (partie p2.0.0) : médias avec vigilance et audiences (routage des actions média, fact checking réel), propositions E7 avec dicibilité R9 par groupe, partis organisés (Front de l'ordre et Alliance parlementaire, fictifs) avec leaders nommés, manoeuvres lues dans le moteur et relations évolutives, économie mensuelle branchée (chômage 8,2 observé sept 2026, trajectoire suivante hypothèse marquée, dérive bornée), 20 actions, fin proposition sur dicibilité réelle. 126 tests verts sur 30 fichiers, tsc propre, build UI vert.
+- Pourquoi : Aaron a demandé des personnages nommés (toute la société, pas que le politique, scientifiques, historiens, ingénieurs, IA inclus), des interactions humaines fondamentales et un objectif de joueur, inspirations FM et Plague Inc renforcées. Compromis assumé : le moteur de base garde ses 2 groupes et 3 acteurs, la partie V2 compose au-dessus (économie dérive les groupes avant le pas, manoeuvres lues après). Sauvegarde : refus propre des versions croisées.
+
 ## 2026-09-15, /pilote-sim Phase 0 clôturée puis Phase 1 ouverte
 
 - Socle : git init, .gitignore couvrant .env*, hook .githooks/pre-commit actif via core.hooksPath et testé (blocage motif secret vérifié, .env bloqué par ignore), commit 021a13c propre, scan secrets vide, git status propre. Attente hook soldée dans docs/suivi-attentes.md.

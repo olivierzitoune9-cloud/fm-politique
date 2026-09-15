@@ -24,6 +24,7 @@ export interface ConfigIdee {
     traits: string[];
     ideologie: { gaucheDroite: number; ouvertFerme: number };
     ambition: Ambition;
+    propositionTexte: string;
   };
 }
 
@@ -35,6 +36,7 @@ export default function NouvellePartiePage() {
   const [gd, setGd] = useState(0);
   const [of, setOf] = useState(0);
   const [ambition, setAmbition] = useState<Ambition>("elu");
+  const [proposition, setProposition] = useState("");
   const [graine, setGraine] = useState(() => Math.floor(Math.random() * 100000));
 
   const nomDe = useMemo(() => nomJoueurAleatoire(creerRng(graine)), [graine]);
@@ -55,6 +57,7 @@ export default function NouvellePartiePage() {
         traits,
         ideologie: { gaucheDroite: gd / 100, ouvertFerme: of / 100 },
         ambition,
+        propositionTexte: proposition.trim(),
       },
     };
     sessionStorage.setItem("fm-politique:config", JSON.stringify(idee));
@@ -131,6 +134,16 @@ export default function NouvellePartiePage() {
             ))}
           </div>
           <label className="champ" style={{ marginTop: 12 }}>
+            <label>Ta proposition centrale (tu la pousseras case par case)</label>
+            <input
+              type="text"
+              value={proposition}
+              onChange={(e) => setProposition(e.target.value)}
+              placeholder="ex. tirage au sort d'un conseil citoyen"
+              maxLength={120}
+            />
+          </label>
+          <label className="champ">
             <label>Graine (même graine, même monde)</label>
             <input type="number" value={graine} onChange={(e) => setGraine(Number(e.target.value) || 0)} />
           </label>

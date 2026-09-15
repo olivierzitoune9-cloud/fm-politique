@@ -108,6 +108,7 @@ export interface ConfigCarriere {
   traits: string[];
   ideologie: { gaucheDroite: number; ouvertFerme: number };
   ambition: Ambition;
+  propositionTexte?: string;
 }
 
 export function creerCarriere(config: ConfigCarriere, rng: Rng): Carriere {

@@ -9,6 +9,7 @@ import {
   clamp01b,
   creerCarriere,
   libelleStatut,
+  persuasionJoueur,
   regenererHebdo,
   statutCible,
   STATUTS,
@@ -20,8 +21,17 @@ import { echeancesAPartirDe, dateISO as dateISODe, libelleSemaine as libelleSema
 import { filtrerVueJoueur } from "./joueur.js";
 import { genererPersonnages, type Personnage } from "./personnages.js";
 import { creerRng } from "./rng.js";
+import { ajusterEconomie, chomagePourTick } from "./data/economie.js";
+import { MEDIAS, mediaParId, routerMedia, type Media } from "./medias.js";
+import { creerProposition, dicibiliteMoyenne, pousserProposition, type Proposition } from "./propositions.js";
+import {
+  manoeuvresPartis,
+  majPartis,
+  relationsInitialesPartis,
+  type ManoeuvreParti,
+} from "./partis.js";
 
-export const VERSION_PARTIE = "p1.0.0"; // moteur m0.5.0
+export const VERSION_PARTIE = "p2.0.0"; // moteur m0.4.0, partie V2 monde qui vit
 
 export type FinId =
   | "elu"
@@ -54,23 +64,36 @@ export interface Partie {
   monde: Monde;
   carriere: Carriere;
   personnages: Personnage[];
+  proposition: Proposition;
+  relationsPartis: Record<string, number>;
   journal: JournalPartie[];
   fin: Fin | null;
 }
 
 export interface TourSemaine {
   actionId: string;
+  mediaId?: string; // routage des actions média, défaut le quotidien régional
+  pousserProposition?: boolean; // R9 : pousser ta proposition en même temps
   interaction?: { persoId: string; interactionId: InteractionId; promesse?: string };
 }
 
 export function creerPartie(graine: number, config: ConfigCarriere): Partie {
+  const monde = creerMonde(graine);
   return {
     version: VERSION_PARTIE,
     graine,
     tick: 0,
-    monde: creerMonde(graine),
+    monde,
     carriere: creerCarriere(config, creerRng(graine + 0x5bf03635)),
     personnages: genererPersonnages(creerRng(graine + 0x9e3779b9)),
+    proposition: creerProposition(
+      config.propositionTexte && config.propositionTexte.trim().length > 0
+        ? config.propositionTexte.trim()
+        : "organiser la démocratie locale : tirage au sort d'un conseil citoyen",
+      "joueur",
+      monde.groupes.map((g) => g.id),
+    ),
+    relationsPartis: relationsInitialesPartis(),
     journal: [
       { tick: 0, texte: "Semaine 0. Tu regardes le monde depuis ton poste de travail, et le monde ne te regarde pas." },
     ],
@@ -112,7 +135,7 @@ function rangStatut(statut: Carriere["statut"]): number {
   return STATUTS.findIndex((s) => s.id === statut);
 }
 
-export function evaluerFins(c: Carriere, tick: number): Fin | null {
+export function evaluerFins(c: Carriere, tick: number, dicibilite: number | null = null): Fin | null {
   const p = c.progression;
   const ambition = AMBITIONS.find((a) => a.id === c.ambition)!;
   const tickLegislativesT1 = tickDeDate(2027, 6, 6);
@@ -158,7 +181,7 @@ export function evaluerFins(c: Carriere, tick: number): Fin | null {
       }
       break;
     case "proposition":
-      if (p.notoriete >= 0.65 && p.legitime >= 0.5) {
+      if ((dicibilite ?? p.notoriete) >= ambition.seuil && p.legitime >= 0.5) {
         return creerFin("proposition-imposee", tick, "Ta proposition est dans le débat", "Ce qui était indicible se discute partout. Personne ne peut plus faire comme si.", true);
       }
       if (tick === tickLegislativesT2) {
@@ -188,16 +211,25 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   const tick = partie.tick + 1;
   const rng = creerRng((partie.graine * 2654435761 + tick) >>> 0);
 
-  // 1. Le monde tourne : ton coup passe dans la boucle, les adversaires arbitrent après.
-  const monde = pas(partie.monde, { optionId: action.moteur ?? "preparer-silencieux" });
+  // 1. Le monde tourne : économie mensuelle branchée (R4), ton coup passe dans la boucle.
+  const monde = pas(ajusterEconomie(partie.monde, tick), { optionId: action.moteur ?? "preparer-silencieux" });
 
-  // 2. Multiplicateurs : caution savante R14 sur les actions média, micro ciblage IA.
+  // 2. Multiplicateurs : caution savante R14, micro ciblage IA, routage média avec fact checking.
   const cautionVive = partie.personnages.some(
     (p) => p.cautionActive !== null && p.cautionActive.jusqua >= tick && action.categorie === "media",
   );
   const multiplicateurCaution = cautionVive ? 1.6 : 1;
   const multiplicateurMedia = action.categorie === "media" ? 1 + c0.bonusMedia : 1;
-  const multiplicateur = Math.min(2.6, multiplicateurCaution * multiplicateurMedia);
+  let multiplicateur = Math.min(2.6, multiplicateurCaution * multiplicateurMedia);
+  const journal: JournalPartie[] = [{ tick, texte: `${action.libelle} : fait.` }];
+  let risqueFactCheck = 0;
+  if (action.categorie === "media") {
+    const media = mediaParId(tour.mediaId ?? "med.quotidien-regional");
+    const routage = routerMedia(media, "media", c0.bonusMedia, partie.proposition.statutPreuve);
+    multiplicateur = Math.min(2.6, multiplicateur * routage.multiplicateur);
+    risqueFactCheck = routage.risqueFactCheck;
+    journal.push({ tick, texte: `Passage par ${routage.detail}.` });
+  }
 
   // 3. Effets de l'action, risque amorti par les contacts croisés (atténuateur R1).
   let carriere = appliquerEffets(c0, action.effets, multiplicateur);
@@ -207,7 +239,6 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
       risqueEnquete: clamp01b(carriere.risqueEnquete * (1 - Math.min(0.5, c0.contactsCroises * 0.3))),
     };
   }
-  const journal: JournalPartie[] = [{ tick, texte: `${action.libelle} : fait.` }];
 
   // 4. Interaction humaine facultative.
   let personnages = partie.personnages;
@@ -240,6 +271,28 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     }
   }
 
+  // 4bis. Proposition poussée (R9) et fact checking des médias.
+  let proposition = partie.proposition;
+  const veutPousser = tour.pousserProposition === true || action.regle === "R9";
+  if (veutPousser) {
+    const force = persuasionJoueur(carriere) * 0.5 + carriere.progression.notoriete * 0.5;
+    const deni = carriere.progression.reputation * 0.6 + 0.2;
+    let deltas: string[] = [];
+    for (const g of partie.monde.groupes) {
+      const p = pousserProposition(proposition, g.id, force, deni, rng, partie.graine);
+      proposition = p.proposition;
+      deltas.push(`${g.id} ${p.delta >= 0 ? "+" : ""}${p.delta.toFixed(3)}`);
+    }
+    journal.push({ tick, texte: `Proposition « ${proposition.texte} » poussée (${deltas.join(", ")}).` });
+  }
+  if (risqueFactCheck > 0) {
+    carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + risqueFactCheck * 0.3) };
+    if (risqueFactCheck > 0.4) {
+      carriere = appliquerDelta(carriere, "reputation", -risqueFactCheck * 0.1);
+      journal.push({ tick, texte: "Vérification de faits : ton propos a été repris et corrigé." });
+    }
+  }
+
   // 5. Coûts de la semaine puis régénération pour la suivante.
   const coutTemps = action.coutTemps + (tour.interaction !== undefined ? 0.2 : 0);
   carriere = {
@@ -259,12 +312,31 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     journal.push({ tick, texte: `Nouveau statut : ${libelleStatut(cible)}.` });
   }
 
-  // 7. Marginalisation comptée puis fins évaluées sur l'état final de la semaine.
+  // 7. Partis : manoeuvres lues dans le moteur, relations évolutives (trahisons des leaders comprises).
+  const trahisonsLeaders = personnages
+    .filter((p) => p.metier === "leader-parti")
+    .reduce((s, p) => s + p.memoire.filter((m) => m.type === "trahison").length, 0);
+  const relationsPartis = majPartis(partie.relationsPartis, action.moteur, trahisonsLeaders);
+  for (const m of manoeuvresPartis(monde, personnages, true)) {
+    journal.push({ tick, texte: m.texte });
+  }
+
+  // 8. Marginalisation comptée puis fins évaluées sur l'état final de la semaine.
   carriere = evaluerMarginalisation(carriere);
-  const fin = evaluerFins(carriere, tick);
+  const fin = evaluerFins(carriere, tick, dicibiliteMoyenne(proposition));
   if (fin !== null) journal.push({ tick, texte: `Fin de partie : ${fin.titre}. ${fin.detail}` });
 
-  return { ...partie, tick, monde, carriere, personnages, journal: [...partie.journal, ...journal], fin };
+  return {
+    ...partie,
+    tick,
+    monde,
+    carriere,
+    personnages,
+    proposition,
+    relationsPartis,
+    journal: [...partie.journal, ...journal],
+    fin,
+  };
 }
 
 function evaluerMarginalisation(c: Carriere): Carriere {
@@ -288,10 +360,17 @@ export interface VuePartie {
   echeances: ReturnType<typeof echeancesAPartirDe>;
   journal: JournalPartie[];
   fin: Fin | null;
+  medias: Media[];
+  proposition: Proposition;
+  manoeuvres: ManoeuvreParti[];
+  relationsPartis: Record<string, number>;
+  chomage: number;
+  sourceChomage: string;
 }
 
 export function vuePartie(partie: Partie): VuePartie {
   const semaine = partie.tick + 1;
+  const eco = chomagePourTick(semaine);
   return {
     version: partie.version,
     tick: partie.tick,
@@ -305,5 +384,11 @@ export function vuePartie(partie: Partie): VuePartie {
     echeances: echeancesAPartirDe(semaine).slice(0, 5),
     journal: partie.journal.slice(-30),
     fin: partie.fin,
+    medias: MEDIAS,
+    proposition: partie.proposition,
+    manoeuvres: manoeuvresPartis(partie.monde, partie.personnages, true),
+    relationsPartis: partie.relationsPartis,
+    chomage: eco.chomage,
+    sourceChomage: eco.source,
   };
 }

@@ -1,5 +1,25 @@
 # Journal du pôle développeur simulation
 
+## 2026-09-15, V1 et V2 du prototype au vrai jeu
+
+### Contexte courant
+
+V1 (partie p1, commit 38696cc) et V2 (partie p2.0.0) livrées en session. Nouveaux modules : temps.ts (calendrier réel, tick égale semaine depuis 2026-09-07, échéances plausibles datées), personnages.ts (15 profils fictifs nommés seedés avec hooks métiers), carriere.ts (statuts FM, ambitions, ressources hebdo), actions.ts (20 actions mappées R1 R2 R9 R10 R11 R12 R15 R22 et coups moteur), interactions.ts (convaincre promettre demander trahir recoudre avec mémoire), partie.ts (orchestrateur : monde qui tourne, multiplicateurs, fins multiples), sauvegarde.ts (JSON versionné, refus propre), medias.ts (vigilance, audiences, amplification, fact checking), propositions.ts (R9 dicibilité), partis.ts (leaders nommés, manoeuvres, relations), data/economie.ts (chômage mensuel 2026-2028, premier point observé Insee, suite hypothèse).
+
+### Vérifications du jour
+
+- npx vitest run : 126 tests verts sur 30 fichiers (dont calibration 200 parties et calibration V2 40 parties de 24 semaines bornées).
+- npx tsc --noEmit : propre, racine et ui/.
+- next build : vert, 6 pages générées (/, /nouvelle-partie, /partie).
+- Déterminisme vérifié : même seed rejoue pareil sur 12 semaines, deux seeds divergent.
+
+### Erreurs et limites
+
+- Quatre échecs initiaux corrigés : off-by-one tickDeDate (floor et non ceil), tick 2027 estimé à la main dans un test (remplacé par tickDeDate), divergence de seed testée sur la carrière alors que le monde ne diverge que par les chocs, message de sauvegarde.
+- Le moteur de base garde 2 groupes et 3 acteurs : la V2 compose au-dessus (économie, médias, partis, proposition), la fusion complète dans la boucle est un choix de J3.
+- Off-by-one dans un simulateur de date : leçon retenue, toujours écrire l'aller-retour date-tick comme test avant la fonction.
+
+
 ## 2026-09-15, /regles R1
 
 ### Contexte courant

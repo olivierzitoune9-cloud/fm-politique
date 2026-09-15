@@ -30,10 +30,10 @@
 
 Vision durable dans docs/vision-v1-v2.md. Jalons :
 
-- J1 V1 carrière, personnages, objectif : personnages fictifs nommés (noms aléatoires seedés, chercheurs, historiens, ingénieurs, experte IA, journalistes, élus, syndicalistes, entrepreneur, fonctionnaire), interactions humaines avec mémoire (promesses, trahisons, dettes), calendrier réel semaine par semaine depuis septembre 2026 avec échéances 2027 et suivantes, ambition choisie à la création, 16 à 20 actions mappées aux règles, ressources hebdo, boîte mail centrale, fins multiples, sauvegarde locale versionnée. Moteur m0.5.0.
-- J2 V2 monde qui vit : partis rivaux avec leaders nommés et arbitrage réel, médias avec biais et audiences, institutions avec autonomie, propositions avec dicibilité (R9), économie mensuelle branchée (R4), maximum de règles branchées avec motif écrit pour les écartées. Moteur m0.6.0.
+- J1 V1 carrière, personnages, objectif : LIVRÉE le 2026-09-15 (partie p1, commit 38696cc). Personnages fictifs nommés (15 profils : chercheur, experte IA, ingénieur, historien, journalistes, élus, syndicaliste, entrepreneur, fonctionnaire, leaders), interactions avec mémoire E6, calendrier réel depuis le 2026-09-07 avec échéances 2027-2032, 4 ambitions, 18 actions mappées R1 à R22, fins multiples, sauvegarde locale versionnée, /nouvelle-partie et /partie refondues. 107 tests verts, build UI vert.
+- J2 V2 monde qui vit : LIVRÉE le 2026-09-15 (partie p2.0.0). Médias avec vigilance et audiences (fact checking réel), propositions R9 avec dicibilité par groupe, partis organisés avec leaders nommés et manoeuvres lues dans le moteur, économie mensuelle branchée (chômage observé sept 2026, suite hypothèse marquée), 20 actions, fin proposition sur dicibilité réelle, calibration V2 40 parties bornées. 126 tests verts sur 30 fichiers, tsc propre, build UI vert.
 - J3 propagation et carte : carte France régions types, adoption par territoire, arbre d'améliorations à points, vecteurs, barre de réponse adverse. Session suivante.
 - J4 info imparfaite à la FM : sondages commandables avec coûts et biais, rapporteurs, éditorialisation. Session suivante.
 - J5 V1 complète : calibration élargie, audits, tutoriel par courrier, déploiement. Session suivante.
 
-Prochaine commande dans l'ordre : /moteur sur J1 puis J2, puis /audit-parcours-joueur et /audit-securite-sim au jalon.
+Prochaine commande dans l'ordre : /audit-parcours-joueur, puis /moteur sur J3, /audit-securite-sim avant tout déploiement.
