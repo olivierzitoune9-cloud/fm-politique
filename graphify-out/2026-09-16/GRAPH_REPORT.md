@@ -1,11 +1,11 @@
 # Graph Report - fm-politique  (2026-09-16)
 
 ## Corpus Check
-- 124 files · ~56,709 words
+- 126 files · ~68,305 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 780 nodes · 1373 edges · 61 communities (55 shown, 6 thin omitted)
+- 944 nodes · 1540 edges · 70 communities (64 shown, 6 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
@@ -62,18 +62,27 @@
 - next.config.mjs
 - next-env.d.ts
 - personnages.ts
-- jouerSemaine
+- vision-gameplay-fm-politique.md
 - 4. Tokens
-- partie.test.ts
+- creerPartie
 - propositions.ts
 - Contenu manquant
-- temps.ts
+- partie.test.ts
 - actions.ts
 - Déploiement, FM politique
 - Journal design, FM politique
 - courrier.ts
 - Audit parcours joueur du 2026-09-16, partie p2.1.0, sur écrans réels
 - Journal du pôle parcours joueur
+- **86\. Ce qu’il faut absolument éviter**
+- Recherche gameplay hors politique, 2026-09-16
+- **13\. Le système de réunions**
+- **4\. Le monde doit être beaucoup plus grand que la politique électorale**
+- **31\. Et il faut aller beaucoup plus loin que la vidéo**
+- **87\. Les jeux de référence**
+- **57\. Le jeu doit avoir plusieurs niveaux de zoom**
+- **37\. La perception est aussi importante que la réalité**
+- **PROJET — GAMEPLAY**
 
 ## God Nodes (most connected - your core abstractions)
 1. `clamp01()` - 48 edges
@@ -83,7 +92,7 @@
 5. `creerRng()` - 28 edges
 6. `Bibliothèque de mécanismes, vidéo source « Comment devenir dictateur selon la science »` - 25 edges
 7. `Catalogue des règles (testables, jamais scriptées)` - 24 edges
-8. `Historique FM politique` - 22 edges
+8. `Historique FM politique` - 23 edges
 9. `PartiePage()` - 19 edges
 10. `creerPartie()` - 16 edges
 
@@ -92,29 +101,29 @@
   ui/sim/ai/arbitrage.ts → ui/sim/types.ts
 - `NouvellePartiePage()` --calls--> `creerRng()`  [EXTRACTED]
   ui/app/nouvelle-partie/page.tsx → ui/sim/rng.ts
-- `PartiePage()` --calls--> `libelleMetierOrigine()`  [EXTRACTED]
-  ui/app/partie/page.tsx → ui/sim/carriere.ts
-- `PartiePage()` --calls--> `palierDeStatut()`  [EXTRACTED]
-  ui/app/partie/page.tsx → ui/sim/carriere.ts
 - `PartiePage()` --calls--> `genererCourriels()`  [EXTRACTED]
   ui/app/partie/page.tsx → ui/sim/courrier.ts
+- `PartiePage()` --calls--> `libelleGroupe()`  [EXTRACTED]
+  ui/app/partie/page.tsx → ui/sim/joueur.ts
+- `PartiePage()` --calls--> `raconterChronologie()`  [EXTRACTED]
+  ui/app/partie/page.tsx → ui/sim/narrative/raconteur.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (61 total, 6 thin omitted)
+## Communities (70 total, 6 thin omitted)
 
 ### Community 0 - "rng.ts"
 Cohesion: 0.05
-Nodes (72): clamp01(), creerRng(), Rng, appliquerEuphemisme(), EtatCoutMoral, ResultatCoutMoral, appliquerBoucEmissaire(), CibleBouc (+64 more)
+Nodes (73): clamp01(), creerRng(), Rng, appliquerEuphemisme(), EtatCoutMoral, ResultatCoutMoral, appliquerBoucEmissaire(), CibleBouc (+65 more)
 
 ### Community 1 - "partie/page.tsx"
-Cohesion: 0.22
-Nodes (15): LIBELLES_CATEGORIE, ORDRE_CATEGORIES, PartiePage(), avancer(), recommencer(), libelleStatut(), objectifsPour(), InteractionId (+7 more)
+Cohesion: 0.21
+Nodes (16): LIBELLES_CATEGORIE, ORDRE_CATEGORIES, PartiePage(), avancer(), libelleMetierOrigine(), libelleStatut(), objectifsPour(), palierDeStatut() (+8 more)
 
 ### Community 2 - "carriere.ts"
-Cohesion: 0.11
-Nodes (24): metadata, ConfigIdee, NouvellePartiePage(), Ambition, AmbitionDef, AMBITIONS, AVERTISSEMENT_OUVERTURE, libelleMetierOrigine() (+16 more)
+Cohesion: 0.08
+Nodes (28): metadata, ConfigIdee, NouvellePartiePage(), ACTIVITES_SEMAINE, ActiviteSemaine, Ambition, AmbitionDef, AMBITIONS (+20 more)
 
 ### Community 3 - "france-2026.ts"
 Cohesion: 0.43
@@ -133,16 +142,16 @@ Cohesion: 0.08
 Nodes (24): Catalogue des règles (testables, jamais scriptées), R10. Langage adoucissant et déshumanisation (M8 Klemperer, M17 Bandura), R11. Bouc émissaire (M5), R12. Marque portable et double lecture (M6), R13. Sophismes productifs (M9), R14. Caution savante (M10), R15. Arbitrage légal contre force (M13), R16. Capture par tranches fines (M14 salami) (+16 more)
 
 ### Community 7 - "Journal du pôle développeur simulation"
-Cohesion: 0.08
-Nodes (24): 2026-09-15, catalogue complet R1 à R22, 2026-09-15, fin de session : partie jouable et calibration, 2026-09-15, fin de session : UI build vert et courrier, 2026-09-15, France 2026 et UI, 2026-09-15, IA des acteurs sans API, 2026-09-15, joueur jouable m0.3.0, 2026-09-15, /moteur boucle minimale m0.1.0, 2026-09-15, moteur m0.2.0 avec IA branchée (+16 more)
+Cohesion: 0.07
+Nodes (28): 2026-09-15, catalogue complet R1 à R22, 2026-09-15, fin de session : partie jouable et calibration, 2026-09-15, fin de session : UI build vert et courrier, 2026-09-15, France 2026 et UI, 2026-09-15, IA des acteurs sans API, 2026-09-15, joueur jouable m0.3.0, 2026-09-15, /moteur boucle minimale m0.1.0, 2026-09-15, moteur m0.2.0 avec IA branchée (+20 more)
 
 ### Community 8 - "ui/package.json"
 Cohesion: 0.09
 Nodes (21): react, react-dom, @types/node, @types/react, dependencies, next, react, react-dom (+13 more)
 
 ### Community 9 - "Historique FM politique"
-Cohesion: 0.09
-Nodes (22): 2026-09-15, audits sécu et parcours avant jalon, 2026-09-15, création du workspace, 2026-09-15, fin de session : partie jouable et calibration, 2026-09-15, fin de session : UI build vert et courrier, 2026-09-15, France 2026 première passe et UI scaffold, 2026-09-15, IA des acteurs sans API, 2026-09-15, joueur jouable moteur m0.3.0, 2026-09-15, /moteur boucle minimale m0.1.0 (+14 more)
+Cohesion: 0.08
+Nodes (23): 2026-09-15, audits sécu et parcours avant jalon, 2026-09-15, création du workspace, 2026-09-15, fin de session : partie jouable et calibration, 2026-09-15, fin de session : UI build vert et courrier, 2026-09-15, France 2026 première passe et UI scaffold, 2026-09-15, IA des acteurs sans API, 2026-09-15, joueur jouable moteur m0.3.0, 2026-09-15, /moteur boucle minimale m0.1.0 (+15 more)
 
 ### Community 10 - "package.json"
 Cohesion: 0.15
@@ -165,8 +174,8 @@ Cohesion: 0.18
 Nodes (10): ui/sim/**/*, compilerOptions, module, moduleResolution, outDir, rootDir, skipLibCheck, strict (+2 more)
 
 ### Community 15 - "partie.ts"
-Cohesion: 0.17
-Nodes (18): Carriere, creerCarriere(), palierDeStatut(), Territoire, Monde, INTERACTIONS, base(), CONFIG (+10 more)
+Cohesion: 0.14
+Nodes (25): CategorieAction, clamp01b(), regenererHebdo(), STATUTS, Territoire, Monde, EffetMedia, Media (+17 more)
 
 ### Community 16 - "AGENTS.md, FM politique"
 Cohesion: 0.22
@@ -213,8 +222,8 @@ Cohesion: 0.33
 Nodes (5): Base documentaire (registre des sources et niveaux de preuve), Champs couverts en Phase 1, Fiche minimale par mécanisme, Premières sources à relire en Phase 1 (issues de la vidéo, à vérifier sur primaire), Vérifications Phase 1 du 2026-09-15 (revue des primaires, avant tout codage)
 
 ### Community 27 - "2026-09-15, /pilote-sim Phase 0 puis Phase 1"
-Cohesion: 0.20
-Nodes (9): 2026-09-15, /pilote-sim Phase 0 puis Phase 1, 2026-09-16, étude des jeux comparables, Contexte courant, Contexte courant, Erreurs et limites, Erreurs et limites, Journal du pôle recherche et pilotage, Vérifications du jour (+1 more)
+Cohesion: 0.14
+Nodes (13): 2026-09-15, /pilote-sim Phase 0 puis Phase 1, 2026-09-16, recherche gameplay hors politique, 2026-09-16, étude des jeux comparables, Contexte courant, Contexte courant, Contexte courant, Erreurs et limites, Erreurs et limites (+5 more)
 
 ### Community 28 - "2026-09-15, /ontologie v1"
 Cohesion: 0.33
@@ -265,36 +274,36 @@ Cohesion: 0.07
 Nodes (26): 1. Méthode et limites, 2.10 eRepublik (eRepublik Labs, 2007, toujours en ligne), 2.11 Rebel Inc (Ndemic Creations, 2018), 2.12 Espiocracy (Ex Vivo Studios / Hooded Horse, annoncé 2027), 2.1 Democracy 3 / Democracy 4 (Positech, 2013 / 2020), 2.2 The Political Machine 2024 (Stardock, 2024, appid 2512090), 2.3 The Political Process (Verlumino, 2019, appid 1184770), 2.4 Suzerain (Long Due Games, 2020) (+18 more)
 
 ### Community 47 - "personnages.ts"
-Cohesion: 0.11
-Nodes (27): ajouterMemoire(), appliquerInteraction(), borner01(), clampRel(), InteractionDef, interactionParId(), MemoirePersoLike, ResultatInteraction (+19 more)
+Cohesion: 0.10
+Nodes (34): Carriere, persuasionJoueur(), ajouterMemoire(), appliquerInteraction(), borner01(), clampRel(), InteractionDef, interactionParId() (+26 more)
 
-### Community 48 - "jouerSemaine"
-Cohesion: 0.43
-Nodes (7): clamp01b(), regenererHebdo(), appliquerDelta(), appliquerEffets(), evaluerMarginalisation(), jouerSemaine(), rangStatut()
+### Community 48 - "vision-gameplay-fm-politique.md"
+Cohesion: 0.02
+Nodes (85): **10\. Le joueur doit pouvoir recruter des personnes**, **11\. Le joueur doit construire son « staff »**, **12\. Le staff doit pouvoir être en désaccord**, **14\. L’inbox doit être centrale**, **15\. Le joueur doit pouvoir cliquer profondément**, **16\. Le joueur doit pouvoir rechercher n’importe qui**, **17\. Le recrutement ne doit pas être limité à la politique**, **18\. Construire une organisation** (+77 more)
 
 ### Community 49 - "4. Tokens"
 Cohesion: 0.17
 Nodes (11): 1. La thèse, en une phrase, 2. Ce que dit la recherche, 2bis. Le document public français, la linéale neutre, la densité, les thèmes, 3. Décisions actées, 4.1 Couleurs, thème clair « papier de dossier », 4.2 Couleurs, thème sombre « veille », 4.3 Typographie, 4.4 Espacement, filets, rayons (+3 more)
 
-### Community 50 - "partie.test.ts"
-Cohesion: 0.16
-Nodes (16): ConfigCarriere, territoiresInitiaux(), VERSION_MOTEUR, creerFin(), creerPartie(), evaluerFins(), ACTIONS_LOOP, CONFIG (+8 more)
+### Community 50 - "creerPartie"
+Cohesion: 0.21
+Nodes (13): recommencer(), ConfigCarriere, territoiresInitiaux(), VERSION_MOTEUR, creerPartie(), partir(), CONFIG, partir() (+5 more)
 
 ### Community 51 - "propositions.ts"
-Cohesion: 0.39
-Nodes (6): creerProposition(), dicibiliteMoyenne(), modifierStatutPreuve(), pousserProposition(), StatutPreuve, EtatDicibilite
+Cohesion: 0.48
+Nodes (5): creerProposition(), dicibiliteMoyenne(), modifierStatutPreuve(), pousserProposition(), StatutPreuve
 
 ### Community 52 - "Contenu manquant"
 Cohesion: 0.14
 Nodes (13): Ce qui a été fait en fin de session du 2026-09-16, Contenu manquant, Défauts constatés, causes vérifiées dans le code, Priorité proposée pour la prochaine session, R1. « Semaine suivante » ne fait rien, R2. L'origine choisie ne se retrouve pas dans le statut, R3. Expliquer les graines, R4. Plus d'origines et plus de rôles de base (+5 more)
 
-### Community 53 - "temps.ts"
-Cohesion: 0.27
-Nodes (11): dateDebutSemaine(), dateISO(), DEBUT_MS, EcheanceCalendaire, ECHEANCES, echeancesAPartirDe(), electionAUtick(), ElectionId (+3 more)
+### Community 53 - "partie.test.ts"
+Cohesion: 0.17
+Nodes (16): LIBELLES_ORIGINE, creerFin(), evaluerFins(), ACTIONS_LOOP, CONFIG, dateDebutSemaine(), dateISO(), DEBUT_MS (+8 more)
 
 ### Community 54 - "actions.ts"
-Cohesion: 0.18
-Nodes (12): ActionJeu, actionParId(), ACTIONS_JEU, CategorieAction, EffetsAction, ActionJouable, EffetMedia, Media (+4 more)
+Cohesion: 0.43
+Nodes (5): ActionJeu, actionParId(), ACTIONS_JEU, EffetsAction, ActionJouable
 
 ### Community 55 - "Déploiement, FM politique"
 Cohesion: 0.29
@@ -316,8 +325,44 @@ Nodes (6): Audit parcours joueur du 2026-09-16, partie p2.1.0, sur écrans réel
 Cohesion: 0.40
 Nodes (4): 2026-09-16, audit p2.1.0 après rafale jalons, 2026-09-16, exécution des cinq retouches après GO d'Aaron, Contexte courant (à lire en premier), Journal du pôle parcours joueur
 
+### Community 61 - "**86\. Ce qu’il faut absolument éviter**"
+Cohesion: 0.18
+Nodes (11): **86\. Ce qu’il faut absolument éviter**, **Un arbre de dialogues**, **Un jeu de jauges**, **Un jeu où l’IA invente les conséquences au fur et à mesure.**, **Un jeu où la recherche documentaire est uniquement décorative.**, **Un jeu où les autres acteurs attendent**, **Un jeu où les événements sont plus importants que les systèmes.**, **Un jeu où tous les personnages sont décoratifs.** (+3 more)
+
+### Community 62 - "Recherche gameplay hors politique, 2026-09-16"
+Cohesion: 0.25
+Nodes (7): 1. Corpus et méthode, 2. Ce qui rend leurs semaines intéressantes (établi, sourcé), 3. Mécanismes récurrents des jeux qui tiennent la personne (établi par convergence), 4. Ce que notre jeu n'a pas (diagnostic), 5. Hypothèses de gameplay F1 à F10 (hypothèse de modélisation, à arbitrer), 6. Sources datées et limites, Recherche gameplay hors politique, 2026-09-16
+
+### Community 63 - "**13\. Le système de réunions**"
+Cohesion: 0.25
+Nodes (8): **13\. Le système de réunions**, **Réunion de crise**, **Réunion institutionnelle**, **Réunion médiatique**, **Réunion organisationnelle**, **Réunion stratégique**, **Réunion économique**, **Réunion électorale**
+
+### Community 64 - "**4\. Le monde doit être beaucoup plus grand que la politique électorale**"
+Cohesion: 0.25
+Nodes (8): **4\. Le monde doit être beaucoup plus grand que la politique électorale**, **Échelle individuelle**, **Échelle institutionnelle**, **Échelle internationale**, **Échelle organisationnelle**, **Échelle relationnelle**, **Échelle sociétale**, **Échelle territoriale**
+
+### Community 65 - "**31\. Et il faut aller beaucoup plus loin que la vidéo**"
+Cohesion: 0.29
+Nodes (7): **31\. Et il faut aller beaucoup plus loin que la vidéo**, **Institutions**, **International**, **Médias**, **Organisations**, **Société**, **Économie**
+
+### Community 66 - "**87\. Les jeux de référence**"
+Cohesion: 0.33
+Nodes (6): **87\. Les jeux de référence**, **Crusader Kings III**, **Democracy 4**, **Football Manager**, **Suzerain**, **Victoria 3**
+
+### Community 67 - "**57\. Le jeu doit avoir plusieurs niveaux de zoom**"
+Cohesion: 0.50
+Nodes (4): **57\. Le jeu doit avoir plusieurs niveaux de zoom**, **Vue macro**, **Vue micro**, **Vue méso**
+
+### Community 68 - "**37\. La perception est aussi importante que la réalité**"
+Cohesion: 0.67
+Nodes (3): **37\. La perception est aussi importante que la réalité**, **perception de l’état du monde.**, **état réel du monde**
+
+### Community 69 - "**PROJET — GAMEPLAY**"
+Cohesion: 0.67
+Nodes (3): **PROJET — GAMEPLAY**, **Vers un véritable Football Manager politique**, **Vision centrale**
+
 ## Knowledge Gaps
-- **383 isolated node(s):** `name`, `version`, `private`, `type`, `test` (+378 more)
+- **527 isolated node(s):** `name`, `version`, `private`, `type`, `test` (+522 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -325,16 +370,16 @@ Nodes (4): 2026-09-16, audit p2.1.0 après rafale jalons, 2026-09-16, exécution
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Rng` connect `rng.ts` to `carriere.ts`, `engine.ts`, `personnages.ts`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `creerRng()` connect `rng.ts` to `carriere.ts`, `engine.ts`, `partie.ts`, `jouerSemaine`, `personnages.ts`, `partie.test.ts`, `propositions.ts`, `actions.ts`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **Why does `clamp01()` connect `rng.ts` to `engine.ts`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
+- **Why does `creerRng()` connect `rng.ts` to `carriere.ts`, `engine.ts`, `partie.ts`, `personnages.ts`, `creerPartie`, `propositions.ts`, `partie.test.ts`, `actions.ts`?**
+  _High betweenness centrality (0.009) - this node is a cross-community bridge._
+- **Why does `clamp01()` connect `rng.ts` to `engine.ts`?**
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
-  _383 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _527 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `rng.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05087572977481234 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05012285012285012 - nodes in this community are weakly interconnected._
 - **Should `carriere.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.1053763440860215 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._

@@ -21,9 +21,19 @@ function base(): { carriere: Carriere; persos: Personnage[] } {
 }
 
 describe("interactions humaines et mémoire", () => {
-  it("cinq interactions déclarées avec coûts de temps", () => {
-    expect(INTERACTIONS).toHaveLength(5);
+  it("six interactions déclarées avec coûts de temps", () => {
+    expect(INTERACTIONS).toHaveLength(6);
     for (const i of INTERACTIONS) expect(i.coutTemps).toBeGreaterThan(0);
+  });
+
+  it("étudier affiné la lecture sans toucher à la relation (J11 E1)", () => {
+    const { carriere, persos } = base();
+    const cible = { ...persos[0], connaissance: 0.2, relation: 0.35 };
+    const r = appliquerInteraction(carriere, cible, "etudier", 1, creerRng(9), 1);
+    expect(r.perso.connaissance).toBeGreaterThan(cible.connaissance);
+    expect(r.perso.relation).toBe(cible.relation);
+    expect(r.resultat.message).toContain("Ta lecture");
+    expect(r.perso.memoire).toHaveLength(cible.memoire.length);
   });
 
   it("convaincre : déterministe, relation bornée", () => {

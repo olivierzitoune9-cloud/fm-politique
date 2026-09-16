@@ -3,10 +3,10 @@
 // J16 F5 : les traits du personnage pèsent dans chaque résultat, jamais en blocage binaire.
 // J17 F7 : chaque interaction augmente la connaissance mutuelle, la fiche s'affine.
 import { clamp01b, persuasionJoueur, type Carriere, type Promesse } from "./carriere.js";
-import { effetHook, nomComplet, poidsTraits, gagnerConnaissance, type EffetHook, type Personnage } from "./personnages.js";
+import { effetHook, nomComplet, poidsTraits, gagnerConnaissance, estimationRelation, type EffetHook, type Personnage } from "./personnages.js";
 import type { Rng } from "./rng.js";
 
-export type InteractionId = "convaincre" | "promettre" | "demander-coup-de-main" | "trahir" | "recoudre";
+export type InteractionId = "convaincre" | "promettre" | "demander-coup-de-main" | "trahir" | "recoudre" | "etudier";
 
 export interface InteractionDef {
   id: InteractionId;
@@ -45,6 +45,13 @@ export const INTERACTIONS: InteractionDef[] = [
     libelle: "Recoudre",
     description: "Réparer avec du temps et de l'argent. Une cicatrice se fond, elle ne disparaît pas.",
     coutTemps: 0.35,
+  },
+  {
+    id: "etudier",
+    libelle: "Étudier",
+    description:
+      "Observer, écouter, croiser ce qu'on dit de lui. Aucun effet immédiat, sauf que tu le connais mieux : la fiche s'affine (E1).",
+    coutTemps: 0.2,
   },
 ];
 
@@ -216,6 +223,19 @@ export function appliquerInteraction(
       resultat = {
         perso: persoSuivant,
         message: `${nomComplet(perso)} le saura. Ton nom monte, ta parole descend.`,
+        effet: null,
+        reussi: true,
+        coutTemps: def.coutTemps,
+      };
+      break;
+    }
+    case "etudier": {
+      // E1 (J11) : étudier coûte du temps et ne promet rien, sauf de mieux lire la personne.
+      persoSuivant = gagnerConnaissance(perso, 0.4);
+      const lecture = estimationRelation(persoSuivant);
+      resultat = {
+        perso: persoSuivant,
+        message: `Tu observes ${nomComplet(perso)} une semaine de plus. Ta lecture : ${lecture.libelle} (${lecture.fiabilite}).`,
         effet: null,
         reussi: true,
         coutTemps: def.coutTemps,

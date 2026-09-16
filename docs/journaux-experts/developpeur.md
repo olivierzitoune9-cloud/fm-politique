@@ -10,7 +10,7 @@ Nouveaux modules et mécanismes, tous testés :
 - `ui/sim/dilemmes.ts` (neuf) : catalogue de cinq carrefours conditionnés (bascule normative, demande de sauveur, vœux de janvier, escalade d'antenne, passé fouillé), résolution pondérée par compétence et traits, effet durable sur échec, promesse possible. Aucun aléa gratuit : chaque dilemme a sa condition.
 - `ui/sim/carriere.ts` : effets durables nommés (avancerEffetsDurees, surcoutEffetsDurees), promesses à échéance (Promesse), dons nommés (DonCampagne), coûts croissants par palier (coutPalier), corruption d'expansion (corruptionExpansion), investiture à trois états.
 - `ui/sim/personnages.ts` : connaissance mutuelle par personnage, estimationRelation en fourchette (F7), poidsTraits (F5) sur onze traits.
-- `ui/sim/interactions.ts` : traits pondérés dans convaincre, promettre, demander un coup de main, trahir, recoudre ; connaissance qui monte ; promesse datée créée et retournée à l'orchestrateur.
+- `ui/sim/interactions.ts` : traits pondérés dans convaincre, promettre, demander un coup de main, trahir, recoudre ; connaissance qui monte ; promesse datée créée et retournée à l'orchestrateur ; sixième interaction étudier (E1), qui coûte du temps et n'apporte que la connaissance.
 - `ui/sim/courrier.ts` : enjeu dominant par territoire et matchingMarqueEnjeu (E6), propagerTerritoires accepte un vecteur de matching optionnel (comportement p2.1.0 conservé par défaut).
 - `ui/sim/partis.ts` : frappeAdverse, coalition conditionnée par notoriété et relations dégradées, ciblage du territoire le plus fort.
 - `ui/sim/temps.ts` : échéance investitures-2027 (mai 2027, entre les deux tours et les législatives), saisonDuTick et LIBELLES_SAISON.
