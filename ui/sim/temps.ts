@@ -61,6 +61,13 @@ export const ECHEANCES: EcheanceCalendaire[] = [
     detail: "Deux semaines après le premier tour.",
   },
   {
+    id: "investitures-2027",
+    libelle: "Investitures législatives",
+    tick: tickDeDate(2027, 5, 10),
+    statut: "plausible",
+    detail: "Entre les deux tours de la présidentielle et les législatives, ton propre camp arbitre qui il investit. Échéance intermédiaire (E8).",
+  },
+  {
     id: "legislatives-2027-t1",
     libelle: "Législatives, premier tour",
     tick: tickDeDate(2027, 6, 6),
@@ -102,3 +109,29 @@ export function electionAUtick(tick: number): ElectionId | null {
   if (tick === tickDeDate(2027, 6, 6)) return "legislatives-t1";
   return null;
 }
+
+// J17 F10 : le calendrier réel fait sentir ses saisons. Rentrée, vœux, campagne, été politique.
+// Le joueur lit la semaine différemment selon où il en est de l'année française.
+export function saisonDuTick(tick: number): string | null {
+  const d = dateDebutSemaine(tick);
+  const mois = d.getUTCMonth() + 1;
+  const annee = d.getUTCFullYear();
+  const tickVoeux = tickDeDate(2027, 1, 4);
+  const tickCampagneDebut = tickDeDate(2027, 3, 1);
+  const tickCampagneFin = tickDeDate(2027, 4, 26);
+  const tickRentree = tickDeDate(annee, 9, 1);
+  const tickEteDebut = tickDeDate(annee, 8, 1);
+  const tickEteFin = tickDeDate(annee, 9, 1);
+  if (tick >= tickCampagneDebut && tick <= tickCampagneFin) return "Campagne présidentielle";
+  if (tick === tickVoeux) return "Vœux : la saison des promesses";
+  if (mois === 9 && Math.abs(tick - tickRentree) <= 4) return "Rentrée : tout le monde revient";
+  if (tick >= tickEteDebut && tick < tickEteFin) return "Été politique : le pays regarde ailleurs";
+  return null;
+}
+
+export const LIBELLES_SAISON: Record<string, string> = {
+  "Campagne présidentielle": "Le pays entier regarde la présidentielle. Une semaine vaut dix.",
+  "Vœux : la saison des promesses": "Les vœux tombent : promettre coûte moins, tenir se voit plus.",
+  "Rentrée : tout le monde revient": "Les associations redémarrent, les élus sont joignables, le terrain est fertile.",
+  "Été politique : le pays regarde ailleurs": "Les médias n'ont plus de place pour toi. Semaine creuse, moins d'écho.",
+};

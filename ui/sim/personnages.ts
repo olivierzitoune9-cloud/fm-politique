@@ -37,6 +37,8 @@ export interface Personnage {
   relation: number; // -1..1 envers le joueur
   memoire: MemoirePerso[];
   cautionActive: { jusqua: number; multiplicateur: number } | null; // R14 via chercheur
+  // J17 F7 : connaissance mutuelle. On n'affiche jamais la relation exacte tant qu'on ne connaît pas la personne.
+  connaissance: number; // 0..1
 }
 
 const PRENOMS = [
@@ -128,8 +130,98 @@ export function genererPersonnages(rng: Rng): Personnage[] {
       relation: arrondi2((rng.next() - 0.5) * 0.4),
       memoire: [],
       cautionActive: null,
+      connaissance: arrondi2(0.1 + rng.next() * 0.2),
     };
   });
+}
+
+// J17 F7 : chaque interaction rapproche, la fiche s'affine au fil des semaines.
+export function gagnerConnaissance(p: Personnage, gain: number): Personnage {
+  return { ...p, connaissance: Math.min(1, p.connaissance + gain) };
+}
+
+export interface EstimationRelation {
+  libelle: string; // ce qu'on lit sur le visage
+  fiabilite: string; // vague, approximative, sure
+  min: number;
+  max: number;
+}
+
+// J17 F7 : la fiche n'affiche jamais la relation exacte avant une vraie connaissance.
+// Fourchette large au début, resserrée par les interactions, exacte au delà de 0.9.
+export function estimationRelation(p: Personnage): EstimationRelation {
+  const c = p.connaissance;
+  const demiLargeur = 0.5 * (1 - c);
+  const centre = p.relation;
+  const min = Math.max(-1, Math.round((centre - demiLargeur) * 100) / 100);
+  const max = Math.min(1, Math.round((centre + demiLargeur) * 100) / 100);
+  const fiabilite = c >= 0.9 ? "sûre" : c >= 0.5 ? "approximative" : "vague";
+  let libelle: string;
+  if (p.relation < -0.25) libelle = "hostile";
+  else if (p.relation < 0.1) libelle = "distant";
+  else if (p.relation < 0.4) libelle = "tiède";
+  else libelle = "chaud";
+  if (c >= 0.5) {
+    // Avec la connaissance, la lecture gagne la nuance du doute : on montre la fourchette.
+    libelle = `${libelle} (entre ${min.toFixed(2)} et ${max.toFixed(2)})`;
+  }
+  return { libelle, fiabilite, min, max };
+}
+
+// J16 F5 : les traits pèsent dans les interactions. La mémoire existait, les personnalités manquaient.
+// Hypothèse de gameplay (King of Dragon Pass) : jamais de blocage, des poids.
+export interface PoidsTraits {
+  convaincre: number; // modificateur de la base de persuasion
+  graviteMemoire: number; // multiplicateur de gravité des souvenirs posés
+  refusSeuil: number; // modificateur du seuil de refus d'un coup de main
+  fiabilitePromesse: number; // pondère la gravité d'une promesse manquée
+}
+
+export function poidsTraits(perso: Personnage, notorieteJoueur: number): PoidsTraits {
+  const base: PoidsTraits = { convaincre: 0, graviteMemoire: 1, refusSeuil: 0, fiabilitePromesse: 1 };
+  for (const t of perso.traits) {
+    switch (t) {
+      case "loyal":
+        base.convaincre += 0.04;
+        base.graviteMemoire *= 1.15; // blessé plus durablement, fidèle plus longtemps
+        break;
+      case "ambitieux":
+        base.convaincre += notorieteJoueur * 0.15; // il te suit si tu montes
+        break;
+      case "susceptible":
+        base.graviteMemoire *= 1.3;
+        base.refusSeuil += 0.05;
+        break;
+      case "idealiste":
+        base.convaincre += 0.03;
+        base.fiabilitePromesse *= 1.3; // une promesse manquée le touche vraiment
+        break;
+      case "opportuniste":
+        base.convaincre += 0.05;
+        base.fiabilitePromesse *= 0.7; // une promesse manquée glisse
+        break;
+      case "discret":
+        base.refusSeuil -= 0.03;
+        break;
+      case "bavard":
+        base.convaincre += 0.02;
+        break;
+      case "rigoureux":
+      case "rigide":
+        base.convaincre -= 0.04;
+        base.refusSeuil += 0.04;
+        base.graviteMemoire *= 0.9; // froid, durable, sans rancune excessive
+        break;
+      case "cynique":
+        base.convaincre -= 0.05;
+        base.graviteMemoire *= 0.8;
+        break;
+      case "empathique":
+        base.convaincre += 0.05;
+        break;
+    }
+  }
+  return base;
 }
 
 export interface EffetHook {

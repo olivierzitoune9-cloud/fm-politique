@@ -4,11 +4,24 @@
 import { actionParId, type ActionJeu } from "./actions.js";
 import { creerMonde, pas, type Monde } from "./engine.js";
 import {
+  ACTIVITES_SEMAINE,
   AMBITIONS,
   AVERTISSEMENT_OUVERTURE,
   clamp01b,
+  coutPalier,
+  corruptionExpansion,
+  avancerEffetsDurees,
+  surcoutEffetsDurees,
+  efficaciteSemaine,
+  appliquerFatigue,
+  gagnerCompetence,
+  competenceDeCategorie,
+  activiteParId,
+  appliquerActivite,
+  type ActiviteSemaine,
   creerCarriere,
   libelleStatut,
+  palierDeStatut,
   persuasionJoueur,
   regenererHebdo,
   statutCible,
@@ -17,21 +30,32 @@ import {
   type ConfigCarriere,
 } from "./carriere.js";
 import { appliquerInteraction, type InteractionId } from "./interactions.js";
-import { echeancesAPartirDe, dateISO as dateISODe, libelleSemaine as libelleSemaineDe, tickDeDate } from "./temps.js";
+import { dateISO as dateISODe, libelleSemaine as libelleSemaineDe, LIBELLES_SAISON, saisonDuTick, tickDeDate } from "./temps.js";
 import { filtrerVueJoueur } from "./joueur.js";
-import { genererPersonnages, type Personnage } from "./personnages.js";
+import { genererPersonnages, nomComplet, poidsTraits, type Personnage } from "./personnages.js";
 import { creerRng } from "./rng.js";
 import { ajusterEconomie, chomagePourTick } from "./data/economie.js";
 import { MEDIAS, mediaParId, routerMedia, type Media } from "./medias.js";
 import { creerProposition, dicibiliteMoyenne, pousserProposition, type Proposition } from "./propositions.js";
 import {
+  adoptionMoyenne,
+  matchingMarqueEnjeu,
+  propagerTerritoires,
+  sondageParId,
+  territoiresInitiaux,
+  type Territoire,
+} from "./courrier.js";
+import {
   manoeuvresPartis,
   majPartis,
   relationsInitialesPartis,
+  frappeAdverse,
   type ManoeuvreParti,
 } from "./partis.js";
+import { genererDilemmes, resoudreDilemme, promesseDepuisDilemme, type Dilemme } from "./dilemmes.js";
+import { echeancesAPartirDe } from "./temps.js";
 
-export const VERSION_PARTIE = "p2.0.0"; // moteur m0.4.0, partie V2 monde qui vit
+export const VERSION_PARTIE = "p3.0.0"; // le vrai jeu : richesse de semaine, dilemmes, monde qui répond
 
 export type FinId =
   | "elu"
@@ -42,6 +66,7 @@ export type FinId =
   | "brule"
   | "sous-enquete"
   | "echec-echeance"
+  | "investiture-ratee"
   | "retour-ordinaire";
 
 export interface Fin {
@@ -66,15 +91,21 @@ export interface Partie {
   personnages: Personnage[];
   proposition: Proposition;
   relationsPartis: Record<string, number>;
+  territoires: Territoire[]; // J3 : carte d'adoption, douze territoires types
+  dilemmesPasses: string[]; // J16 : ids des dilemmes déjà sortis, un par partie au plus
+  dilemmeOuvert: Dilemme | null; // le carrefour en attente de choix, bloquant pour la semaine
   journal: JournalPartie[];
   fin: Fin | null;
 }
 
 export interface TourSemaine {
   actionId: string;
+  activiteId?: string; // J15 F1 : la seconde étage de la semaine, activité de fond
   mediaId?: string; // routage des actions média, défaut le quotidien régional
   pousserProposition?: boolean; // R9 : pousser ta proposition en même temps
-  interaction?: { persoId: string; interactionId: InteractionId; promesse?: string };
+  sondageId?: string; // J4 : sondage commandé, débité chaque semaine
+  interaction?: { persoId: string; interactionId: InteractionId; promesse?: string; categorieAttendue?: "terrain" | "media" | "coalition" | "institution" | "preparation" };
+  choixDilemme?: { dilemmeId: string; optionId: string }; // F4 : carrefour à trancher
 }
 
 export function creerPartie(graine: number, config: ConfigCarriere): Partie {
@@ -94,6 +125,9 @@ export function creerPartie(graine: number, config: ConfigCarriere): Partie {
       monde.groupes.map((g) => g.id),
     ),
     relationsPartis: relationsInitialesPartis(),
+    territoires: territoiresInitiaux(graine),
+    dilemmesPasses: [],
+    dilemmeOuvert: null,
     journal: [
       { tick: 0, texte: "Semaine 0. Tu regardes le monde depuis ton poste de travail, et le monde ne te regarde pas." },
     ],
@@ -157,8 +191,12 @@ export function evaluerFins(c: Carriere, tick: number, dicibilite: number | null
 
   switch (c.ambition) {
     case "elu":
-      if (tick === tickLegislativesT1 && p.soutiens >= ambition.seuil) {
+      // F9 (J17) : les choix anciens conditionnent l'option tardive. Sans investiture, pas de banc.
+      if (tick === tickLegislativesT1 && c.investiture === "obtenue" && p.soutiens >= ambition.seuil) {
         return creerFin("elu", tick, "Élu député", "Tu entres à l'Assemblée en juin 2027. Un banc, un micro, un pouvoir réel.", true);
+      }
+      if (tick === tickLegislativesT1 && c.investiture === "ratee") {
+        return creerFin("investiture-ratee", tick, "Non investi", "Ton propre camp a arbitré entre toi et un autre nom en mai 2027. Sans investiture, pas de banc en juin.", false);
       }
       if (tick === tickLegislativesT2) {
         return creerFin("echec-echeance", tick, "Battu aux législatives", "Juin 2027 est passé sans siège. La carrière s'arrête ici, ou ailleurs.", false);
@@ -188,10 +226,28 @@ export function evaluerFins(c: Carriere, tick: number, dicibilite: number | null
         return creerFin("echec-echeance", tick, "Proposition restée marginale", "Fin du cycle 2027 : ton idée n'a pas franchi la fenêtre.", false);
       }
       break;
+    case "maire":
+      if (tick === tickDeDate(2032, 3, 14) && p.soutiens >= ambition.seuil && p.legitime >= 0.4) {
+        return creerFin("elu", tick, "Élu maire", "Mars 2032 : ta ville t'a confié les clés. Le long chemin local a payé.", true);
+      }
+      if (tick === tickDeDate(2032, 3, 14)) {
+        return creerFin("echec-echeance", tick, "Battu aux municipales", "Mars 2032 sans mairie. L'ancrage n'a pas suffi.", false);
+      }
+      break;
+    case "europeen":
+      if (tick === tickDeDate(2029, 6, 10) && p.soutiens >= ambition.seuil) {
+        return creerFin("elu", tick, "Élu au Parlement européen", "Juin 2029 : ta liste siège. Le discours porte au delà du clocher.", true);
+      }
+      if (tick === tickDeDate(2029, 6, 10)) {
+        return creerFin("echec-echeance", tick, "Manqué les européennes", "Juin 2029 sans siège. La liste n'a pas pris.", false);
+      }
+      break;
   }
 
-  if (tick > tickDeDate(2029, 1, 7)) {
-    return creerFin("retour-ordinaire", tick, "Retour à la vie ordinaire", "Début 2029, sans objectif atteint ni chute spectaculaire : la vie reprend son cours.", false);
+  if (tick >= tickDeDate(2032, 4, 2)) {
+    // >= et non > : tickDeDate arrondit à la semaine, le 1er et le 2 avril 2032 partagent
+    // le même tick, et la fin doit bien s'ouvrir dès ce printemps 2032.
+    return creerFin("retour-ordinaire", tick, "Retour à la vie ordinaire", "Printemps 2032, sans objectif atteint ni chute spectaculaire : la vie reprend son cours.", false);
   }
   return null;
 }
@@ -202,26 +258,60 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   }
   const action = actionParId(tour.actionId);
   const c0 = partie.carriere;
-  if (action.coutTemps > c0.ressources.temps + 1e-9) {
-    throw new Error(`Pas assez de temps cette semaine pour « ${action.libelle} ».`);
-  }
-  if (action.coutArgent > c0.ressources.argent + 1e-9) {
-    throw new Error(`Pas assez d'argent cette semaine pour « ${action.libelle} ».`);
-  }
   const tick = partie.tick + 1;
   const rng = creerRng((partie.graine * 2654435761 + tick) >>> 0);
 
   // 1. Le monde tourne : économie mensuelle branchée (R4), ton coup passe dans la boucle.
+  // J4 : le sondage commandé est débité chaque semaine, même gratuit au bar en temps passé à écouter.
+  let carriereSondee = c0;
+  const journal: JournalPartie[] = [{ tick, texte: `${action.libelle} : fait.` }];
+  if (tour.sondageId !== undefined) {
+    try {
+      const s = sondageParId(tour.sondageId);
+      carriereSondee = {
+        ...carriereSondee,
+        ressources: {
+          ...carriereSondee.ressources,
+          temps: Math.max(0, carriereSondee.ressources.temps - s.coutTemps),
+          argent: Math.max(0, carriereSondee.ressources.argent - s.coutArgent),
+        },
+      };
+      journal.push({ tick, texte: `${s.libelle} commandé : ${s.precision}.` });
+    } catch {
+      journal.push({ tick, texte: "Sondage illisible : tu avances à l'aveugle cette semaine." });
+    }
+  }
   const monde = pas(ajusterEconomie(partie.monde, tick), { optionId: action.moteur ?? "preparer-silencieux" });
 
-  // 2. Multiplicateurs : caution savante R14, micro ciblage IA, routage média avec fact checking.
+  // 2. Multiplicateurs : état intérieur (J15 F2), compétence répétée (J15 F3), caution R14,
+  // micro ciblage IA, routage média avec fact checking. Coûts croissants par palier (E4).
+  const coutPalierActuel = coutPalier(palierDeStatut(c0.statut));
+  const surcoutDurees = surcoutEffetsDurees(c0);
+  const coutTempsTotal = action.coutTemps * coutPalierActuel.temps + surcoutDurees;
+  const manqueTemps = coutTempsTotal > c0.ressources.temps + 1e-9;
+  const manqueArgent = action.coutArgent * coutPalierActuel.argent > c0.ressources.argent + 1e-9;
+  const coupForce = manqueTemps || manqueArgent;
+  const competenceJouee = c0.competences[competenceDeCategorie(action.categorie)] ?? 0;
   const cautionVive = partie.personnages.some(
     (p) => p.cautionActive !== null && p.cautionActive.jusqua >= tick && action.categorie === "media",
   );
   const multiplicateurCaution = cautionVive ? 1.6 : 1;
   const multiplicateurMedia = action.categorie === "media" ? 1 + c0.bonusMedia : 1;
-  let multiplicateur = Math.min(2.6, multiplicateurCaution * multiplicateurMedia);
-  const journal: JournalPartie[] = [{ tick, texte: `${action.libelle} : fait.` }];
+  const multiplicateurCompetence = 1 + 0.25 * competenceJouee; // J15 F3 : la répétition paie
+  let multiplicateur = Math.min(
+    3.2,
+    multiplicateurCaution * multiplicateurMedia * multiplicateurCompetence * efficaciteSemaine(c0),
+  );
+  if (coupForce) {
+    journal.push({
+      tick,
+      texte: manqueArgent && manqueTemps
+        ? `Tu as forcé « ${action.libelle} » sans temps ni argent : dette, fatigue et réputation entamée.`
+        : manqueArgent
+          ? `Tu as forcé « ${action.libelle} » sans argent : tu t'endettes et ta réputation s'entame.`
+          : `Tu as forcé « ${action.libelle} » sans temps : semaine bâclée, soutiens et réputation en berne.`,
+    });
+  }
   let risqueFactCheck = 0;
   if (action.categorie === "media") {
     const media = mediaParId(tour.mediaId ?? "med.quotidien-regional");
@@ -232,21 +322,63 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   }
 
   // 3. Effets de l'action, risque amorti par les contacts croisés (atténuateur R1).
-  let carriere = appliquerEffets(c0, action.effets, multiplicateur);
+  // R7 J8 : le coup forcé paie en dette d'argent, risque d'enquête et réputation entamée.
+  let carriere = appliquerEffets(carriereSondee, action.effets, multiplicateur * (coupForce ? 0.5 : 1));
+  if (coupForce) {
+    if (manqueArgent) {
+      carriere = {
+        ...carriere,
+        ressources: { ...carriere.ressources, argent: clamp01b(carriere.ressources.argent - 0.08) },
+        risqueEnquete: clamp01b(carriere.risqueEnquete + 0.06),
+      };
+      carriere = appliquerDelta(carriere, "reputation", -0.03);
+    }
+    if (manqueTemps) {
+      carriere = appliquerDelta(carriere, "soutiens", -0.02);
+      carriere = appliquerDelta(carriere, "reputation", -0.02);
+      carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + 0.03) };
+    }
+  }
   if (action.effets.risque !== undefined && action.regle === "R1") {
     carriere = {
       ...carriere,
       risqueEnquete: clamp01b(carriere.risqueEnquete * (1 - Math.min(0.5, c0.contactsCroises * 0.3))),
     };
   }
+  // J15 F3 : la répétition construit la compétence, quel que soit le résultat de la semaine.
+  carriere = gagnerCompetence(carriere, competenceDeCategorie(action.categorie));
+  // J15 F2 : le coup fatigue, les coups forcés usent le moral en plus.
+  carriere = appliquerFatigue(carriere, coutTempsTotal, coupForce);
+  // E5 (J13) : croître en soutiens sans croître en organisation convertit la dette en risque.
+  const corruption = corruptionExpansion(carriere.progression);
+  if (corruption > 0) {
+    carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + corruption) };
+    journal.push({
+      tick,
+      texte: "Ta croissance dépasse ton organisation : trop de soutiens, trop peu de relais. Des questions commencent à circuler.",
+    });
+  }
 
-  // 4. Interaction humaine facultative.
+  // 4. Interaction humaine facultative. Traits pondérés (J16 F5), connaissance qui monte (J17 F7),
+  // promesse à échéance enregistrée (E10), dons nommés tracés (E7).
   let personnages = partie.personnages;
   if (tour.interaction !== undefined) {
     const perso = personnages.find((p) => p.id === tour.interaction!.persoId);
     if (perso === undefined) throw new Error(`Personnage inconnu : ${tour.interaction.persoId}`);
-    const r = appliquerInteraction(carriere, perso, tour.interaction.interactionId, tick, rng, partie.graine, tour.interaction.promesse);
+    const r = appliquerInteraction(
+      carriere,
+      perso,
+      tour.interaction.interactionId,
+      tick,
+      rng,
+      partie.graine,
+      tour.interaction.promesse,
+      tour.interaction.categorieAttendue,
+    );
     carriere = r.carriere;
+    if (r.resultat.promesse !== undefined) {
+      carriere = { ...carriere, promesses: [...carriere.promesses, r.resultat.promesse] };
+    }
     personnages = personnages.map((p) => (p.id === perso.id ? r.perso : p));
     journal.push({ tick, texte: r.resultat.message });
     if (r.resultat.effet !== null) {
@@ -256,8 +388,14 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
       if (e.notoriete !== undefined) carriere = appliquerDelta(carriere, "notoriete", e.notoriete);
       if (e.legitime !== undefined) carriere = appliquerDelta(carriere, "legitime", e.legitime);
       if (e.reputation !== undefined) carriere = appliquerDelta(carriere, "reputation", e.reputation);
-      if (e.argent !== undefined)
+      if (e.argent !== undefined) {
         carriere = { ...carriere, ressources: { ...carriere.ressources, argent: clamp01b(carriere.ressources.argent + e.argent) } };
+        // E7 (J13) : un don nommé laisse une trace et une dette, jamais un +argent anonyme.
+        carriere = {
+          ...carriere,
+          dons: [...carriere.dons, { persoId: perso.id, nomPerso: nomComplet(perso), montant: e.argent, tick, contre: "faveur à rendre" }],
+        };
+      }
       if (e.exposition !== undefined)
         carriere = { ...carriere, ressources: { ...carriere.ressources, audience: clamp01b(carriere.ressources.audience + e.exposition * 0.3) } };
       if (e.microCiblage === true) {
@@ -293,17 +431,64 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     }
   }
 
-  // 5. Coûts de la semaine puis régénération pour la suivante.
-  const coutTemps = action.coutTemps + (tour.interaction !== undefined ? 0.2 : 0);
+  // 5. Coûts de la semaine (coûts croissants par palier E4, surcoûts d'effets durables F6),
+  // activité de fond (J15 F1), promesses réglées (E10), régénération pour la suivante.
+  const coutTemps = coutTempsTotal + (tour.interaction !== undefined ? 0.2 : 0);
+  const coutArgent = action.coutArgent * coutPalierActuel.argent;
   carriere = {
     ...carriere,
     ressources: {
       ...carriere.ressources,
       temps: Math.max(0, carriere.ressources.temps - coutTemps),
-      argent: Math.max(0, carriere.ressources.argent - action.coutArgent),
+      argent: Math.max(0, carriere.ressources.argent - coutArgent),
     },
   };
+  // J15 F1 : la seconde étage de la semaine. Une activité de fond, jamais bloquante, toujours réelle.
+  const activite = activiteParId(tour.activiteId ?? "repos");
+  carriere = appliquerActivite(carriere, activite);
+  journal.push({ tick, texte: `À côté : ${activite.libelle.toLowerCase()}.` });
+  // E10 (J11) : les promesses se règlent ici. Tenue par l'action attendue, manquée à l'échéance.
+  const persoParId = (id: string) => personnages.find((p) => p.id === id);
+  carriere = {
+    ...carriere,
+    promesses: carriere.promesses.map((pr) => {
+      if (pr.statut !== "en-cours") return pr;
+      if (action.categorie === pr.categorieAttendue) {
+        const cible = persoParId(pr.persoId);
+        if (cible !== undefined) {
+          const marque = cible.memoire.filter((m) => m.type === "promesse").reduce((s, m) => s + m.gravite, 0);
+          const poids = poidsTraits(cible, carriere.progression.notoriete);
+          // Traits : l'idéaliste note plus, l'opportuniste moins (J16 F5).
+          const gainRelation = Math.min(0.15, 0.06 + marque * poids.fiabilitePromesse);
+          const cibleActuelle = personnages.find((p) => p.id === pr.persoId);
+          if (cibleActuelle !== undefined) {
+            personnages = personnages.map((p) =>
+              p.id === pr.persoId ? { ...p, relation: Math.max(-1, Math.min(1, p.relation + gainRelation)) } : p,
+            );
+          }
+        }
+        journal.push({ tick, texte: `Promesse tenue envers ${pr.texte}. Ta parole vaut plus, cette semaine.` });
+        return { ...pr, statut: "tenue" as const };
+      }
+      if (tick > pr.tickEcheance) {
+        const cible = persoParId(pr.persoId);
+        if (cible !== undefined) {
+          const poids = poidsTraits(cible, carriere.progression.notoriete);
+          personnages = personnages.map((p) =>
+            p.id === pr.persoId
+              ? { ...p, memoire: [...p.memoire, { type: "attaque" as const, gravite: 0.5 * poids.fiabilitePromesse, tick, detail: "promesse manquée" }] }
+              : p,
+          );
+        }
+        journal.push({ tick, texte: `Promesse manquée : ${pr.texte}. Ça se sait, et ça se garde.` });
+        return { ...pr, statut: "manquee" as const };
+      }
+      return pr;
+    }),
+  };
   carriere = regenererHebdo(carriere);
+  // F6 : les effets durables pèsent chaque semaine puis s'éteignent à échéance.
+  carriere = avancerEffetsDurees(carriere, tick);
 
   // 6. Progression de statut.
   const cible = statutCible(carriere.progression);
@@ -321,8 +506,125 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     journal.push({ tick, texte: m.texte });
   }
 
-  // 8. Marginalisation comptée puis fins évaluées sur l'état final de la semaine.
+  // J3 plus E2/E3/E6 : la carte propage ton idée (matching marque-enjeu par territoire, J11),
+  // et le monde te répond : relations dégradées plus notoriété, un parti coalisé riposte (J12).
+  let territoires = propagerTerritoires(
+    partie.territoires,
+    carriere.progression.soutiens,
+    carriere.ressources.audience,
+    carriere.progression.notoriete,
+    partie.territoires.map((t) => matchingMarqueEnjeu(c0.ideologie, t.enjeu)),
+  );
+  const riposte = frappeAdverse(territoires, relationsPartis, carriere.progression.notoriete, rng);
+  if (riposte.frappes.length > 0) {
+    territoires = territoires.map((t) => ({
+      ...t,
+      adoption: clamp01b(t.adoption + (riposte.territoires.get(t.id) ?? 0)),
+      reponseAdverse: clamp01b(t.reponseAdverse + (riposte.reponses.get(t.id) ?? 0)),
+    }));
+    for (const f of riposte.frappes) journal.push({ tick, texte: f.texte });
+  }
+
+  // E8/F9 (J13, J17) : l'investiture, échéance intermédiaire. Ton propre camp arbitre en mai 2027.
+  // Ce que tu as fait aux paliers 1 et 2 conditionne cette option des paliers 4 et 5.
+  let investiture = c0.investiture;
+  const tickInvestiture = tickDeDate(2027, 5, 10);
+  if (investiture === "non-posee" && tick >= tickInvestiture) {
+    const relationMeilleure = Math.max(...Object.values(relationsPartis), -1);
+    const conditionsOk =
+      carriere.progression.soutiens >= 0.3 && trahisonsLeaders === 0 && relationMeilleure >= 0.15;
+    if (conditionsOk) {
+      investiture = "obtenue";
+      journal.push({ tick, texte: "Investiture obtenue : ton camp te confie une circonscription pour juin." });
+    } else {
+      investiture = "ratee";
+      journal.push({
+        tick,
+        texte: trahisonsLeaders > 0
+          ? "Investiture ratée : tes trahisons pesaient plus que tes soutiens dans la salle des directions."
+          : carriere.progression.soutiens < 0.3
+            ? "Investiture ratée : trop peu de soutiens pour défendre un nom en réunion de direction."
+            : "Investiture ratée : aucun courant ne s'est porté garant de ton nom.",
+      });
+    }
+  }
+  carriere = { ...carriere, investiture };
+
+  // F10 (J17) : les saisons se sentent. Une entrée de journal à chaque changement de saison.
+  const saison = saisonDuTick(tick);
+  if (saison !== null && saison !== saisonDuTick(tick - 1)) {
+    journal.push({ tick, texte: `${saison} : ${LIBELLES_SAISON[saison] ?? ""}` });
+  }
+
+  // E11 (J12) : les médias et partis vivent sans toi. Une enquête indépendante de temps en temps.
+  if (rng.next() < 0.08) {
+    const sujets = [
+      "Le Quotidien régional publie une enquête indépendante sur la dette d'un grand groupe local.",
+      "Une chaîne nationale décortique les comptes de campagnes, tous partis confondus.",
+      "Le Front de l'ordre (fictif) s'affiche en couverture, sans lien avec toi.",
+      "Un député éminent est mis en cause par une révélation journalistique, l'onde de choc traverse tous les partis.",
+    ];
+    journal.push({ tick, texte: sujets[Math.floor(rng.next() * sujets.length) % sujets.length] });
+  }
+
+  // 8. Marginalisation comptée, dilemmes (résolution du choix puis génération), fins évaluées.
   carriere = evaluerMarginalisation(carriere);
+
+  // F4/E9 (J16, J11) : le carrefour en cours est tranché, l'effet est révélé en texte, jamais chiffré avant.
+  let dilemmesPasses = [...partie.dilemmesPasses];
+  let dilemmeOuvert: Dilemme | null = partie.dilemmeOuvert;
+  if (tour.choixDilemme !== undefined && partie.dilemmeOuvert !== null) {
+    const d = partie.dilemmeOuvert;
+    if (d.id !== tour.choixDilemme.dilemmeId) {
+      throw new Error("Le dilemme choisi ne correspond pas au carrefour ouvert.");
+    }
+    const persoCible = d.persoId !== undefined ? personnages.find((p) => p.id === d.persoId) : undefined;
+    const resolution = resoudreDilemme(d, tour.choixDilemme.optionId, carriere, persoCible, tick, rng);
+    journal.push({ tick, texte: resolution.texteChoix });
+    const delta = resolution.delta;
+    if (delta.soutiens !== undefined) carriere = appliquerDelta(carriere, "soutiens", delta.soutiens);
+    if (delta.organisation !== undefined) carriere = appliquerDelta(carriere, "organisation", delta.organisation);
+    if (delta.notoriete !== undefined) carriere = appliquerDelta(carriere, "notoriete", delta.notoriete);
+    if (delta.legitime !== undefined) carriere = appliquerDelta(carriere, "legitime", delta.legitime);
+    if (delta.reputation !== undefined) carriere = appliquerDelta(carriere, "reputation", delta.reputation);
+    if (delta.audience !== undefined)
+      carriere = { ...carriere, ressources: { ...carriere.ressources, audience: clamp01b(carriere.ressources.audience + delta.audience) } };
+    if (delta.risque !== undefined)
+      carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + delta.risque) };
+    if (delta.argent !== undefined)
+      carriere = { ...carriere, ressources: { ...carriere.ressources, argent: clamp01b(carriere.ressources.argent + delta.argent) } };
+    if (resolution.effetDurable !== null) {
+      carriere = { ...carriere, effetsDurees: [...carriere.effetsDurees, resolution.effetDurable] };
+    }
+    const promesseDil = promesseDepuisDilemme(d, tour.choixDilemme.optionId, d.persoId, tick);
+    if (promesseDil !== null) carriere = { ...carriere, promesses: [...carriere.promesses, promesseDil] };
+    dilemmesPasses.push(d.id);
+    dilemmeOuvert = null;
+  }
+
+  // F8 : un dilemme peut naître de la semaine écoulée, si aucun carrefour n'est déjà ouvert.
+  if (dilemmeOuvert === null) {
+    const candidats = genererDilemmes(tick, monde, carriere, personnages, dilemmesPasses);
+    if (candidats.length > 0) {
+      dilemmeOuvert = candidats[0];
+      journal.push({ tick, texte: `Un carrefour s'ouvre : ${dilemmeOuvert.titre}.` });
+    }
+  }
+
+  // E13 (J14) : le bruit de la semaine ressort des semaines plus tard. Effet retardé annoncé.
+  if (action.categorie === "media" && multiplicateur > 1.3) {
+    journal.push({
+      tick,
+      texte: `L'écho de « ${action.libelle} » ressortira : des relais le reprendront, le monde s'y référera.`,
+    });
+  }
+
+  if (tick % 4 === 0) {
+    journal.push({
+      tick,
+      texte: `Carte : ton idée est entendue en moyenne à ${(adoptionMoyenne(territoires) * 100).toFixed(0)} sur 100 sur douze territoires.`,
+    });
+  }
   const fin = evaluerFins(carriere, tick, dicibiliteMoyenne(proposition));
   if (fin !== null) journal.push({ tick, texte: `Fin de partie : ${fin.titre}. ${fin.detail}` });
 
@@ -334,6 +636,9 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     personnages,
     proposition,
     relationsPartis,
+    territoires,
+    dilemmesPasses,
+    dilemmeOuvert,
     journal: [...partie.journal, ...journal],
     fin,
   };
@@ -354,23 +659,52 @@ export interface VuePartie {
   libelleSemaine: string;
   dateISO: string;
   avertissement: string;
+  palier: number; // J7 : le joueur ne voit que son palier et avant
   carriere: Carriere;
+  activites: ActiviteSemaine[]; // J15 F1 : le second étage de la semaine
+  dilemmeOuvert: Dilemme | null; // F4 : le carrefour en attente de choix
+  saison: string | null; // F10 : la saison du calendrier réel
+  coutPalier: { temps: number; argent: number }; // E4 : le coût croissant affiché
+  coutSurcoutDurees: number; // F6 : le poids des effets durables sur tes semaines
   personnages: Personnage[];
+  personnagesVisibles: Personnage[]; // J7 : au palier 1, figures de proximité seulement
   groupes: ReturnType<typeof filtrerVueJoueur>["groupes"];
   echeances: ReturnType<typeof echeancesAPartirDe>;
   journal: JournalPartie[];
   fin: Fin | null;
   medias: Media[];
+  mediasVisibles: Media[]; // J7 : médias nationaux masqués au palier 1
   proposition: Proposition;
   manoeuvres: ManoeuvreParti[];
+  manoeuvresVisibles: ManoeuvreParti[]; // J7 : partis rivaux cachés au palier 1
   relationsPartis: Record<string, number>;
+  partisVisibles: boolean; // J7 : faux au palier 1, les partis existent mais ne s'affichent pas
+  territoires: Territoire[]; // J3 : carte d'adoption visible dès le palier 1, c'est ton terrain
   chomage: number;
   sourceChomage: string;
 }
 
+// Métiers visibles au palier 1 : proximité et terrain, jamais les états-majors ni les médias nationaux.
+const METIERS_PALIER_1: Personnage["metier"][] = [
+  "elu-local",
+  "syndicaliste",
+  "figure-associative",
+  "fonctionnaire",
+  "entrepreneur",
+  "chercheur",
+  "historien",
+];
+
 export function vuePartie(partie: Partie): VuePartie {
   const semaine = partie.tick + 1;
   const eco = chomagePourTick(semaine);
+  const palier = palierDeStatut(partie.carriere.statut);
+  const personnagesVisibles = palier <= 1
+    ? partie.personnages.filter((p) => METIERS_PALIER_1.includes(p.metier))
+    : partie.personnages;
+  const mediasVisibles = palier <= 1 ? MEDIAS.slice(0, 1) : MEDIAS;
+  const manoeuvresToutes = manoeuvresPartis(partie.monde, partie.personnages, true);
+  const manoeuvresVisibles = palier <= 1 ? [] : manoeuvresToutes;
   return {
     version: partie.version,
     tick: partie.tick,
@@ -378,16 +712,27 @@ export function vuePartie(partie: Partie): VuePartie {
     libelleSemaine: libelleSemaineDe(semaine),
     dateISO: dateISODe(semaine),
     avertissement: AVERTISSEMENT_OUVERTURE,
+    palier,
     carriere: partie.carriere,
+    activites: ACTIVITES_SEMAINE,
+    dilemmeOuvert: partie.dilemmeOuvert,
+    saison: saisonDuTick(semaine),
+    coutPalier: coutPalier(palier),
+    coutSurcoutDurees: surcoutEffetsDurees(partie.carriere),
     personnages: partie.personnages,
+    personnagesVisibles,
     groupes: filtrerVueJoueur(partie.monde).groupes,
     echeances: echeancesAPartirDe(semaine).slice(0, 5),
     journal: partie.journal.slice(-30),
     fin: partie.fin,
     medias: MEDIAS,
+    mediasVisibles,
     proposition: partie.proposition,
-    manoeuvres: manoeuvresPartis(partie.monde, partie.personnages, true),
+    manoeuvres: manoeuvresToutes,
+    manoeuvresVisibles,
     relationsPartis: partie.relationsPartis,
+    partisVisibles: palier > 1,
+    territoires: partie.territoires,
     chomage: eco.chomage,
     sourceChomage: eco.source,
   };

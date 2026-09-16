@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { type ConfigCarriere } from "./carriere.js";
 import { creerPartie, jouerSemaine } from "./partie.js";
 import { deserialiser, serialiser, VERSION_SAUVEGARDE } from "./sauvegarde.js";
+import { VERSION_PARTIE } from "./partie.js";
 import { VERSION_MOTEUR } from "./engine.js";
 
 const CONFIG: ConfigCarriere = {
@@ -37,5 +38,26 @@ describe("sauvegarde locale versionnée", () => {
     const s = JSON.parse(serialiser(p));
     expect(s.moteurVersion).toBe(VERSION_MOTEUR);
     expect(s.partie.monde.version).toBe(VERSION_MOTEUR);
+  });
+
+  it("migration douce p2.1.0 sans carte ni champs p3 vers p3.0.0 complète", () => {
+    const p = creerPartie(42, CONFIG);
+    const brut = JSON.parse(serialiser(p));
+    brut.partieVersion = "p2.1.0";
+    delete brut.partie.territoires;
+    delete brut.partie.dilemmesPasses;
+    delete brut.partie.carriere.effetsDurees;
+    delete brut.partie.carriere.promesses;
+    delete brut.partie.carriere.dons;
+    delete brut.partie.personnages[0].connaissance;
+    brut.partie.version = "p2.1.0";
+    const charge = deserialiser(JSON.stringify(brut));
+    expect(charge.territoires).toHaveLength(12);
+    expect(charge.version).toBe(VERSION_PARTIE);
+    expect(charge.dilemmesPasses).toEqual([]);
+    expect(charge.carriere.effetsDurees).toEqual([]);
+    expect(charge.carriere.promesses).toEqual([]);
+    expect(charge.carriere.investiture).toBe("non-posee");
+    expect(charge.personnages[0].connaissance).toBeGreaterThan(0);
   });
 });

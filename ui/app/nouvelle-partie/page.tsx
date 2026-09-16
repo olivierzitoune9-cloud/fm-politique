@@ -1,15 +1,15 @@
 "use client";
 
 // Création de personnage : nom, origine, deux traits, idéologie sommaire, ambition, seed.
-// L'avertissement validé en SPEC section 6 s'affiche avant toute chose.
+// R8 J10 : aucun avertissement en écran de jeu, il vit en pied de page discret.
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AMBITIONS,
-  AVERTISSEMENT_OUVERTURE,
   LIBELLES_ORIGINE,
   ORIGINES,
   TRAITS_JOUEUR,
+  vecteurOrigine,
   type Ambition,
   type Origine,
 } from "../../sim/carriere";
@@ -66,11 +66,6 @@ export default function NouvellePartiePage() {
 
   return (
     <div className="grille">
-      <section className="carte">
-        <h2>Avertissement</h2>
-        <p>{AVERTISSEMENT_OUVERTURE}</p>
-      </section>
-
       <div className="grille grille-2">
         <section className="carte">
           <h2>Ton personnage</h2>
@@ -88,6 +83,7 @@ export default function NouvellePartiePage() {
               ))}
             </select>
           </label>
+          <p className="source">{vecteurOrigine(origine)} Chaque métier ouvre une voie propre vers le pouvoir.</p>
           <div className="champ">
             <label>Deux traits (max)</label>
             <div className="rang-radio">
@@ -144,9 +140,14 @@ export default function NouvellePartiePage() {
             />
           </label>
           <label className="champ">
-            <label>Graine (même graine, même monde)</label>
+            <label>Graine : le nombre qui fixe tous les hasards du monde</label>
             <input type="number" value={graine} onChange={(e) => setGraine(Number(e.target.value) || 0)} />
           </label>
+          <p className="source">
+            Même graine, même monde : mêmes événements, mêmes gens qui écrivent. Graine différente, monde différent.
+            Exemple : 42 donne toujours le même pays, 43 un autre. C'est ce qui rend une injustice explicable plutôt
+            qu'arbitraire.
+          </p>
           <div className="boutons">
             <button onClick={creer} type="button">
               Commencer le lundi 7 septembre 2026

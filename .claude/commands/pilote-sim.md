@@ -68,6 +68,7 @@ Une fois le oui obtenu :
 - Écrans ou lisibilité : `/audit-parcours-joueur`, jamais en même session qu'un gros chantier moteur.
 - Secrets, dépendances, routes, sauvegardes : `/audit-securite-sim`, avant chaque jalon et après chaque brique sensible.
 - Carte, SPEC et code en contradiction : `/recartographie-sim` avant tout le reste.
+- Enrichissement gameplay visé : lire `docs/recherche-gameplay-hors-politique-2026-09-16.md` (jalons J15 à J17, J15 recommandé d'abord) et `docs/etude-jeux-comparables-2026-09-16.md` (jalons J11 à J14), tout jalon d'enrichissement attend le oui explicite d'Aaron.
 - Question transversale à plusieurs pôles : panel selon `/boucle-sim` étape 4, avec synthèse sans perte.
 
 ## Garde-fous

@@ -16,6 +16,22 @@ Ce qui est acté et ne se rediscute pas sans raison neuve :
 
 Limite portée en tête : le rendu final n'a pas encore été vérifié sur un appareil réel ni en mode sombre par un tiers. Mes conclusions restent provisoires jusqu'à la vérification visuelle.
 
+## 2026-09-16, écrans p3.0.0 : le jeu dense sans devenir illisible
+
+**Situation.** GO d'Aaron pour transformer le MVP en vrai jeu (jalons J11 à J17). La page de partie reçoit d'un coup : second étage de semaine, énergie et moral, six compétences, panneau de carrefour à deux ou trois réponses, badges d'effets durables, promesses et dons, saison du calendrier, coûts de palier, relation estimée, enjeux de territoire. Le risque design est clair : la densité tue la lecture.
+
+**Ce que j'ai posé, dans la doctrine existante.**
+- Le carrefour a sa propre carte, titrée « Carrefour », placée après le bandeau : un carrefour est un moment, il mérite une surface, jamais un menu déroulant noyé dans une colonne.
+- La relation estimée remplace le chiffre exact : `relation estimée tiède (entre 0.12 et 0.44)` puis `connaissance 40 %`. L'information imparfaite devient lisible sans devenir floue : le badge porte le mot, la parenthèse porte la mesure.
+- Les effets durables portent leur libellé entier, la promesse non tenue prend le badge grave (rouge sémantique, jamais décoratif), le don nommé prend le mauve.
+- Le second étage vit dans la même section que l'action, sous un titre explicite « Activité de fond (second étage) » : deux zones, un seul geste de validation. Le joueur ne valide jamais deux semaines.
+- La saison s'affiche en badge mauve dans le bandeau avec sa phrase d'ambiance, jamais en pied de page : c'est du contexte de jeu, pas une mention légale.
+- Les coûts de palier et les surcoûts d'effets durables sont écrits en clair sous la ligne de ressources, en pourcentage de temps et d'argent : la difficulté croissante doit être annoncée avant d'être subie.
+
+**Ce que je n'ai pas fait et qui reste dû.** Aucune vérification visuelle réelle de ces nouveaux blocs, ni en sombre, ni sur petit écran. La colonne de compétences ajoute six lignes de barres dans le bandeau : c'est le point le plus probable de surcharge, à surveiller au premier retour d'Aaron.
+
+**Leçon.** La densité est acceptable quand chaque bloc a une fonction de décision. Elle devient une faute quand elle remplit pour remplir.
+
 ## 2026-09-15, ouverture du pôle, recherche au lieu de copie
 
 **Situation.** Aaron refuse explicitement de copier Football Manager et Plague Inc, et refuse de m'y voir m'appuyer comme sources. Il demande une recherche réelle, et un pôle design au même titre que les autres pôles du projet.

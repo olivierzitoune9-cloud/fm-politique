@@ -7,6 +7,7 @@ import { raconterChronologie, type TexteNarre } from "./narrative/raconteur.js";
 
 export interface GroupeVu {
   id: string;
+  libelle: string;
   identiteAffichee: number;
   basculeAffichee: number;
   receptiviteAffichee: number;
@@ -25,9 +26,17 @@ function arrondirDizaine(x: number): number {
   return Math.round(x * 10) / 10;
 }
 
+// Libellés français des groupes à l'écran, jamais les ids techniques.
+export function libelleGroupe(id: string): string {
+  if (id === "grp.centre") return "Centre-ville et quartiers installés";
+  if (id === "grp.peripherie") return "Périphérie et quartiers populaires";
+  return id;
+}
+
 export function filtrerVueJoueur(monde: Monde): VueJoueur {
   const groupes: GroupeVu[] = monde.groupes.map((g: GroupeMonde) => ({
     id: g.id,
+    libelle: libelleGroupe(g.id),
     identiteAffichee: arrondirDizaine(g.identiteActive),
     basculeAffichee: arrondirDizaine(g.bascule),
     receptiviteAffichee: arrondirDizaine(g.receptiviteOrdre),

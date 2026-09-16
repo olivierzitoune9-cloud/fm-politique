@@ -1,6 +1,10 @@
 // Sauvegarde locale versionnée : JSON strict, refus de toute sauvegarde d'une autre version de partie ou de moteur.
+// Rafale jalons : migration douce p2.0.0 vers p2.1.0, les territoires manquants sont recréés à la graine.
 import { VERSION_MOTEUR } from "./engine.js";
 import { VERSION_PARTIE, type Partie } from "./partie.js";
+import { territoiresInitiaux } from "./courrier.js";
+import type { Carriere } from "./carriere.js";
+import type { Personnage } from "./personnages.js";
 
 export const VERSION_SAUVEGARDE = 1;
 
@@ -37,6 +41,35 @@ export function deserialiser(texte: string): Partie {
     throw new Error(`Sauvegarde d'une autre version (${String(s.version)}), non chargeable.`);
   }
   if (s.partieVersion !== VERSION_PARTIE) {
+    // Migration douce : une p2.x sans les champs p3 reçoit ses valeurs initiales, rien d'autre ne bouge.
+    if (s.partieVersion === "p2.1.0" || s.partieVersion === "p2.0.0") {
+      const p = s.partie as Partial<Partie> | undefined;
+      if (p !== undefined && typeof p.graine === "number" && typeof p.tick === "number") {
+        if (!Array.isArray((p as { territoires?: unknown }).territoires)) {
+          (p as Partie).territoires = territoiresInitiaux(p.graine);
+        }
+        if (!Array.isArray((p as { dilemmesPasses?: unknown }).dilemmesPasses)) {
+          (p as Partie).dilemmesPasses = [];
+        }
+        (p as Partie).dilemmeOuvert = null;
+        (p as Partie).version = VERSION_PARTIE;
+        const c = p.carriere as Partial<Carriere> | undefined;
+        if (c !== undefined) {
+          if (c.etat === undefined) c.etat = { energie: 1, moral: 0.6 };
+          if (c.competences === undefined)
+            c.competences = { terrain: 0, parole: 0, medias: 0, relation: 0, institution: 0, strategie: 0 };
+          if (!Array.isArray(c.effetsDurees)) c.effetsDurees = [];
+          if (!Array.isArray(c.promesses)) c.promesses = [];
+          if (c.investiture === undefined) c.investiture = "non-posee";
+          if (!Array.isArray(c.dons)) c.dons = [];
+        }
+        for (const pers of p.personnages ?? []) {
+          const perso = pers as Partial<Personnage>;
+          if (perso.connaissance === undefined) perso.connaissance = 0.15;
+        }
+        return p as Partie;
+      }
+    }
     throw new Error(`Sauvegarde d'une autre version de partie (${String(s.partieVersion)}), non chargeable.`);
   }
   if (s.moteurVersion !== VERSION_MOTEUR) {
@@ -52,6 +85,10 @@ export function deserialiser(texte: string): Partie {
     !p.carriere
   ) {
     throw new Error("Sauvegarde incomplète.");
+  }
+  // Tolérance : une sauvegarde sans carte la voit recréée à la graine, sans rien perdre d'autre.
+  if (!Array.isArray((p as { territoires?: unknown }).territoires)) {
+    (p as Partie).territoires = territoiresInitiaux(p.graine);
   }
   return p as Partie;
 }

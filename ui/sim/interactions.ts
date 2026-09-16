@@ -1,7 +1,9 @@
 // Interactions humaines : convaincre, promettre, demander un coup de main, trahir, recoudre.
 // La mémoire (promesses, dettes, trahisons) reste et remonte dans les comportements. E6 de l'ontologie.
-import { clamp01b, persuasionJoueur, type Carriere } from "./carriere.js";
-import { effetHook, nomComplet, type EffetHook, type Personnage } from "./personnages.js";
+// J16 F5 : les traits du personnage pèsent dans chaque résultat, jamais en blocage binaire.
+// J17 F7 : chaque interaction augmente la connaissance mutuelle, la fiche s'affine.
+import { clamp01b, persuasionJoueur, type Carriere, type Promesse } from "./carriere.js";
+import { effetHook, nomComplet, poidsTraits, gagnerConnaissance, type EffetHook, type Personnage } from "./personnages.js";
 import type { Rng } from "./rng.js";
 
 export type InteractionId = "convaincre" | "promettre" | "demander-coup-de-main" | "trahir" | "recoudre";
@@ -60,6 +62,26 @@ export interface ResultatInteraction {
   effet: EffetHook | null;
   reussi: boolean;
   coutTemps: number;
+  promesse?: Promesse; // E10 : une promesse à échéance, posée sur la carrière par l'orchestrateur
+}
+
+// E10 (J11) : fabrique la promesse datée. Échéance par défaut : huit semaines.
+export function creerPromesse(
+  persoId: string,
+  texte: string,
+  tickPrise: number,
+  categorieAttendue: Promesse["categorieAttendue"],
+  echeance = tickPrise + 8,
+): Promesse {
+  return {
+    id: `prom.${persoId}.${tickPrise}`,
+    persoId,
+    texte,
+    tickPrise,
+    tickEcheance: echeance,
+    categorieAttendue,
+    statut: "en-cours",
+  };
 }
 
 function ajouterMemoire(p: Personnage, type: MemoirePersoLike, gravite: number, tick: number, detail: string): Personnage {
@@ -82,11 +104,13 @@ export function appliquerInteraction(
   rng: Rng,
   graine: number,
   promesse?: string,
+  categorieAttendue?: Promesse["categorieAttendue"],
 ): { carriere: Carriere; perso: Personnage; resultat: ResultatInteraction } {
   const def = interactionParId(interactionId);
   const tirage = rng.next();
   void graine;
   const bruit = (tirage - 0.5) * 0.2;
+  const poids = poidsTraits(perso, carriere.progression.notoriete); // J16 F5 : les traits pèsent ici
   let persoSuivant = perso;
   const carriereSuivante: Carriere = { ...carriere };
   let resultat: ResultatInteraction;
@@ -94,11 +118,19 @@ export function appliquerInteraction(
   switch (interactionId) {
     case "convaincre": {
       const trahisons = perso.memoire.filter((m) => m.type === "trahison").length;
-      const base = persuasionJoueur(carriere) * 0.5 + ((perso.relation + 1) / 2) * 0.5 - trahisons * 0.15;
+      const base =
+        persuasionJoueur(carriere) * 0.5 + ((perso.relation + 1) / 2) * 0.5 - trahisons * 0.15 + poids.convaincre * 0.5;
       const reussi = borner01(base + bruit) > 0.5;
       persoSuivant = reussi
         ? { ...perso, relation: clampRel(perso.relation + 0.12) }
-        : ajouterMemoire({ ...perso, relation: clampRel(perso.relation - 0.04) }, "attaque", 0.2, tick, "insistance mal placée");
+        : ajouterMemoire(
+            { ...perso, relation: clampRel(perso.relation - 0.04) },
+            "attaque",
+            0.2 * poids.graviteMemoire,
+            tick,
+            "insistance mal placée",
+          );
+      persoSuivant = gagnerConnaissance(persoSuivant, 0.3);
       resultat = {
         perso: persoSuivant,
         message: reussi
@@ -112,14 +144,18 @@ export function appliquerInteraction(
     }
     case "promettre": {
       const detail = promesse && promesse.trim().length > 0 ? promesse.trim() : "soutien contre soutien";
-      persoSuivant = ajouterMemoire(perso, "promesse", 0.4, tick, detail);
+      const categorie = categorieAttendue ?? "terrain";
+      const p = creerPromesse(perso.id, detail, tick, categorie, tick + 8);
+      persoSuivant = ajouterMemoire(perso, "promesse", 0.4 * poids.fiabilitePromesse, tick, detail);
       persoSuivant = { ...persoSuivant, relation: clampRel(perso.relation + 0.08) };
+      persoSuivant = gagnerConnaissance(persoSuivant, 0.3);
       resultat = {
         perso: persoSuivant,
-        message: `Promesse enregistrée auprès de ${nomComplet(perso)} : ${detail}. Elle te suivra.`,
+        message: `Promesse enregistrée auprès de ${nomComplet(perso)} : ${detail}. Il faudra une action ${categorie} d'ici huit semaines.`,
         effet: null,
         reussi: true,
         coutTemps: def.coutTemps,
+        promesse: p,
       };
       break;
     }
@@ -136,8 +172,8 @@ export function appliquerInteraction(
         break;
       }
       const base = ((perso.relation + 1) / 2) * 0.6 + 0.1 + bruit * 0.5;
-      if (borner01(base) < 0.35) {
-        persoSuivant = ajouterMemoire(perso, "attaque", 0.1, tick, "demande refusée");
+      if (borner01(base) < 0.35 + poids.refusSeuil) {
+        persoSuivant = ajouterMemoire(perso, "attaque", 0.1 * poids.graviteMemoire, tick, "demande refusée");
         resultat = {
           perso: persoSuivant,
           message: `${nomComplet(perso)} décline. La relation n'est pas assez solide.`,
@@ -148,8 +184,9 @@ export function appliquerInteraction(
         break;
       }
       const effet = effetHook(perso.metier);
-      persoSuivant = ajouterMemoire(perso, "dette", 0.5, tick, effet.detail);
+      persoSuivant = ajouterMemoire(perso, "dette", 0.5 * poids.graviteMemoire, tick, effet.detail);
       persoSuivant = { ...persoSuivant, relation: clampRel(perso.relation + 0.05) };
+      persoSuivant = gagnerConnaissance(persoSuivant, 0.3);
       if (effet.caution) {
         persoSuivant = { ...persoSuivant, cautionActive: { jusqua: tick + 4, multiplicateur: 1.5 + perso.expertise } };
       }
@@ -163,7 +200,14 @@ export function appliquerInteraction(
       break;
     }
     case "trahir": {
-      persoSuivant = ajouterMemoire({ ...perso, relation: -0.6 }, "trahison", 0.8, tick, "utilisé puis abandonné");
+      persoSuivant = ajouterMemoire(
+        { ...perso, relation: -0.6 },
+        "trahison",
+        0.8 * poids.graviteMemoire,
+        tick,
+        "utilisé puis abandonné",
+      );
+      persoSuivant = gagnerConnaissance(persoSuivant, 0.2);
       carriereSuivante.progression = {
         ...carriereSuivante.progression,
         notoriete: clamp01b(carriereSuivante.progression.notoriete + 0.06),
@@ -195,6 +239,7 @@ export function appliquerInteraction(
         m.type === "trahison" ? { ...m, gravite: Math.max(0.2, m.gravite * 0.5) } : m,
       );
       persoSuivant = { ...perso, relation: clampRel(perso.relation + 0.15), memoire: amorcees };
+      persoSuivant = gagnerConnaissance(persoSuivant, 0.2);
       carriereSuivante.ressources = {
         ...carriereSuivante.ressources,
         argent: clamp01b(carriereSuivante.ressources.argent - 0.05),

@@ -46,6 +46,13 @@
   color: var(--encre);
 }
 
+.entete-partie .metier {
+  font-family: var(--f-sans);
+  font-size: var(--t-s);
+  font-style: italic;
+  color: var(--encre-douce);
+}
+
 .entete-partie .statut {
   font-family: var(--f-sans);
   font-size: var(--t-xs);

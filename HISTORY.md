@@ -2,6 +2,46 @@
 
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
 
+## 2026-09-16, le vrai jeu : J11 à J17 appliqués d'une traite, partie p3.0.0
+
+- But : Aaron refuse le commit proposé et demande la transformation. Consigne exacte : « je veux modifier en profondeur le jeu pour l'améliorer énormément, on est encore dans un mvp, dans une beta, je veux le vrai jeu », priorité au document vision, puis aux jalons de recherche gameplay, tout dans la même session, commit et push seulement à la fin.
+- Livré, partie p3.0.0 (moteur inchangé m0.4.0, migration douce depuis p2.1.0) : semaine à deux étages (activité de fond), état intérieur énergie et moral qui module l'efficacité, six compétences construites par la répétition, carrefours à deux ou trois réponses pondérés par compétences et traits avec effet révélé en texte, traits de personnalité qui pèsent dans les interactions, effets durables nommés et datés, relation affichée en fourchette selon la connaissance mutuelle, enjeu dominant par territoire avec matching marque-enjeu, promesses à échéance datée, frappe d'un parti adverse coalisé sur ton territoire le plus fort, vie indépendante des partis et médias, aile combative au delà d'une organisation trop grosse, coûts croissants par palier, corruption d'expansion, dons nommés et tracés, investiture de mai 2027 comme échéance intermédiaire, saisons du calendrier réel, écho retardé annoncé.
+- Nouvelle fin investiture-ratee, et fin élue désormais conditionnée à l'investiture obtenue : c'est la remontée longue (F9), les choix des paliers bas conditionnent l'option tardive, sans script.
+- Fichiers : ui/sim/dilemmes.ts (neuf), carriere.ts, personnages.ts, interactions.ts, courrier.ts, partis.ts, temps.ts, partie.ts, sauvegarde.ts, ui/app/partie/page.tsx, dilemmes.test.ts et jeu-profond.test.ts (neufs), sauvegarde.test.ts, partie.test.ts, temps.test.ts.
+- Pourquoi ces formes : chaque mécanisme transpose une source documentée (E1 à E14 de l'étude des jeux comparables, F1 à F10 de la recherche hors politique) et reste une hypothèse de gameplay. Aucun blocage par ressource n'est réintroduit, tout passe par la sanction et l'efficacité réduite, conformément à R7 J8.
+- Simplification assumée : J14 est livrée en version annoncée (l'écho retardé est daté dans le journal), la file d'effets chiffrés retardés reste due.
+- Vérifications réelles : typecheck propre, 33 fichiers et 159 tests verts, build Next vert (6 pages, /partie 23,2 kB). Rapports dans rapport-typecheck.txt, rapport-tests.txt, rapport-build.txt.
+- Restant dû : audit sécurité avant mise en ligne, tutoriel par courrier, revue adversariale des règles neuves sensibles (dilemmes, frappe adverse, investiture), vérification visuelle des nouveaux blocs par le pôle design, déploiement par Aaron.
+
+## 2026-09-16, retouches d'audit, typecheck réparé, deux études d'enrichissement
+
+- Cinq retouches de l'audit parcours exécutées après GO : bouton semaine remonté, sondage commandé réellement débité dans jouerSemaine, groupes francisés à l'écran et dans la dicibilité, mémoire visible en badges dans les fiches, traces des fins persistées (ui/sim/traces.ts, clé fm-politique:traces, écran de fin « Trajectoires déjà tentées »).
+- Fin retour-ordinaire réparée : la condition stricte `tick > tickDeDate(2032, 4, 1)` excluait le tick partagé par le 1er et le 2 avril, remplacée par `tick >= tickDeDate(2032, 4, 2)`. Leçon : dans un tick hebdomadaire, comparer un tick exact avec plus strict exclut toujours la semaine cible.
+- Typecheck cassé en fin de session par un import manquant (CategorieAction dans ui/sim/carriere.ts, code J15 déjà écrit). Réparé, vérifié : tsc propre, 137 tests verts.
+- Deux études de recherche livrées et soldées : docs/etude-jeux-comparables-2026-09-16.md (12 jeux politiques, E1 à E14, jalons J11 à J14) et docs/recherche-gameplay-hors-politique-2026-09-16.md (9 jeux hors politique, F1 à F10, jalons J15 à J17). Diagnostic d'Aaron acté : le jeu est maigre, le gameplay inintéressant, il faut apprendre des jeux qui tiennent la personne. Recommandation d'exécution : J15 richesse de semaine d'abord, puis J11 information incarnée. Aucun jalon d'enrichissement ne démarre sans GO.
+- Limite terminal : la sortie PowerShell reste incapturable depuis ici, les vérifications passent par fichiers. Le build Next n'a pas été rejoué, à faire avant commit.
+
+
+## 2026-09-16, audit parcours joueur p2.1.0
+
+- Audit complet sans toucher au code : docs/audit-parcours-joueur-2026-09-16.md, journal docs/journaux-experts/parcours-joueur.md créé.
+- Verdict : publiable avec retouches. Cinq retouches nommées pour GO d'Aaron, dans l'ordre : bouton semaine remonté près du bandeau, sondage débité ou coût retiré, libellés français des groupes, mémoire visible dans les fiches, trace d'échec au rejouer.
+- Point dur : les groupes perçus affichent encore grp.centre et grp.peripherie, non publiable pour l'historien tant que ce n'est pas francisé.
+- Méthode : retours réels d'Aaron prévalant, protocole tenu, aucune modification sans GO.
+
+## 2026-09-16, rafale jalons J10 J7 J8 J9 J3 J4 J5 d'une traite
+
+- J10 R1 : le clic « Semaine suivante » répond toujours. L'action et le média suivent le palier visible, toute exception de jouerSemaine s'affiche dans le bandeau d'erreur. Fini le clic silencieux.
+- J10 R2 : le statut devient un palier neutre « Citoyen sans mandat », le métier d'origine s'affiche à côté dans le bandeau. Un enseignant lit « Enseignant dans un collège ».
+- J10 R8 : la mise en garde sort des écrans de jeu, elle vit en pied de page discret via MENTION_DISCRETE. Le test suit le déplacement.
+- J7 : chaque action porte un palier 1 à 5, le joueur ne voit que son palier. Au palier 1, figures de proximité seulement, un seul média, aucun parti rival à l'écran. Ils existent et agissent en arrière-plan.
+- J8 R7 : plus de blocage par manque de ressource. On laisse faire à effet réduit, puis dette d'argent, risque d'enquête, réputation entamée, soutiens en berne, journal explicite.
+- J9 R3 R4 R5 : graines expliquées avec exemple 42 contre 43, dix origines avec vecteur propre, six ambitions dont maire 2032 et européenne 2029, objectifs à paliers affichés en barres.
+- J3 : carte de douze territoires types avec adoption par vecteur et réponse adverse qui monte avec la notoriété. Migration douce des sauvegardes p2.0.0 vers p2.1.0.
+- J4 : trois sondages commandables, coûts croissants et biais décroissant, lecture approximative affichée après chaque semaine.
+- J5 : calibration 40 parties de 24 semaines bornées avec carte et sanctions. Partie p2.1.0.
+- Limite : terminal non vérifiable depuis ici (politique d'exécution et capture), tests et build à rejouer par Aaron avec npm.cmd. Revue adversariale et audits parcours plus sécurité restant dus avant mise en ligne.
+
 ## 2026-09-16, retours de jeu d'Aaron, cap vers la progression par paliers
 
 - Recueil intégral dans docs/retours-joueur-2026-09-16.md. Deux défauts vérifiés dans le code, causes lues et non supposées : « Semaine suivante » sans effet parce que l'exception de jouerSemaine n'est affichée nulle part, et origine choisie absente du statut parce que creerCarriere fixe « employe » quelle que soit l'origine.

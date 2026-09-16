@@ -26,6 +26,7 @@ export interface ActionJeu {
   coutArgent: number; // 0..1
   moteur?: ActionJouable; // passe dans la boucle du monde (adversaires réagissent)
   regle?: string; // règle du catalogue mobilisée, pour le texte et les tests
+  palier: number; // J7 : palier d'accès 1..5, le joueur ne voit que son palier et avant
   effets: EffetsAction;
 }
 
@@ -37,6 +38,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Une table, des tracts, des visages. Le bouche à oreille de base.",
     coutTemps: 0.3,
     coutArgent: 0.02,
+    palier: 1,
     effets: { soutiens: 0.04, militants: 0.04, notoriete: 0.02 },
   },
   {
@@ -46,6 +48,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Long, usant, irremplaçable. Tu apprends ce que les gens pensent vraiment.",
     coutTemps: 0.4,
     coutArgent: 0,
+    palier: 1,
     effets: { soutiens: 0.05, notoriete: 0.01, organisation: 0.01 },
   },
   {
@@ -55,6 +58,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Salle des fêtes, quinze chaises, un projecteur. Le risque : la surexposition précoce.",
     coutTemps: 0.35,
     coutArgent: 0.05,
+    palier: 1,
     effets: { notoriete: 0.06, soutiens: 0.04, exposition: 0.08, risque: 0.04 },
   },
   {
@@ -64,6 +68,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Un local, un cahier de responsabilités, des permanences. Ça tient tout seul après.",
     coutTemps: 0.35,
     coutArgent: 0.12,
+    palier: 2,
     effets: { organisation: 0.08, militants: 0.05 },
   },
   {
@@ -73,6 +78,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Marcher devant, parler peu, être vu juste. La légitimité de la rue.",
     coutTemps: 0.3,
     coutArgent: 0,
+    palier: 2,
     effets: { legitime: 0.05, soutiens: 0.05, notoriete: 0.03, risque: 0.02 },
   },
   {
@@ -83,6 +89,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.25,
     coutArgent: 0.06,
     regle: "R12",
+    palier: 1,
     effets: { notoriete: 0.05, militants: 0.03, exposition: 0.05, risque: 0.03 },
   },
   {
@@ -93,6 +100,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.3,
     coutArgent: 0.02,
     regle: "R2",
+    palier: 2,
     effets: { audience: 0.1, notoriete: 0.04, exposition: 0.06 },
   },
   {
@@ -103,6 +111,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.35,
     coutArgent: 0,
     regle: "R13",
+    palier: 3,
     effets: { notoriete: 0.05, legitime: 0.04, audience: 0.06, risque: 0.05 },
   },
   {
@@ -112,6 +121,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Dix minutes en direct. Ça dépend de ta persuasion du jour.",
     coutTemps: 0.25,
     coutArgent: 0,
+    palier: 2,
     effets: { notoriete: 0.05, audience: 0.08, risque: 0.04 },
   },
   {
@@ -123,6 +133,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutArgent: 0,
     moteur: "etiquetage-modere",
     regle: "R1",
+    palier: 1,
     effets: { notoriete: 0.03, exposition: 0.04, risque: 0.08 },
   },
   {
@@ -134,6 +145,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutArgent: 0,
     moteur: "etiquetage-agressif",
     regle: "R1",
+    palier: 3,
     effets: { notoriete: 0.05, exposition: 0.08, risque: 0.18, reputation: -0.04 },
   },
   {
@@ -144,6 +156,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.35,
     coutArgent: 0.02,
     moteur: "chercher-coalition",
+    palier: 2,
     effets: { organisation: 0.04, legitime: 0.02 },
   },
   {
@@ -153,6 +166,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Argent et carnet d'adresses, contre promesses et compromis.",
     coutTemps: 0.3,
     coutArgent: 0.08,
+    palier: 3,
     effets: { argent: -0.05, organisation: 0.05, legitime: 0.03, reputation: -0.02 },
   },
   {
@@ -162,6 +176,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     description: "Préfecture, mairie, sous-préfet. L'accès institutionnel se ménage, pas se force.",
     coutTemps: 0.3,
     coutArgent: 0.03,
+    palier: 3,
     effets: { legitime: 0.04, organisation: 0.03 },
   },
   {
@@ -172,6 +187,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.4,
     coutArgent: 0.06,
     regle: "R15",
+    palier: 2,
     effets: { legitime: 0.06, organisation: 0.06, notoriete: 0.01 },
   },
   {
@@ -182,6 +198,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.3,
     coutArgent: 0,
     moteur: "attaquer-institution",
+    palier: 4,
     effets: { notoriete: 0.06, legitime: -0.05, risque: 0.2 },
   },
   {
@@ -193,6 +210,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutArgent: 0.02,
     moteur: "preparer-silencieux",
     regle: "R22",
+    palier: 1,
     effets: { organisation: 0.05, militants: 0.03, notoriete: -0.01 },
   },
   {
@@ -203,6 +221,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.25,
     coutArgent: 0,
     regle: "R10",
+    palier: 1,
     effets: { legitime: 0.04, reputation: 0.02, notoriete: -0.02 },
   },
   {
@@ -213,6 +232,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.3,
     coutArgent: 0.02,
     regle: "R9",
+    palier: 2,
     effets: { notoriete: 0.02, legitime: 0.01 },
   },
   {
@@ -223,6 +243,7 @@ export const ACTIONS_JEU: ActionJeu[] = [
     coutTemps: 0.3,
     coutArgent: 0,
     regle: "R11",
+    palier: 4,
     effets: { soutiens: 0.06, notoriete: 0.05, risque: 0.15, reputation: -0.06 },
   },
 ];

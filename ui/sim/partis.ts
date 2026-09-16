@@ -1,6 +1,7 @@
 // Partis organisés : les acteurs du moteur ont des leaders nommés et des partis fictifs.
 // Leurs coups deviennent des manoeuvres lisibles. Les relations évoluent avec tes coups.
 import type { Monde } from "./engine.js";
+import type { Rng } from "./rng.js";
 import type { Personnage } from "./personnages.js";
 import { nomComplet } from "./personnages.js";
 
@@ -85,4 +86,47 @@ export function relationsInitialesPartis(): Record<string, number> {
   const r: Record<string, number> = {};
   for (const p of PARTIS) r[p.id] = 0;
   return r;
+}
+
+// E2/E3 (J12) : le monde te répond. Quand tu deviens assez visible, les partis adverses
+// coalisent et frappent ton territoire le plus fort. Borné, seedé, jamais gratuit : il faut
+// des relations déjà dégradées et de la notoriété pour que la frappe se déclenche.
+export interface FrappeAdverse {
+  partiId: string;
+  nomParti: string;
+  territoireNom: string;
+  texte: string;
+  deltaAdoption: number;
+}
+
+export function frappeAdverse(
+  territoires: { id: string; nom: string; adoption: number; reponseAdverse: number }[],
+  relationsPartis: Record<string, number>,
+  notoriete: number,
+  rng: Rng,
+): { frappes: FrappeAdverse[]; territoires: Map<string, number>; reponses: Map<string, number> } {
+  const frappes: FrappeAdverse[] = [];
+  const deltasAdoption = new Map<string, number>();
+  const deltasReponse = new Map<string, number>();
+  if (notoriete < 0.25) return { frappes, territoires: deltasAdoption, reponses: deltasReponse };
+  for (const parti of PARTIS) {
+    const relation = relationsPartis[parti.id] ?? 0;
+    if (relation > -0.2) continue; // pas d'hostilité, pas de frappe
+    const intensite = Math.min(1, (notoriete - 0.25) * 2) * Math.min(1, -relation);
+    if (rng.next() > 0.15 + intensite * 0.4) continue; // conditionné, pas aléatoire
+    const cible = [...territoires].sort((a, b) => b.adoption - a.adoption)[0];
+    if (cible === undefined) continue;
+    const deltaAdoption = -0.03 - intensite * 0.05;
+    const deltaReponse = 0.04 + intensite * 0.05;
+    deltasAdoption.set(cible.id, (deltasAdoption.get(cible.id) ?? 0) + deltaAdoption);
+    deltasReponse.set(cible.id, (deltasReponse.get(cible.id) ?? 0) + deltaReponse);
+    frappes.push({
+      partiId: parti.id,
+      nomParti: parti.nom,
+      territoireNom: cible.nom,
+      texte: `Le ${parti.nom} riposte : contre-offensive organisée à ${cible.nom}, ton implantation y plie.`,
+      deltaAdoption,
+    });
+  }
+  return { frappes, territoires: deltasAdoption, reponses: deltasReponse };
 }

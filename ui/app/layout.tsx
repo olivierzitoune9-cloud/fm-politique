@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MENTION_DISCRETE } from "../sim/carriere";
 import "./globals.css";
 import "./styles/composants.css";
 import "./styles/formulaire.css";
@@ -26,6 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </p>
           </header>
           <main>{children}</main>
+          <footer className="site-pied">
+            <p className="mention">{MENTION_DISCRETE}</p>
+          </footer>
         </div>
       </body>
     </html>
