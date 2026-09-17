@@ -26,6 +26,16 @@ Semaine multi coups avec budget temps/argent, risques affichés, agenda cumulati
 6. Pas de réunions à participants (C3), pas de délégation intelligente avec reprise de contrôle (design §29-30), pas de projets de réforme (§43).
 7. Tensions non tranchées : fins de partie qui ferment au lieu de laisser gouverner, paliers de carrière à confronter à §88, information cachée à calibrer contre §78 (le monde jamais complètement connu).
 
+## État vérifié au 2026-09-17, reprise P1/P2
+
+- [x] Socle P1 intégré : graphe dans Partie, mémoire par nœud, liens, migrations et carte cliquable. Limite : groupes d'opinion présents, territoires encore séparés du graphe.
+- [x] Première boucle P2 implémentée : courrier d'enquête → dossier → liens, recherche interne, signaux faibles cliquables, ouverture persistée. Tests : 200 sur 36 fichiers, dont dix d'enquête et une migration p3.2.0.
+- [x] Validation finale : TypeScript moteur/UI propres, build Next réussi (six pages, /partie 28,3 kB).
+- [x] P3 première boucle implémentée (2026-09-17, partie p3.4.0) : réunions à participants nommés (2 à 3, préparation, coûts, compte rendu daté dans le graphe), initiatives autonomes seedées au plus une par semaine, missions persistantes (objectif, responsable délégué ou gestion personnelle, budget plafonné, échéance huit semaines, pause/reprise, rapports datés), écran « Agir avec d'autres » relié aux dossiers, migration p3.3.0 testée. Vérifications : 210 tests sur 39 fichiers, TypeScript moteur/UI propres, build Next réussi (six pages, /partie 32,5 kB).
+- [ ] P3 compléments : les coups coalition existants ne sont pas encore remplacés par des réunions, pas de recrutement multicritère, coûts encore en points (les euros restent en P4), coefficients posés comme hypothèses de gameplay datées du 2026-09-17, non calibrées empiriquement.
+- [ ] Retour visuel d'Aaron sur P1/P2/P3.
+
+
 ## Phases (une à la fois, chaque phase = tests + build + retour d'Aaron)
 
 - P1 Fondations du monde : graphe d'entités partagé (personnes-organisations-médias-territoires), mémoire des organisations, liens navigables en données. Le socle technique de tout le reste.

@@ -2,6 +2,38 @@
 
 ## Contexte courant
 
+**Résultat final de cette reprise :** P3 première boucle implémentée (partie p3.4.0) : initiatives autonomes, réunions à participants, missions persistantes avec délégation et reprise de contrôle, écran « Agir avec d'autres », migration p3.3.0 testée. Vérifications : 210 tests sur 39 fichiers, TypeScript moteur/UI propres, build Next réussi (six pages, /partie 32,5 kB). Graphify update relancé en fin de session. Commit et push exécutés sur instruction d'Aaron. Retour visuel P1/P2/P3 toujours attendu.
+
+## Intervention du 2026-09-17, P3 : réunions, initiatives, missions
+
+- Méthode TDD stricte tenue : chaque règle nouvelle a d'abord été écrite en test, constatée rouge pour la bonne raison (fichier absent, puis assertions réelles), implémentée, puis validée. Le test d'initiatives vérifie l'absence de mutation de l'entrée, le déterminisme, la mise à jour de lien, la mémoire datée et la fréquence sur 40 graines.
+- Défaut corrigé dans mes propres scénarios : un test de mission avançait au-delà d'une fin « Marginalisé » avec une action non nourrissante ; correction par « tractage-marche », jamais par un assouplissement du moteur.
+- Le scénario de réunion incluait le nœud du joueur parmi les participants ; le graphe social le porte, l'implémentation l'écrit. Hypothèse assumée, à arbitrer si Aaron préfère des invités seulement.
+- Les compte rendus de réunion sont établis lors du branchement dans jouerSemaine (rng de semaine), pas tenus immédiatement au clic : un seul point de résolution, compatible migration p3.3.0.
+- Limites consignées : coups coalition inchangés, pas de recrutement multicritère, coûts en points (euros en P4), coefficients (8 semaines, 2 points d'argent, 5 %/20 %, préparation +0,2) posés comme hypothèses de gameplay datées du 2026-09-17, jamais comme des causalités sourcées.
+- Graphify : update relancé en fin de session après l'ajout des trois modules P3.
+
+
+**Résultat final de cette reprise :** 200 tests / 36 fichiers, TypeScript moteur/UI propres, build Next réussi (six pages, /partie 28,3 kB), diff sans erreur d'espacement. Graphify code mis à jour : 1289 nœuds, 2169 liens, 94 communautés. Documents non réextraits sémantiquement ; rapports de tests JSON signalés sans nœuds par l'outil. Pas de validation navigateur ni de commit/push. P3 reste non démarré.
+
+
+### Reprise du 2026-09-17 : état courant rectifié
+
+P1 est maintenant intégrée et la première boucle P2 est implémentée (partie p3.3.0). L'état « brouillon non importé » ci-dessous est historique. Dix tests d'enquête couvrent ouverture idempotente, sauvegarde, fiches visibles/minces, recherche, fenêtres et plafonds, progression ; migration p3.2.0 testée. Résultat actuel : 200 tests sur 36 fichiers. TypeScript et build verts avant les derniers tests de bornes, contrôle final relancé.
+
+Périmètre réel : page existante enrichie, pas encore inbox/navigation complète de la vision. P3 non commencé ; retour visuel et arbitrage git attendus. Le graphe représente des groupes d'opinion, les territoires restent sur leur carte séparée.
+
+### Intervention du 2026-09-17, réparation et vérification P2
+
+- Corrections : structure enquete.ts, fonction ouvrirDossier générique, nom courrierEnquete à l'écran, dossier hors carte consultable, persistance immédiate, remise à zéro de la sélection/recherche au recommencer, signaux cliquables et absents quand vides, champ de recherche nommé pour l'accessibilité.
+- Recherche d'organisation retrouve désormais aussi ses membres ; idOrganisation partagé plutôt que dupliqué. Les règles de visibilité de proximité sont encore dupliquées avec partie.ts, limite connue.
+- Deux défauts confirmés par tests nouveaux : horizon huit semaines incluant neuf ticks, fenêtre courrier incluant cinq ticks et événements futurs. Correction des bornes [tick - horizon + 1, tick]. Les tests ne sont pas assouplis.
+- Erreurs de méthode à conserver : annonces « P2 codé » avant validation, trop de relances terminal sans preuve de fin, formulations répondant à des hypothèses non demandées. Rapports distincts et marqueurs de succès utilisés ensuite, aucune sortie vide considérée comme succès.
+- Vérifications : suite complète 197 tests/build six pages avant extension ; 200 tests après correction des bornes, chaîne TypeScript/build finale en cours. Ne pas confondre test-p2.txt (échec ancien) avec validation-p2-tests.log (réussite actuelle).
+
+### État antérieur, conservé
+
+
 P1 du plan d'application des visions (docs/plan-application-vision.md) est démarrée mais non intégrée : `ui/sim/monde-social.ts` est le brouillon de référence du graphe social (nœuds personne/organisation/média/groupe, liens appartenance/influence/information, mémoire d'événements datée, carteVisible pilotée par le palier J7). Il n'est importé nulle part : pas de test, pas d'écran, pas de sauvegarde. Le dépôt est vert depuis la clôture du 2026-09-17 (172 tests, 34 fichiers, tsc propre, build verte). Le chantier p3.1.0 (semaine multi coups) est consigné mais non commité, avec ses résidus notés ci-dessous : plafond écran 12, contrôle des moyens non cumulatif, monde ne voyant que le premier coup.
 
 ## 2026-09-17, clôture de la session buguée : P1 démarrée, brouillon mort supprimé, dépôt rendu vert

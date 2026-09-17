@@ -54,8 +54,22 @@ import {
 } from "./partis.js";
 import { genererDilemmes, resoudreDilemme, promesseDepuisDilemme, type Dilemme } from "./dilemmes.js";
 import { echeancesAPartirDe } from "./temps.js";
+import {
+  carteVisible,
+  creerMondeSocial,
+  enregistrerEvenement,
+  idOrganisation,
+  noeudsVisiblesDuPalier,
+  NOEUD_JOUEUR,
+  type MondeSocial,
+  type VueMondeSocial,
+} from "./monde-social.js";
+import { avancerMissions, type Mission } from "./missions.js";
+import { tenirReunion, coutReunion, type OrdreReunion, type CompteRenduReunion } from "./reunions.js";
+import { avancerInitiatives } from "./initiatives.js";
+import type { DossierRef } from "./enquete.js";
 
-export const VERSION_PARTIE = "p3.1.0"; // C1 : la semaine multi coups, risque affiché, agenda comme file
+export const VERSION_PARTIE = "p3.4.0"; // P3 : réunions, initiatives et missions persistantes
 
 export type FinId =
   | "elu"
@@ -92,6 +106,10 @@ export interface Partie {
   proposition: Proposition;
   relationsPartis: Record<string, number>;
   territoires: Territoire[]; // J3 : carte d'adoption, douze territoires types
+  mondeSocial: MondeSocial; // P1 : le graphe du monde, avec la mémoire datée de chaque nœud
+  missions: Mission[];
+  reunions: CompteRenduReunion[];
+  dossiers: DossierRef[]; // P2 : les dossiers d'enquête ouverts, rechargés avec la partie
   dilemmesPasses: string[]; // J16 : ids des dilemmes déjà sortis, un par partie au plus
   dilemmeOuvert: Dilemme | null; // le carrefour en attente de choix, bloquant pour la semaine
   journal: JournalPartie[];
@@ -105,6 +123,7 @@ export interface CoupSemaine {
 }
 
 export interface TourSemaine {
+  reunions?: OrdreReunion[];
   actionId: string; // conservé : premier coup, compatibilité p3.0.0
   actions?: CoupSemaine[]; // C1 : la semaine multi coups, dans l'ordre choisi
   activiteId?: string; // J15 F1 : la seconde étage de la semaine, activité de fond
@@ -117,13 +136,18 @@ export interface TourSemaine {
 
 export function creerPartie(graine: number, config: ConfigCarriere): Partie {
   const monde = creerMonde(graine);
+  const personnages = genererPersonnages(creerRng(graine + 0x9e3779b9));
   return {
     version: VERSION_PARTIE,
     graine,
     tick: 0,
     monde,
     carriere: creerCarriere(config, creerRng(graine + 0x5bf03635)),
-    personnages: genererPersonnages(creerRng(graine + 0x9e3779b9)),
+    personnages,
+    mondeSocial: creerMondeSocial(personnages, monde, graine, config.nom),
+    dossiers: [],
+    reunions: [],
+    missions: [],
     proposition: creerProposition(
       config.propositionTexte && config.propositionTexte.trim().length > 0
         ? config.propositionTexte.trim()
@@ -349,6 +373,11 @@ export function totalSemaine(tour: TourSemaine, palier: number): TotalSemaine {
       // interaction inconnue : la semaine lèvera, le total ne bloque pas
     }
   }
+  for (const ordre of tour.reunions ?? []) {
+    const cout = coutReunion(ordre);
+    temps += cout.temps;
+    argent += cout.argent;
+  }
   return { temps, argent, coups: coups.length };
 }
 
@@ -487,6 +516,7 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
 
   // 4. Interaction humaine facultative. Traits pondérés (J16 F5), connaissance qui monte (J17 F7),
   // promesse à échéance enregistrée (E10), dons nommés tracés (E7).
+  let messageInteraction: string | null = null; // P1 : entre en mémoire du graphe social
   let personnages = partie.personnages;
   if (tour.interaction !== undefined) {
     const perso = personnages.find((p) => p.id === tour.interaction!.persoId);
@@ -507,6 +537,7 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     }
     personnages = personnages.map((p) => (p.id === perso.id ? r.perso : p));
     journal.push({ tick, texte: r.resultat.message });
+    messageInteraction = r.resultat.message;
     if (r.resultat.effet !== null) {
       const e = r.resultat.effet;
       if (e.soutiens !== undefined) carriere = appliquerDelta(carriere, "soutiens", e.soutiens);
@@ -584,6 +615,13 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
       argent: Math.max(0, carriere.ressources.argent - coutArgent),
     },
   };
+  // P3 : réunions après les dépenses des coups, avant la régénération hebdomadaire.
+  let etatReunions = { ...partie, carriere, personnages, journal: [] as JournalPartie[] };
+  for (const ordre of tour.reunions ?? []) etatReunions = tenirReunion(etatReunions, ordre, tick, rng);
+  etatReunions = avancerMissions(etatReunions, tick, creerRng((partie.graine * 3266489917 + tick) >>> 0));
+  carriere = etatReunions.carriere;
+  personnages = etatReunions.personnages;
+  journal.push(...etatReunions.journal);
   // J15 F1 : la seconde étage de la semaine. Une activité de fond, jamais bloquante, toujours réelle.
   const activite = activiteParId(tour.activiteId ?? "repos");
   carriere = appliquerActivite(carriere, activite);
@@ -652,6 +690,77 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   const relationsPartis = majPartis(partie.relationsPartis, action.moteur, trahisonsLeaders);
   for (const m of manoeuvresPartis(monde, personnages, true)) {
     journal.push({ tick, texte: m.texte });
+  }
+
+  // P1 : le graphe social reçoit la mémoire de la semaine. Chaque nœud retient ce qui lui est
+  // arrivé, daté : la mémoire des organisations survit aux personnages (design §36-37).
+  let mondeSocial = avancerInitiatives(
+    etatReunions.mondeSocial, personnages, tick,
+    creerRng((partie.graine * 2246822519 + tick) >>> 0),
+  );
+  const initiative = mondeSocial.evenements.find((e) => e.tick === tick && e.type === "initiative-autonome");
+  if (initiative !== undefined) journal.push({ tick, texte: initiative.texte });
+  mondeSocial = enregistrerEvenement(mondeSocial, {
+    tick,
+    noeudId: NOEUD_JOUEUR,
+    type: "decisions",
+    texte: `Semaine ${tick} : ${action.libelle.toLowerCase()}.`,
+  });
+  for (const e of monde.evenements.filter((ev) => ev.tick === tick)) {
+    mondeSocial = enregistrerEvenement(mondeSocial, {
+      tick,
+      noeudId: e.groupeId,
+      type: "evenement-monde",
+      texte: `${e.type} (${e.cause}).`,
+    });
+  }
+  for (const p of personnages) {
+    const recent = p.memoire.find((m) => m.tick === tick);
+    const textePerso =
+      tour.interaction !== undefined && tour.interaction.persoId === p.id && messageInteraction !== null
+        ? messageInteraction
+        : recent?.detail;
+    if (textePerso !== undefined) {
+      mondeSocial = enregistrerEvenement(mondeSocial, {
+        tick,
+        noeudId: p.id,
+        type: "rencontre",
+        texte: textePerso,
+      });
+      // La mémoire du nœud organisation : ce qui arrive à un membre marque la maison.
+      mondeSocial = enregistrerEvenement(mondeSocial, {
+        tick,
+        noeudId: idOrganisation(p.organisation),
+        type: "rencontre",
+        texte: `${p.prenom} ${p.nom} : ${recent?.detail ?? textePerso}`,
+      });
+    }
+  }
+  for (const m of MEDIAS) {
+    if (coups.some((coup) => {
+      try {
+        return actionParId(coup.actionId).categorie === "media";
+      } catch {
+        return false;
+      }
+    })) {
+      mondeSocial = enregistrerEvenement(mondeSocial, {
+        tick,
+        noeudId: m.id,
+        type: "passage-media",
+        texte: `A relayé « ${action.libelle} » cette semaine.`,
+      });
+    }
+  }
+  if (chocEcoFort(monde, tick)) {
+    for (const g of monde.groupes) {
+      mondeSocial = enregistrerEvenement(mondeSocial, {
+        tick,
+        noeudId: g.id,
+        type: "choc-eco",
+        texte: `Satisfaction économique à ${(g.satisfactionEco * 100).toFixed(0)} sur 100.`,
+      });
+    }
   }
 
   // J3 plus E2/E3/E6 : la carte propage ton idée (matching marque-enjeu par territoire, J11),
@@ -795,6 +904,9 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     proposition,
     relationsPartis,
     territoires,
+    mondeSocial,
+    reunions: etatReunions.reunions,
+    missions: etatReunions.missions,
     dilemmesPasses,
     dilemmeOuvert,
     journal: [...partie.journal, ...journal],
@@ -808,6 +920,12 @@ function evaluerMarginalisation(c: Carriere): Carriere {
     return { ...c, semainesMarginalise: c.semainesMarginalise + 1 };
   }
   return { ...c, semainesMarginalise: 0 };
+}
+
+// P1 : un choc économique marquant entre en mémoire de groupe. Seuil haut, pour que la mémoire
+// porte les vrais bouleversements et pas le bruit hebdomadaire.
+function chocEcoFort(monde: Monde, tick: number): boolean {
+  return monde.groupes.some((g) => g.satisfactionEco < 0.25) && tick > 0;
 }
 
 export interface VuePartie {
@@ -838,6 +956,8 @@ export interface VuePartie {
   relationsPartis: Record<string, number>;
   partisVisibles: boolean; // J7 : faux au palier 1, les partis existent mais ne s'affichent pas
   territoires: Territoire[]; // J3 : carte d'adoption visible dès le palier 1, c'est ton terrain
+  carte: VueMondeSocial; // P1 : le sous-graphe visible, piloté par le palier (nœuds, liens, mémoire)
+  dossiers: DossierRef[]; // P2 : les dossiers d'enquête ouverts
   chomage: number;
   sourceChomage: string;
 }
@@ -863,6 +983,16 @@ export function vuePartie(partie: Partie): VuePartie {
   const mediasVisibles = palier <= 1 ? MEDIAS.slice(0, 1) : MEDIAS;
   const manoeuvresToutes = manoeuvresPartis(partie.monde, partie.personnages, true);
   const manoeuvresVisibles = palier <= 1 ? [] : manoeuvresToutes;
+  // P1 : la carte du monde social visible suit les mêmes règles J7 que le reste de la vue.
+  const carte = carteVisible(
+    partie.mondeSocial,
+    noeudsVisiblesDuPalier(
+      partie.mondeSocial,
+      palier,
+      personnagesVisibles.map((p) => p.id),
+      mediasVisibles.map((m) => m.id),
+    ),
+  );
   return {
     version: partie.version,
     tick: partie.tick,
@@ -891,6 +1021,8 @@ export function vuePartie(partie: Partie): VuePartie {
     relationsPartis: partie.relationsPartis,
     partisVisibles: palier > 1,
     territoires: partie.territoires,
+    carte,
+    dossiers: partie.dossiers,
     chomage: eco.chomage,
     sourceChomage: eco.source,
   };

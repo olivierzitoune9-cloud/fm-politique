@@ -1,8 +1,10 @@
 // Sauvegarde locale versionnée : JSON strict, refus de toute sauvegarde d'une autre version de partie ou de moteur.
-// Migration douce p2.x vers p3.0.0 puis p3.1.0 (C1 multi coups) : les champs manquants reçoivent leurs valeurs initiales.
+// Migration douce p2.x vers p3.0.0, p3.1.0 (C1 multi coups), p3.2.0 (P1 graphe social) et
+// p3.3.0 (P2 dossiers d'enquête) : les champs manquants reçoivent leurs valeurs initiales.
 import { VERSION_MOTEUR } from "./engine.js";
 import { VERSION_PARTIE, type Partie } from "./partie.js";
 import { territoiresInitiaux } from "./courrier.js";
+import { creerMondeSocial, type MondeSocial } from "./monde-social.js";
 import type { Carriere } from "./carriere.js";
 import type { Personnage } from "./personnages.js";
 
@@ -41,17 +43,33 @@ export function deserialiser(texte: string): Partie {
     throw new Error(`Sauvegarde d'une autre version (${String(s.version)}), non chargeable.`);
   }
   if (s.partieVersion !== VERSION_PARTIE) {
-    // Migration douce : une p2.x ou p3.0.0 sans les champs p3.1.0 reçoit ses valeurs initiales.
-    if (s.partieVersion === "p2.1.0" || s.partieVersion === "p2.0.0" || s.partieVersion === "p3.0.0") {
+    // Migration douce : une p2.x, p3.0.0 ou p3.1.0 sans les champs récents reçoit ses valeurs initiales.
+    if (s.partieVersion === "p2.1.0" || s.partieVersion === "p2.0.0" || s.partieVersion === "p3.0.0" || s.partieVersion === "p3.1.0" || s.partieVersion === "p3.2.0" || s.partieVersion === "p3.3.0") {
       const p = s.partie as Partial<Partie> | undefined;
       if (p !== undefined && typeof p.graine === "number" && typeof p.tick === "number") {
         if (!Array.isArray((p as { territoires?: unknown }).territoires)) {
           (p as Partie).territoires = territoiresInitiaux(p.graine);
         }
+        // P1 : une sauvegarde d'avant le graphe social le voit reconstruit depuis ses entités.
+        // L'historique d'événements d'avant la migration n'est pas reconstituable, il repart vide.
+        if (!mondeSocialValide(p.mondeSocial) && Array.isArray(p.personnages) && p.monde !== undefined) {
+          (p as Partie).mondeSocial = creerMondeSocial(
+            p.personnages,
+            p.monde,
+            p.graine,
+            p.carriere?.nom ?? "Toi",
+          );
+        }
+        // P2 : les dossiers d'enquête n'existaient pas avant p3.3.0, ils repartent vides.
+        if (!Array.isArray((p as { dossiers?: unknown }).dossiers)) {
+          (p as Partie).dossiers = [];
+        }
         if (!Array.isArray((p as { dilemmesPasses?: unknown }).dilemmesPasses)) {
           (p as Partie).dilemmesPasses = [];
         }
-        (p as Partie).dilemmeOuvert = null;
+        if (!Array.isArray(p.missions)) p.missions = [];
+        if (!Array.isArray(p.reunions)) p.reunions = [];
+        if (p.dilemmeOuvert === undefined) p.dilemmeOuvert = null;
         (p as Partie).version = VERSION_PARTIE;
         const c = p.carriere as Partial<Carriere> | undefined;
         if (c !== undefined) {
@@ -90,5 +108,25 @@ export function deserialiser(texte: string): Partie {
   if (!Array.isArray((p as { territoires?: unknown }).territoires)) {
     (p as Partie).territoires = territoiresInitiaux(p.graine);
   }
+  // Tolérance P1 : une sauvegarde sans graphe social le voit recréé depuis ses entités réelles.
+  if (!mondeSocialValide(p.mondeSocial)) {
+    (p as Partie).mondeSocial = creerMondeSocial(
+      p.personnages,
+      p.monde,
+      p.graine,
+      p.carriere?.nom ?? "Toi",
+    );
+  }
+  // Tolérance P2 : une sauvegarde sans dossiers les voit recréés vides.
+  if (!Array.isArray((p as { dossiers?: unknown }).dossiers)) {
+    (p as Partie).dossiers = [];
+  }
+  if (!Array.isArray(p.missions)) p.missions = [];
+  if (!Array.isArray(p.reunions)) p.reunions = [];
   return p as Partie;
+}
+
+// Le graphe est valide s'il existe et porte des nœuds : un objet partiel ou vide est reconstruit.
+function mondeSocialValide(ms: unknown): ms is MondeSocial {
+  return ms !== null && typeof ms === "object" && Array.isArray((ms as MondeSocial).noeuds) && (ms as MondeSocial).noeuds.length > 0;
 }

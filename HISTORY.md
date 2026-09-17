@@ -1,6 +1,26 @@
 # Historique FM politique
 
+## 2026-09-17, P3 première boucle : réunions, initiatives autonomes, missions persistantes (partie p3.4.0)
+
+- C3 : les réunions ont des participants nommés (deux à trois personnes du graphe), une préparation qui coûte 15 % de semaine en plus et améliore le rendement à tirage identique, des coûts réels débités (30 % de semaine et 2 points d'argent, ou 45 % préparée), un compte rendu daté écrit dans la mémoire du joueur et des participants. Sans moyens : rendement réduit et réputation -2, jamais d'interdiction (R7).
+- C6 : une initiative autonome au plus par semaine entre deux personnages, tirée seedée, pondérée par même organisation, même métier et lien existant ; alliance ou rivalité selon traits (ambitieux, susceptible, empathique, loyal) et rivalités d'organisations ; la relation au joueur n'entre jamais dans le tirage. Lien renforcé, mémoire datée des deux nœuds, ligne de journal.
+- Missions (design §29-30, §94) : consigne persistante recrutement ou enquête, responsable nommé ou reprise en gestion personnelle (5 % contre 20 % de temps), budget plafonnant réellement la dépense, échéance huit semaines, pause sans coût, rapports hebdomadaires datés, succès versé une seule fois (+6 militants ou +10 connaissance, sans révéler les faits hors palier). Une réunion réussie cette semaine améliore la mission de ses participants.
+- Écran « Agir avec d'autres » : préparer une réunion avec traits visibles, confier une mission, suspendre/relancer, reprendre le contrôle, rapports reliés aux dossiers. Les missions passent par la sauvegarde immédiate, comme les dossiers.
+- Migration p3.3.0 → p3.4.0 testée : missions et réunions initialisées vides, dossiers, mémoire du graphe et dilemme préservés, partie jouable.
+- Vérifications : 210 tests verts sur 39 fichiers (dont 17 P3 : initiatives, réunions, missions, migration), TypeScript moteur/UI propres, build Next réussi (six pages, /partie 32,5 kB). Aucune réglette assouplie : les bornes [tick − horizon + 1, tick] de P2 restent intègres.
+- Hypothèses de gameplay datées du 2026-09-17, jamais présentées comme des causalités sourcées : 8 semaines de mission, 2 points d'argent par tour, supervision 5 %, gestion personnelle 20 %, préparation +0,2 de rendement.
+- Commit et push exécutés sur instruction d'Aaron en fin de session.
+
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
+## 2026-09-17, reprise P1/P2 : graphe intégré et première boucle d'enquête
+
+- P1 branchée dans Partie, vue et sauvegardes. Mémoire par nœud limitée à 40 faits, alliances/rivalités initiales issues d'hypothèses de modélisation sur les organisations fictives du jeu. Le graphe distingue personnes, organisations, médias et groupes, pas encore les territoires.
+- P2 en p3.3.0 : module pur d'enquête, références de dossiers persistées, recherche par nom/métier/organisation, courrier lié aux dossiers, signaux hors carte, fiche limitée par le palier. Ouverture depuis la recherche réparée pour les nœuds hors carte ; sauvegarde immédiate sans attendre de jouer une semaine.
+- Erreurs conservées : insertions initiales mal imbriquées dans enquete.ts, puis return/accolade en double ; nom courrielEnquete erroné dans l'écran. Réparés après lecture des erreurs. Les tests de limites ont ensuite révélé une semaine en trop et des faits futurs acceptés : bornes corrigées sans assouplir les tests.
+- Vérification intermédiaire complète : 197 tests et build six pages verts. Après ajout des cas de bornes : 200 tests passent sur 36 fichiers. Contrôle final confirmé : TypeScript moteur/UI propres, build Next réussi, six pages (/partie 28,3 kB). Graphify code actualisé : 1289 nœuds et 2169 liens ; mise à jour sémantique des documents non réalisée.
+- Pourquoi ce point de passage : ne pas enchaîner P3 sur une validation implicite de P2. La page unique, la centralité réelle de l'inbox et la connaissance dépendante du palier restent des limites documentées. Aucun contrôle visuel, commit ou push effectué.
+
+
 ## 2026-09-17, clôture de la session interrompue : P1 en brouillon, dépôt rendu vert
 
 - Pourquoi : la session du 2026-09-16 soir a démarré P1 (graphe d'entités et mémoire des organisations) puis a été coupée par un bug avant tout protocole de clôture. Sur consigne d'Aaron, la clôture est faite le 2026-09-17 par une session neuve.

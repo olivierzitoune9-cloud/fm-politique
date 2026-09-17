@@ -3,6 +3,8 @@
 // Écran de partie V1 : semaine datée, actions hebdo, interactions avec personnages nommés,
 // vue filtrée du monde, fins multiples. Sauvegarde locale automatique, sans réseau.
 import { useEffect, useState } from "react";
+import ActionsCollectives from "./actions-collectives";
+import type { OrdreReunion } from "../../sim/reunions";
 import { AMBITIONS, libelleMetierOrigine, libelleStatut, objectifsPour, palierDeStatut, type ConfigCarriere } from "../../sim/carriere";
 import { ACTIONS_JEU, type CategorieAction } from "../../sim/actions";
 import { SONDAGES, sondageParId, LIBELLES_ENJEU } from "../../sim/courrier";
@@ -15,6 +17,7 @@ import { raconterChronologie } from "../../sim/narrative/raconteur";
 import { FRANCE_2026 } from "../../sim/data/france-2026";
 import { libelleGroupe } from "../../sim/joueur";
 import { deserialiser, serialiser } from "../../sim/sauvegarde";
+import { courrierEnquete, lireDossier, ouvrirDossier, rechercherSujets, signalFaibles } from "../../sim/enquete";
 import { ajouterTrace, resumerTraces, traceDepuisFin, type TraceFin } from "../../sim/traces";
 
 const CLE_CONFIG = "fm-politique:config";
@@ -29,9 +32,35 @@ const LIBELLES_CATEGORIE: Record<CategorieAction, string> = {
   preparation: "Préparation",
 };
 
+// P1 : libellés et style de la carte du monde social, sobre, sans image, cliquable.
+const LIBELLES_LIEN_SOCIAL: Record<string, string> = {
+  appartenance: "appartenance",
+  influence: "influence",
+  information: "informé de",
+  alliance: "alliance",
+  rivalite: "rivalité",
+};
+const LIBELLES_TYPE_NOEUD: Record<string, string> = {
+  personne: "Personne",
+  organisation: "Organisation",
+  media: "Média",
+  groupe: "Groupe d'opinion",
+};
+const STYLE_NOEUD = {
+  background: "none",
+  border: "none",
+  color: "inherit",
+  padding: 0,
+  font: "inherit",
+  textDecoration: "underline",
+  cursor: "pointer",
+  textAlign: "left" as const,
+};
+
 const ORDRE_CATEGORIES: CategorieAction[] = ["terrain", "media", "coalition", "institution", "preparation"];
 
 export default function PartiePage() {
+  const [reunions, setReunions] = useState<OrdreReunion[]>([]);
   const [partie, setPartie] = useState<Partie | null>(null);
   const [erreur, setErreur] = useState<string | null>(null);
   const [chargement, setChargement] = useState(true);
@@ -49,6 +78,10 @@ export default function PartiePage() {
   const [categoriePromesse, setCategoriePromesse] = useState<CategorieAction>("terrain");
   // Retouche 5 audit : les trajectoires déjà tentées, persistées localement, jamais effacées au rejouer.
   const [traces, setTraces] = useState<TraceFin[]>([]);
+  // P1 : le nœud sélectionné dans la carte du monde social, null = vue d'ensemble.
+  const [noeudCarte, setNoeudCarte] = useState<string | null>(null);
+  // P2 : la requête de recherche interne.
+  const [requete, setRequete] = useState("");
 
   useEffect(() => {
     // Retouche 5 : les traces survivent à tout, y compris à un rejouer avec la même graine.
@@ -102,10 +135,24 @@ export default function PartiePage() {
   const vue = vuePartie(partie);
   const c = vue.carriere;
   const mails = genererCourriels(partie.monde.evenements, partie.monde.decisions);
+  const courriersDossiers = courrierEnquete(partie, vue.personnages);
+  const resultatsRecherche = rechercherSujets(partie, vue.personnages, requete);
+  const signaux = signalFaibles(partie, vue.personnages);
   const chrono = raconterChronologie(partie.monde.evenements, partie.monde.decisions);
   const ambition = AMBITIONS.find((a) => a.id === c.ambition)!;
   // R1 J10 : la sélection suit toujours le palier visible, le clic répond toujours avec une raison.
   const persoChoisi = vue.personnagesVisibles.find((p) => p.id === persoId) ?? vue.personnages.find((p) => p.id === persoId) ?? null;
+
+  // P2 : ouvrir une fiche, c'est naviguer dans le graphe et ouvrir le dossier en même temps.
+  // Une seule mécanique générale (§118), persistée dans la partie.
+  function ouvrirFiche(id: string) {
+    if (partie === null) return;
+    const suivante = ouvrirDossier(partie, id, partie.tick);
+    setPartie(suivante);
+    localStorage.setItem(CLE_SAVE, serialiser(suivante));
+    setNoeudCarte(id);
+    document.getElementById("monde-social")?.scrollIntoView({ block: "start" });
+  }
 
   function peut(a: { coutTemps: number; coutArgent: number }): boolean {
     return a.coutTemps <= c.ressources.temps + 1e-9 && a.coutArgent <= c.ressources.argent + 1e-9;
@@ -134,6 +181,7 @@ export default function PartiePage() {
       : (palier > 1 ? vue.medias[0]?.id : vue.mediasVisibles[0]?.id) ?? mediaId;
     const tour: TourSemaine = {
       actionId: coupsNettoyes[0],
+      reunions,
       actions: coupsNettoyes.map((actionId) => ({ actionId, mediaId: mediaSur })),
       mediaId: mediaSur,
       sondageId,
@@ -154,6 +202,7 @@ export default function PartiePage() {
     }
     try {
       const suivante = jouerSemaine(partie, tour);
+      setReunions([]);
       setPartie(suivante);
       setCoups(coupsNettoyes);
       if (persoSur !== persoId) setPersoId(persoSur);
@@ -194,12 +243,18 @@ export default function PartiePage() {
       ambition: c.ambition,
     });
     setPartie(fraiche);
+    setReunions([]);
+    setNoeudCarte(null);
+    setRequete("");
     localStorage.setItem(CLE_SAVE, serialiser(fraiche));
     setErreur(null);
   }
 
   return (
     <div className="grille">
+      <ActionsCollectives partie={partie} visibles={vue.personnagesVisibles} reunions={reunions}
+        changerReunions={setReunions} ouvrirFiche={ouvrirFiche}
+        sauvegarder={(suivante) => { localStorage.setItem(CLE_SAVE, serialiser(suivante)); setPartie(suivante); }} />
       <section className="carte">
         <h2 className="entete-partie">
           <span className="qui">{c.nom}</span>
@@ -711,7 +766,22 @@ export default function PartiePage() {
 
       <div className="grille grille-2">
         <section className="carte">
-          <h2>Boîte mail ({mails.length})</h2>
+          <h2>Boîte mail ({mails.length + courriersDossiers.length})</h2>
+          {courriersDossiers.map((cq, n) => (
+            <div className="mail" key={`cq-${n}`}>
+              <div className="de">
+                s{cq.tick} de {cq.sujetNom}
+              </div>
+              <div>
+                <strong>{cq.objet}</strong> : {cq.corps}
+              </div>
+              <div>
+                <button type="button" onClick={() => ouvrirFiche(cq.sujetId)} style={STYLE_NOEUD}>
+                  Ouvrir le dossier
+                </button>
+              </div>
+            </div>
+          ))}
           {mails.slice(-12).map((m, n) => (
             <div className="mail" key={n}>
               <div className="de">
@@ -722,7 +792,7 @@ export default function PartiePage() {
               </div>
             </div>
           ))}
-          {mails.length === 0 && <p className="source">Pas encore de courrier. Le monde regarde ailleurs, pour l'instant.</p>}
+          {mails.length + courriersDossiers.length === 0 && <p className="source">Pas encore de courrier. Le monde regarde ailleurs, pour l'instant.</p>}
         </section>
 
         <section className="carte">
@@ -785,6 +855,151 @@ export default function PartiePage() {
           </ol>
         </section>
       </div>
+
+      <section className="carte">
+        <h2>Recherche</h2>
+        <input
+          aria-label="Rechercher un sujet dans le monde social"
+          value={requete}
+          onChange={(e) => setRequete(e.target.value)}
+          placeholder="Un nom, une organisation, un métier..."
+          style={{ width: "70%" }}
+        />
+        <ul className="liste-plat">
+          {resultatsRecherche.map((r) => (
+            <li key={r.id}>
+              <button type="button" onClick={() => ouvrirFiche(r.id)} style={STYLE_NOEUD}>
+                {r.nom}
+              </button>{" "}
+              <span className="source">
+                {LIBELLES_TYPE_NOEUD[r.type] ?? r.type}
+                {r.visible ? "" : " — hors de ta portée pour l'instant"}
+              </span>
+            </li>
+          ))}
+          {requete.trim().length >= 2 && resultatsRecherche.length === 0 && (
+            <li>
+              <span className="source">Rien ne correspond. Essaie un autre nom, une organisation, un métier.</span>
+            </li>
+          )}
+        </ul>
+        <p className="source">
+          Deux lettres suffisent. La recherche porte sur tout le graphe connu, la fiche reste proportionnée à ta portée.
+        </p>
+      </section>
+
+      <section className="carte" id="monde-social">
+        <h2>Le monde social</h2>
+        <p className="source">
+          Personnes, organisations, médias et groupes reliés entre eux. Clique sur un nœud pour ses liens et ce qu&apos;il
+          a retenu, semaine après semaine. À ton palier, tu ne vois que ton niveau de lecture du monde.
+        </p>
+        {(() => {
+          const noeudChoisi = noeudCarte !== null ? (partie.mondeSocial.noeuds.find((n) => n.id === noeudCarte) ?? null) : null;
+          if (noeudChoisi === null) {
+            const groupesType: { type: string; libelle: string }[] = [
+              { type: "personne", libelle: "Visages" },
+              { type: "organisation", libelle: "Organisations" },
+              { type: "media", libelle: "Médias" },
+              { type: "groupe", libelle: "Groupes" },
+            ];
+            return (
+              <div className="grille grille-2">
+                {groupesType.map((t) => (
+                  <div key={t.type}>
+                    <h3 style={{ fontSize: "0.9rem", color: "var(--muted)" }}>{t.libelle}</h3>
+                    <ul className="liste-plat">
+                      {vue.carte.noeuds
+                        .filter((n) => n.type === t.type)
+                        .map((n) => (
+                          <li key={n.id}>
+                            <button type="button" onClick={() => ouvrirFiche(n.id)} style={STYLE_NOEUD}>
+                              {n.nom}
+                            </button>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            );
+          }
+          const dossier = lireDossier(partie, noeudChoisi.id, vue.personnages);
+          const faits = dossier !== null && dossier.complet ? dossier.faits.slice(0, 8) : [];
+          const liensFiche = dossier !== null && dossier.complet ? dossier.liens : [];
+          return (
+            <>
+              <p>
+                <button type="button" onClick={() => setNoeudCarte(null)} style={STYLE_NOEUD}>
+                  Retour à la vue d&apos;ensemble
+                </button>
+              </p>
+              <div className="perso">
+                <div className="identite">{noeudChoisi.nom}</div>
+                <div className="meta">
+                  {LIBELLES_TYPE_NOEUD[noeudChoisi.type] ?? noeudChoisi.type}
+                  {dossier !== null && dossier.tickOuverture !== null
+                    ? ` — dossier ouvert depuis la semaine ${dossier.tickOuverture}`
+                    : " — dossier jamais ouvert"}
+                </div>
+              </div>
+              {dossier !== null && !dossier.complet && <p className="source">{dossier.note}</p>}
+              <h3 style={{ fontSize: "0.9rem", color: "var(--muted)" }}>Liens visibles</h3>
+              <ul className="liste-plat">
+                {liensFiche.map((l, i) => (
+                  <li key={i}>
+                    <button type="button" onClick={() => ouvrirFiche(l.id)} style={STYLE_NOEUD}>
+                      {l.nom}
+                    </button>{" "}
+                    <span className="source">
+                      {LIBELLES_LIEN_SOCIAL[l.type] ?? l.type}, force {Math.round(l.force * 100)}
+                    </span>
+                  </li>
+                ))}
+                {liensFiche.length === 0 && (
+                  <li>
+                    <span className="source">Aucun lien visible depuis ce nœud, pour l&apos;instant.</span>
+                  </li>
+                )}
+              </ul>
+              <h3 style={{ fontSize: "0.9rem", color: "var(--muted)" }}>Faits datés, sources du graphe</h3>
+              <ul className="liste-plat">
+                {faits.map((e, i) => (
+                  <li key={i}>
+                    <span className="tick">s{e.tick}</span>
+                    {e.texte} <span className="source">({e.source.replace(/-/g, " ")})</span>
+                  </li>
+                ))}
+                {faits.length === 0 && (
+                  <li>
+                    <span className="source">
+                      {dossier !== null && !dossier.complet
+                        ? "La fiche restera mince tant que le sujet reste hors de ta portée."
+                        : "Rien encore. Ce nœud vit, mais rien ne lui est encore arrivé sous tes yeux."}
+                    </span>
+                  </li>
+                )}
+              </ul>
+            </>
+          );
+        })()}
+      </section>
+
+      {signaux.length > 0 && <section className="carte">
+        <h2>Signaux faibles</h2>
+        <ul className="liste-plat">
+          {signaux.map((s) => (
+            <li key={s.sujetId}>
+              <span className="tick">s{s.dernierTick}</span>
+              <button type="button" onClick={() => ouvrirFiche(s.sujetId)} style={STYLE_NOEUD}>{s.nom}</button>{" "}
+              <span className="source">
+                ({LIBELLES_TYPE_NOEUD[s.type] ?? s.type}, {s.mouvements} mouvement{s.mouvements > 1 ? "s" : ""})
+              </span>
+              <span className="source"> : activité enregistrée hors de ta carte. Ouvre le dossier pour enquêter.</span>
+            </li>
+          ))}
+        </ul>
+      </section>}
 
       <section className="carte">
         <h2>Repères France</h2>
