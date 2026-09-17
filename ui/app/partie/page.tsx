@@ -9,7 +9,7 @@ import { SONDAGES, sondageParId, LIBELLES_ENJEU } from "../../sim/courrier";
 import { INTERACTIONS, type InteractionId } from "../../sim/interactions";
 import { nomComplet, libelleMetier, estimationRelation } from "../../sim/personnages";
 import { LIBELLES_SAISON } from "../../sim/temps";
-import { creerPartie, jouerSemaine, vuePartie, type Partie, type TourSemaine } from "../../sim/partie";
+import { creerPartie, jouerSemaine, listeCoupsSemaine, risqueAction, totalSemaine, vuePartie, type Partie, type TourSemaine } from "../../sim/partie";
 import { genererCourriels } from "../../sim/courrier";
 import { raconterChronologie } from "../../sim/narrative/raconteur";
 import { FRANCE_2026 } from "../../sim/data/france-2026";
@@ -35,7 +35,7 @@ export default function PartiePage() {
   const [partie, setPartie] = useState<Partie | null>(null);
   const [erreur, setErreur] = useState<string | null>(null);
   const [chargement, setChargement] = useState(true);
-  const [actionId, setActionId] = useState<string>(ACTIONS_JEU[0].id);
+  const [coups, setCoups] = useState<string[]>([ACTIONS_JEU[0].id]);
   const [persoId, setPersoId] = useState<string>("");
   const [interactionId, setInteractionId] = useState<InteractionId>("convaincre");
   const [promesse, setPromesse] = useState("");
@@ -111,6 +111,10 @@ export default function PartiePage() {
     return a.coutTemps <= c.ressources.temps + 1e-9 && a.coutArgent <= c.ressources.argent + 1e-9;
   }
 
+  // C1 : garde anti-spam d'écran, pas une loi du monde. La vraie limite reste le temps (1.0)
+  // et l'argent : au delà, la semaine est forcée et sanctionnée (R7 J8), jamais bloquée.
+  const MAX_COUPS_ECRAN = 12;
+
   // J7 : le joueur ne voit que les actions de son palier et des précédents. Le reste existe mais attend.
   const palier = palierDeStatut(c.statut);
   const actionsVisibles = ACTIONS_JEU.filter((a) => a.palier <= palier);
@@ -118,13 +122,23 @@ export default function PartiePage() {
 
   function avancer() {
     if (partie === null) return;
-    // R1 J10 : l'action suit le palier visible, le personnage suit les visages du palier.
-    const actionSure = actionsVisibles.some((a) => a.id === actionId) ? actionId : actionsVisibles[0]?.id ?? actionId;
+    // R1 J10 : les coups suivent le palier visible, le personnage suit les visages du palier.
+    // C1 : 1 à 4 coups de terrain dans l'ordre choisi, chacun avec son risque affiché avant.
+    const coupsSurs = coups.length > 0 ? coups : [ACTIONS_JEU[0].id];
+    const coupsNettoyes = coupsSurs
+      .map((id) => (actionsVisibles.some((a) => a.id === id) ? id : actionsVisibles[0]?.id ?? id))
+      .slice(0, MAX_COUPS_ECRAN);
     const persoSur = persoId !== "" && vue.personnagesVisibles.some((p) => p.id === persoId) ? persoId : "";
     const mediaSur = (palier > 1 ? vue.medias : vue.mediasVisibles).some((m) => m.id === mediaId)
       ? mediaId
       : (palier > 1 ? vue.medias[0]?.id : vue.mediasVisibles[0]?.id) ?? mediaId;
-    const tour: TourSemaine = { actionId: actionSure, mediaId: mediaSur, sondageId, activiteId };
+    const tour: TourSemaine = {
+      actionId: coupsNettoyes[0],
+      actions: coupsNettoyes.map((actionId) => ({ actionId, mediaId: mediaSur })),
+      mediaId: mediaSur,
+      sondageId,
+      activiteId,
+    };
     if (pousserProp) tour.pousserProposition = true;
     if (persoSur !== "") {
       tour.interaction = {
@@ -141,7 +155,7 @@ export default function PartiePage() {
     try {
       const suivante = jouerSemaine(partie, tour);
       setPartie(suivante);
-      if (actionSure !== actionId) setActionId(actionSure);
+      setCoups(coupsNettoyes);
       if (persoSur !== persoId) setPersoId(persoSur);
       if (mediaSur !== mediaId) setMediaId(mediaSur);
       // J4 : lecture du sondage commandé, biaisé et approximatif, jamais l'état exact.
@@ -280,7 +294,7 @@ export default function PartiePage() {
         )}
         <div className="boutons">
           <button onClick={avancer} type="button">
-            Semaine suivante : {ACTIONS_JEU.find((a) => a.id === actionId)?.libelle ?? actionId}
+            Jouer la semaine : {coups.map((id) => ACTIONS_JEU.find((a) => a.id === id)?.libelle ?? id).join(" + ")}
           </button>
         </div>
         {erreur !== null && <p className="erreur">{erreur}</p>}
@@ -439,10 +453,11 @@ export default function PartiePage() {
       {vue.fin === null && (
         <div className="grille grille-3">
           <section className="carte">
-            <h2>Une action cette semaine</h2>
+            <h2>Coups de la semaine (C1 : autant de coups que ton temps permet, le temps est la limite)</h2>
             <p className="source">
               Palier {palier} sur 5 : {actionsVisibles.length} actions visibles
               {actionsMasquees > 0 ? `, ${actionsMasquees} se révéleront en montant de palier.` : "."}
+              Le risque de chaque coup est écrit avant le clic (C2, vision section 11).
             </p>
             {ORDRE_CATEGORIES.map((cat) => (
               <div key={cat}>
@@ -451,18 +466,22 @@ export default function PartiePage() {
                 </h3>
                 {actionsVisibles.filter((a) => a.categorie === cat).map((a) => {
                   const possible = peut(a);
+                  let risque: string | null = null;
+                  try {
+                    risque = risqueAction(a.id, c.ressources.temps, c.ressources.argent, palier).detail;
+                  } catch {
+                    risque = null;
+                  }
+                  const dejaPris = coups.includes(a.id);
+                  const ajouter = () => {
+                    if (dejaPris || coups.length >= MAX_COUPS_ECRAN) return;
+                    setCoups([...coups, a.id]);
+                  };
                   return (
-                    <label
+                    <div
                       key={a.id}
-                      className={`action-option${actionId === a.id ? " choisi" : ""}`}
+                      className={`action-option${dejaPris ? " choisi" : ""}`}
                     >
-                      <input
-                        type="radio"
-                        name="action"
-                        checked={actionId === a.id}
-                        onChange={() => setActionId(a.id)}
-                        style={{ marginRight: 6 }}
-                      />
                       <span className="titre">{a.libelle}</span>{" "}
                       <span className="cout">
                         (temps {Math.round(a.coutTemps * 100)}
@@ -471,11 +490,48 @@ export default function PartiePage() {
                         {!possible ? ", hors moyens : possible, mais sanctionné" : ""})
                       </span>
                       <div className="desc">{a.description}</div>
-                    </label>
+                      <div className="desc">Risque : {risque ?? "illisible"}.</div>
+                      {!dejaPris && coups.length < MAX_COUPS_ECRAN && (
+                        <button type="button" className="lien" onClick={ajouter}>
+                          + ajouter à cette semaine
+                        </button>
+                      )}
+                    </div>
                   );
                 })}
               </div>
             ))}
+            <h3 style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "10px 0 6px" }}>
+              Agenda de la semaine (C4 : ta file de coups dans l'ordre)
+            </h3>
+            {coups.map((coupId, index) => (
+              <div className="ligne-choix" key={`${coupId}-${index}`}>
+                <span>
+                  Coup {index + 1} : {ACTIONS_JEU.find((a) => a.id === coupId)?.libelle ?? coupId}
+                </span>
+                {coups.length > 1 && (
+                  <button type="button" className="lien" onClick={() => setCoups(coups.filter((_, n) => n !== index))}>
+                    retirer
+                  </button>
+                )}
+              </div>
+            ))}
+            {(() => {
+              try {
+                const total = totalSemaine(
+                  { actionId: coups[0] ?? ACTIONS_JEU[0].id, actions: coups.map((actionId) => ({ actionId })) },
+                  palier,
+                );
+                const depasse = total.temps > c.ressources.temps + 1e-9;
+                return (
+                  <p className="source">
+                    Total : temps {total.temps.toFixed(2)} sur 1.0{depasse ? " : semaine forcée, dette et fatigue." : "."}
+                  </p>
+                );
+              } catch {
+                return null;
+              }
+            })()}
             <h3 style={{ fontSize: "0.85rem", color: "var(--muted)", margin: "10px 0 6px" }}>Activité de fond (second étage)</h3>
             {vue.activites.map((a) => (
               <label key={a.id} className={`action-option${activiteId === a.id ? " choisi" : ""}`}>
@@ -492,7 +548,7 @@ export default function PartiePage() {
             ))}
             <div className="boutons">
               <button onClick={avancer} type="button">
-                Semaine suivante
+                Jouer la semaine ({coups.length} coup{coups.length > 1 ? "s" : ""})
               </button>
               <button className="secondaire" onClick={recommencer} type="button">
                 Recommencer avec une autre graine

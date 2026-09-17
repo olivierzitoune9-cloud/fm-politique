@@ -1,6 +1,37 @@
 # Historique FM politique
 
 Journal des décisions et changements de fonctionnement qui doivent survivre d'une session à l'autre. La SPEC garde le quoi, ce fichier garde le pourquoi.
+## 2026-09-17, clôture de la session interrompue : P1 en brouillon, dépôt rendu vert
+
+- Pourquoi : la session du 2026-09-16 soir a démarré P1 (graphe d'entités et mémoire des organisations) puis a été coupée par un bug avant tout protocole de clôture. Sur consigne d'Aaron, la clôture est faite le 2026-09-17 par une session neuve.
+- Ce que la session avait laissé : deux brouillons concurrents du graphe du monde social, aucun des deux importé. `ui/sim/mondeSocial.ts` (premier jet : neuf organisations fixes avec mémoire fenêtrée, alliances et rivalités initiales datées) casse le typecheck contre les métiers réels du moteur (7 erreurs TypeScript) et faisait échouer le build Next. `ui/sim/monde-social.ts` (second jet : graphe dérivé des entités réelles, personnages et leurs organisations, MEDIAS, groupes du moteur, liens appartenance/influence/information, mémoire d'événements datée, carteVisible pilotée par le palier J7) compile proprement.
+- Décision de clôture, tranchée par la lecture du dépôt sans arbitrage : `mondeSocial.ts` supprimé comme brouillon mort. Ses idées à reprendre quand P1 s'intégrera sont notées au journal développeur (mémoire par organisation en fenêtre glissante, alliances et rivalités initiales).
+- Nettoyage : extrait*.txt, grep-residus.txt, racine-pkg.txt et rapports de debug de la racine supprimés (résidus du combat terminal de la session buguée).
+- Vérifications rejouées via fichiers de sortie : 34 fichiers et 172 tests passés (dont 11 multi coups en semaine.test.ts) ; tsc --noEmit propre ; next build verte, 6 pages, /partie 24,7 kB.
+- Reste P1 : brancher le graphe dans creerPartie et la sauvegarde, exposer la carte visible à l'écran, tests dédiés. Toujours aucun commit ni push : le chantier p3.1.0 et les consignes attendent le GO d'Aaron.
+
+## 2026-09-16, mandat double vision et plan d'application
+
+- Aaron mandate l'application à fond des deux documents de vision : gameplay ET design (nouveau doc de l'auteur de la vision gameplay, reçu le soir, copié fidèlement dans docs/vision-design-fm-politique.md après vérification d'intégrité, 56 626 caractères identiques, 131 sections). Pourquoi : Aaron juge les itérations précédentes trop timides, il veut que le jeu vise réellement FM politique, « le monde entier, pas une page unique ».
+- Plan d'application posé dans docs/plan-application-vision.md : six phases P1 à P6 partant de la boucle §93 du doc design (observer, identifier, enquêter, imaginer, préparer, agir, attendre, observer, réévaluer). Ordre choisi : d'abord le monde (graphe d'entités, mémoire des organisations), ensuite l'enquête (inbox, dossiers, recherche), puis l'action riche, l'économie en euros, le monde adaptatif, enfin les fins racontables. Règle permanente reprise du design §118 : jamais une mécanique spéciale quand une mécanique générale suffit.
+- Tensions explicitement non tranchées : portraits (doctrine sans image contre incarnation), paliers contre progression ressentie (§86-88), information cachée contre profondeur optionnelle (§31, §48, §78). Elles reviennent en arbitrage à leur phase.
+- Aucun code ce soir : documentation seulement. Le code P1 attend le GO.
+
+## Rectification finale du 2026-09-16
+
+Les mentions de livraison p3.1.0 ci-dessous sont trop larges : 172 tests passent (34 fichiers), mais le correctif reste partiel. Le moteur accepte plus de quatre actions ; l'écran plafonne à douze, interdit la répétition, les contrôles de moyens ne suivent pas les dépenses cumulées et le monde ne reçoit que la première action. Le risque affiché est approximatif, non garanti égal au résultat. Pas de validation visuelle ni de commit/push. Le journal développeur et le suivi des attentes portent ces réserves.
+
+
+## 2026-09-16, la semaine multi coups : C1 C2 C4 C5, partie p3.1.0
+
+- Pourquoi : Aaron rejette la semaine à une action principale, sur le vif : « tu crois que sur FM on a une action par semaine ? tu crois que dans la vie on a une action par semaine ? ». La revue adversariale gameplay l'avait déjà chiffré en écart critique G1 (vision 9, 10, 13, 14, 15). Leçon de méthode actée : quand le document vision et la commodité d'implémentation se contredisent, la vision gagne.
+- Livré, partie p3.1.0 (migration douce depuis p3.0.0) : la semaine devient un budget de coups. `TourSemaine.actions` reçoit de 1 à N coups de terrain, chacun résolu dans l'ordre choisi avec son journal, ses coûts au palier courant, son risque affiché avant le clic (C2), sa compétence gagnée et sa fatigue appliquée entre deux coups (C5). L'agenda additionne temps et argent avant validation (C4), le dépassement reste possible et sanctionné, jamais bloqué (R7 J8).
+- Fichiers : ui/sim/partie.ts, ui/app/partie/page.tsx, ui/sim/sauvegarde.ts (migration), ui/sim/semaine.test.ts (neuf, 11 tests), ui/sim/sauvegarde.test.ts. Docs : revue adversariale complétée, suivi-attentes, plan, journal développeur.
+- Vérifications réelles : 34 fichiers, 171 tests verts, tsc propre, next build vert (6 pages, /partie 24,7 kB).
+- Arbitrage d'Aaron intégré en fin de chantier : le plafond de 4 coups d'abord posé a été retiré du moteur. La file de coups n'est bornée nulle part dans le monde : la vraie limite reste le temps (1.0) et l'argent, le coup forcé paie en dette et réputation (R7 J8). L'écran garde un garde anti-spam (MAX_COUPS_ECRAN = 12) pour la liste cliquable, hors moteur. Test neuf : six coups se résolvent dans l'ordre. Limites notées : le monde ne voit que le premier coup (à relier à C6), routage média partagé par semaine.
+- Reste dû de la revue : C3 réunions à participants, C6 initiatives des personnages, C7 vie interne d'organisation, C8 scandales nommés, C9 processus de réforme, C10 mouvements sociaux.
+
+
 
 ## 2026-09-16, le vrai jeu : J11 à J17 appliqués d'une traite, partie p3.0.0
 

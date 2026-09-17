@@ -2,6 +2,16 @@
 
 > Le master prompt (section 50) est la constitution du projet, l'exécution reste par étapes contrôlées avec checkpoints (section 51). Artefacts persistants obligatoires (section 52) : base, registre, ontologie, dictionnaire des variables, catalogue des règles, architecture, tests, état du projet, journal des décisions.
 
+## État courant, 2026-09-17
+
+- P1 du plan d'application des visions (docs/plan-application-vision.md) : démarrée le 2026-09-16 soir, coupée par un bug, clôturée le 2026-09-17. Brouillon de référence `ui/sim/monde-social.ts` (nœuds personne/organisation/média/groupe, liens typés, mémoire datée, carteVisible par palier), non importé, sans test ni sauvegarde ni écran. Un premier brouillon `mondeSocial.ts` cassait typecheck et build, supprimé à la clôture.
+- Dépôt rendu vert à la clôture : 172 tests sur 34 fichiers, tsc propre, next build 6 pages (/partie 24,7 kB). Toujours aucun commit ni push : le chantier p3.1.0 et les consignes du 2026-09-16 attendent le GO d'Aaron. Résidus p3.1.0 inchangés : plafond écran 12, moyens non cumulatifs, monde ne voyant que le premier coup.
+
+## État courant rectifié, 2026-09-16
+
+p3.1.0 : 172 tests passent sur 34 fichiers, build Next.js aboutie. C1/C2/C4 restent PARTIELS malgré les mentions de livraison historiques ci-dessous. Priorité : consommation cumulative des ressources et agenda sans plafond arbitraire, puis réactions du monde à chaque action. L'écran limite encore à 12 actions distinctes, une seule interaction est possible, seule la première action atteint la boucle du monde. Aperçu des risques approximatif et total visible incomplet. Voir les réserves finales du journal développeur. Aucun commit/push du chantier.
+
+
 - Phase 0, compréhension : vision, objectifs, philosophie FM, contraintes. Sortie : cette SPEC v0 et cette architecture. État : clôturée le 2026-09-15 (git init, hook actif et testé, commit 021a13c).
 - Phase 1, recherche générale : base documentaire et fiches par mécanisme. État : en cours depuis le 2026-09-15, première passe vidéo vérifiée dans docs/base-documentaire.md.
 - Phase 2, ontologie : entités stabilisées. Sortie : `docs/ontologie-v0.md` puis v1.
@@ -52,5 +62,13 @@ Aaron a tranché : pas de commit tout de suite, une session unique de transforma
 - J12 le monde te répond (E2 E3 E11 E12) : coalition adverse à seuil et frappe sur ton territoire le plus fort, vie indépendante des partis et médias, aile déviante au delà d'une organisation trop grosse. État : LIVRÉE le 2026-09-16 (frappeAdverse dans partis.ts, enquêtes indépendantes et aile combative dans partie.ts).
 - J13 profondeur de carrière (E4 E5 E7 E8) : coûts croissants par palier, corruption d'expansion, investiture comme échéance intermédiaire. État : LIVRÉE le 2026-09-16 (coutPalier et corruptionExpansion dans carriere.ts, dons nommés, investiture dans partie.ts).
 - J14 causalité profonde (E13) : effets retardés des actions de fond, le bruit d'aujourd'hui revient des semaines plus tard. État : SIMPLIFIÉE et LIVRÉE le 2026-09-16 (l'écho retardé est annoncé puis daté dans le journal ; la file d'effets chiffrés est remise à plus tard, simplification assumée et notée dans le journal du pôle développeur).
+
+
+## Phase 13 ter, revue adversariale gameplay (session du 2026-09-16)
+
+Revue livrée : docs/revue-adversariale-gameplay-2026-09-16.md (écarts G1 à G10 contre vision sections 1 à 63, partie p3.0.0, sur consigne d'Aaron : suivre voire dépasser le document vision).
+
+- C1 multi coups + C2 risque affiché + C4 agenda-file + C5 dépendances intra-semaine : LIVRÉS le 2026-09-16 (partie p3.1.0, migration p3.0.0, ui/sim/partie.ts, ui/sim/semaine.test.ts, ui/app/partie/page.tsx). 171 tests verts, tsc propre, build vert. Le plafond de 4 coups est un choix d'écran : la limite du monde reste le temps (1.0) et l'argent, coup forcé possible et sanctionné (R7 J8).
+- Reste du chantier ordonné : C3 réunions à participants, C6 initiatives de personnages, C7 vie interne d'organisation, C8 scandales nommés, C9 processus de réforme, C10 mouvements sociaux. Un correctif à la fois, jamais deux en même temps.
 
 Prochaine commande dans l'ordre : /audit-parcours-joueur, puis /moteur sur J3, /audit-securite-sim avant tout déploiement.

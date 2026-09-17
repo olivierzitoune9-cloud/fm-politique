@@ -1,5 +1,5 @@
 // Sauvegarde locale versionnée : JSON strict, refus de toute sauvegarde d'une autre version de partie ou de moteur.
-// Rafale jalons : migration douce p2.0.0 vers p2.1.0, les territoires manquants sont recréés à la graine.
+// Migration douce p2.x vers p3.0.0 puis p3.1.0 (C1 multi coups) : les champs manquants reçoivent leurs valeurs initiales.
 import { VERSION_MOTEUR } from "./engine.js";
 import { VERSION_PARTIE, type Partie } from "./partie.js";
 import { territoiresInitiaux } from "./courrier.js";
@@ -41,8 +41,8 @@ export function deserialiser(texte: string): Partie {
     throw new Error(`Sauvegarde d'une autre version (${String(s.version)}), non chargeable.`);
   }
   if (s.partieVersion !== VERSION_PARTIE) {
-    // Migration douce : une p2.x sans les champs p3 reçoit ses valeurs initiales, rien d'autre ne bouge.
-    if (s.partieVersion === "p2.1.0" || s.partieVersion === "p2.0.0") {
+    // Migration douce : une p2.x ou p3.0.0 sans les champs p3.1.0 reçoit ses valeurs initiales.
+    if (s.partieVersion === "p2.1.0" || s.partieVersion === "p2.0.0" || s.partieVersion === "p3.0.0") {
       const p = s.partie as Partial<Partie> | undefined;
       if (p !== undefined && typeof p.graine === "number" && typeof p.tick === "number") {
         if (!Array.isArray((p as { territoires?: unknown }).territoires)) {

@@ -16,6 +16,23 @@ Ce qui est acté et ne se rediscute pas sans raison neuve :
 
 Limite portée en tête : le rendu final n'a pas encore été vérifié sur un appareil réel ni en mode sombre par un tiers. Mes conclusions restent provisoires jusqu'à la vérification visuelle.
 
+## 2026-09-16, mandat double vision : plan d'application écrit, aucun code
+
+Contexte courant actualisé : Aaron mandate l'application à fond des DEUX visions, gameplay et design. Le doc design (131 sections) a été copié dans docs/vision-design-fm-politique.md, intégrité vérifiée (56 626 caractères identiques à la source). Le plan d'application est docs/plan-application-vision.md : six phases P1 à P6. Pour le design, la cible reste la boucle §93 (observer, identifier, enquêter, imaginer, préparer, agir, attendre, observer les conséquences, réévaluer), l'interface en trois couches §13 (monde, analyse, action), le contextual surfacing §12, easy to read deep to inspect §32, et la règle §118 (jamais de mécanique spéciale quand une générale suffit). Ce que ce plan ne fait PAS : trancher les portraits, les paliers, ou le droit de gouverner après l'objectif ; ces tensions restent inscrites à l'arbitrage dans le plan. Prochain point de contrôle : GO d'Aaron sur P1 (graphe d'entités et mémoire des organisations), en corrigeant au passage les résidus p3.1.0 (plafond écran 12, contrôle des moyens non cumulatif, monde ne voyant que la première action).
+
+Cette intervention porte sur la documentation : plan d'application, SPEC, suivi, HISTORY. Aucun code, aucun test nouveau. La copie du doc design est fidèle à cent pour cent, par construction (copie binaire vérifiée).
+
+## 2026-09-16, correction de direction après retour d'Aaron sur p3.1.0
+
+Contexte courant actualisé : Aaron refuse la confusion entre accumulation de blocs et profondeur. Il demande plusieurs pages reliées, des ressources concrètes (portefeuille en euros, dépenses compréhensibles, moyens de financement), des interactions plus riches et des conséquences expliquées. Le verdict ancien de densité acceptable ne vaut pas validation du parcours actuel ; aucune observation navigateur nouvelle ici.
+
+Relecture : vision §14 inbox centrale, §15 navigation profonde, §16 recherche de personnes ; doctrine §2 annonce déjà des euros plutôt que des points. L'implémentation n'a pas tenu cette direction. Les numéros de sections de l'ancienne revue gameplay comportent des correspondances erronées : ne plus les recopier sans vérifier.
+
+Proposition : construire une boucle jouable transversale avec inbox, dossier d'action, finances, fiches de personnes et agenda, puis compte rendu et suivi différé. Pages justifiées par une décision et des données persistantes, pas par un quota de routes. Pas d'euros de façade ni de narration inventant des effets absents du moteur. Argent personnel distinct des fonds d'organisation ; temps en créneaux et durées, navigation sans avancer l'horloge. Montants d'exemple d'Aaron non traités comme calibration réelle.
+
+Cette intervention porte sur le diagnostic et le plan : aucun code, test ou build nouveau. Retour enregistré dans le recueil et le suivi. La conformité complète au document vision reste à auditer exigence par exigence.
+
+
 ## 2026-09-16, écrans p3.0.0 : le jeu dense sans devenir illisible
 
 **Situation.** GO d'Aaron pour transformer le MVP en vrai jeu (jalons J11 à J17). La page de partie reçoit d'un coup : second étage de semaine, énergie et moral, six compétences, panneau de carrefour à deux ou trois réponses, badges d'effets durables, promesses et dons, saison du calendrier, coûts de palier, relation estimée, enjeux de territoire. Le risque design est clair : la densité tue la lecture.

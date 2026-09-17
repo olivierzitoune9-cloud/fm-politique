@@ -13,21 +13,8 @@
       "_origin": "ast",
       "id": "ui_sim_rng_rng",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "rng"
-    },
-    {
-      "label": "ResultatArgument",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r13-sophisme.ts",
-      "source_location": "L14",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r13_sophisme_resultatargument",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "resultatargument"
     },
     {
       "label": "ContexteVoie",
@@ -39,7 +26,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r15_voie_legale_contextevoie",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "contextevoie"
     },
     {
@@ -52,7 +39,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r15_voie_legale_resultatvoie",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultatvoie"
     },
     {
@@ -65,7 +52,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r16_salami_etatinstitution",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "etatinstitution"
     },
     {
@@ -78,7 +65,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r16_salami_resultattranche",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultattranche"
     },
     {
@@ -91,7 +78,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r17_armee_etatarmee",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "etatarmee"
     },
     {
@@ -104,7 +91,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r17_armee_resultatarmee",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultatarmee"
     },
     {
@@ -117,7 +104,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r18_choc_etatexception",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "etatexception"
     },
     {
@@ -130,34 +117,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r18_choc_resultatexception",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultatexception"
-    },
-    {
-      "label": "EtatColere",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r19-soupape.ts",
-      "source_location": "L7",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r19_soupape_etatcolere",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "etatcolere"
-    },
-    {
-      "label": "ResultatColere",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r19-soupape.ts",
-      "source_location": "L13",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r19_soupape_resultatcolere",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "resultatcolere"
     },
     {
       "label": "EtatSoutien",
@@ -169,7 +130,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r20_rally_etatsoutien",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "etatsoutien"
     },
     {
@@ -182,7 +143,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r20_rally_resultatsoutien",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultatsoutien"
     },
     {
@@ -195,7 +156,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r21_culte_etatculte",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "etatculte"
     },
     {
@@ -208,125 +169,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r21_culte_resultatculte",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "resultatculte"
-    },
-    {
-      "label": "EtatPreparation",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r22-preparation.ts",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r22_preparation_etatpreparation",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "etatpreparation"
-    },
-    {
-      "label": "ResultatPreparation",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r22-preparation.ts",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r22_preparation_resultatpreparation",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "resultatpreparation"
-    },
-    {
-      "label": "ResultatDetresse",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r4-detresse.ts",
-      "source_location": "L13",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r4_detresse_resultatdetresse",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "resultatdetresse"
-    },
-    {
-      "label": "JournalTirage",
-      "file_type": "code",
-      "source_file": "ui/sim/types.ts",
-      "source_location": "L23",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_types_journaltirage",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "journaltirage"
-    },
-    {
-      "label": "Courriel",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L109",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_courriel",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "courriel"
-    },
-    {
-      "label": "Echeance",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L116",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_echeance",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "echeance"
-    },
-    {
-      "label": "EnjeuTerritoire",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L33",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_enjeuterritoire",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "enjeuterritoire"
-    },
-    {
-      "label": "Sondage",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L161",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_sondage",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sondage"
-    },
-    {
-      "label": "Indicateur",
-      "file_type": "code",
-      "source_file": "ui/sim/data/france-2026.ts",
-      "source_location": "L4",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_data_france_2026_indicateur",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "indicateur"
     },
     {
       "label": "InteractionId",
@@ -342,19 +186,6 @@
       "norm_label": "interactionid"
     },
     {
-      "label": "totalSemaine",
-      "file_type": "code",
-      "source_file": "ui/sim/partie.ts",
-      "source_location": "L325",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_partie_totalsemaine",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "totalsemaine"
-    },
-    {
       "label": "TourSemaine",
       "file_type": "code",
       "source_file": "ui/sim/partie.ts",
@@ -366,19 +197,6 @@
       "community": 1,
       "community_name": "partie/page.tsx",
       "norm_label": "toursemaine"
-    },
-    {
-      "label": "Sauvegarde",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.ts",
-      "source_location": "L11",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_sauvegarde",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sauvegarde"
     },
     {
       "label": "TraceFin",
@@ -459,6 +277,58 @@
       "norm_label": "poidsobjectifs"
     },
     {
+      "label": "Courriel",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L109",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_courriel",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "courriel"
+    },
+    {
+      "label": "Echeance",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L116",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_echeance",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "echeance"
+    },
+    {
+      "label": "EnjeuTerritoire",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L33",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_enjeuterritoire",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "enjeuterritoire"
+    },
+    {
+      "label": "Sondage",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L161",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_sondage",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "sondage"
+    },
+    {
       "label": "PointEco",
       "file_type": "code",
       "source_file": "ui/sim/data/economie.ts",
@@ -537,19 +407,6 @@
       "norm_label": "groupemonde"
     },
     {
-      "label": "GroupeVu",
-      "file_type": "code",
-      "source_file": "ui/sim/joueur.ts",
-      "source_location": "L8",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_joueur_groupevu",
-      "community": 11,
-      "community_name": "engine.ts",
-      "norm_label": "groupevu"
-    },
-    {
       "label": "VueJoueur",
       "file_type": "code",
       "source_file": "ui/sim/joueur.ts",
@@ -574,6 +431,19 @@
       "community": 11,
       "community_name": "engine.ts",
       "norm_label": "textenarre"
+    },
+    {
+      "label": "ActiviteSemaine",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L387",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_activitesemaine",
+      "community": 15,
+      "community_name": "partie.ts",
+      "norm_label": "activitesemaine"
     },
     {
       "label": "EffetMedia",
@@ -680,69 +550,30 @@
       "norm_label": "risqueaffiche"
     },
     {
-      "label": "ConfigIdee",
+      "label": "vuePartie",
       "file_type": "code",
-      "source_file": "ui/app/nouvelle-partie/page.tsx",
-      "source_location": "L19",
+      "source_file": "ui/sim/partie.ts",
+      "source_location": "L856",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "ui_app_nouvelle_partie_page_configidee",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "configidee"
+      "id": "ui_sim_partie_vuepartie",
+      "community": 15,
+      "community_name": "partie.ts",
+      "norm_label": "vuepartie"
     },
     {
-      "label": "ActionJeu",
+      "label": "ManoeuvreParti",
       "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L20",
+      "source_file": "ui/sim/partis.ts",
+      "source_location": "L29",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "ui_sim_actions_actionjeu",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "actionjeu"
-    },
-    {
-      "label": "CategorieAction",
-      "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L5",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_actions_categorieaction",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "categorieaction"
-    },
-    {
-      "label": "EffetsAction",
-      "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L7",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_actions_effetsaction",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "effetsaction"
-    },
-    {
-      "label": "Ambition",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L8",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_ambition",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "ambition"
+      "id": "ui_sim_partis_manoeuvreparti",
+      "community": 15,
+      "community_name": "partie.ts",
+      "norm_label": "manoeuvreparti"
     },
     {
       "label": "AmbitionDef",
@@ -797,19 +628,6 @@
       "norm_label": "objectifpalier"
     },
     {
-      "label": "Origine",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L266",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_origine",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "origine"
-    },
-    {
       "label": "Progression",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -836,45 +654,6 @@
       "norm_label": "statutcarriere"
     },
     {
-      "label": "ActionJouable",
-      "file_type": "code",
-      "source_file": "ui/sim/engine.ts",
-      "source_location": "L23",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_engine_actionjouable",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "actionjouable"
-    },
-    {
-      "label": "Carriere",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L174",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_carriere",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "carriere"
-    },
-    {
-      "label": "EffetDurable",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L202",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_effetdurable",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "effetdurable"
-    },
-    {
       "label": "Promesse",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -886,58 +665,6 @@
       "community": 47,
       "community_name": "personnages.ts",
       "norm_label": "promesse"
-    },
-    {
-      "label": "EffetsDelta",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L30",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_effetsdelta",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "effetsdelta"
-    },
-    {
-      "label": "ModeleDilemme",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L48",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_modeledilemme",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "modeledilemme"
-    },
-    {
-      "label": "OptionDilemme",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L11",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_optiondilemme",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "optiondilemme"
-    },
-    {
-      "label": "ResolutionDilemme",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L41",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_resolutiondilemme",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "resolutiondilemme"
     },
     {
       "label": "InteractionDef",
@@ -1031,32 +758,6 @@
       "norm_label": "metier"
     },
     {
-      "label": "Personnage",
-      "file_type": "code",
-      "source_file": "ui/sim/personnages.ts",
-      "source_location": "L27",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_personnages_personnage",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "personnage"
-    },
-    {
-      "label": "poidsTraits",
-      "file_type": "code",
-      "source_file": "ui/sim/personnages.ts",
-      "source_location": "L180",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_personnages_poidstraits",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "poidstraits"
-    },
-    {
       "label": "Profil",
       "file_type": "code",
       "source_file": "ui/sim/personnages.ts",
@@ -1079,8 +780,21 @@
       "_origin": "ast",
       "id": "ui_sim_carriere_configcarriere",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "configcarriere"
+    },
+    {
+      "label": "totalSemaine",
+      "file_type": "code",
+      "source_file": "ui/sim/partie.ts",
+      "source_location": "L325",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_partie_totalsemaine",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "totalsemaine"
     },
     {
       "label": "StatutPreuve",
@@ -1146,32 +860,6 @@
       "community": 53,
       "community_name": "temps.ts",
       "norm_label": "electionid"
-    },
-    {
-      "label": "EtatCoutMoral",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r10-euphemisme.ts",
-      "source_location": "L7",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r10_euphemisme_etatcoutmoral",
-      "community": 54,
-      "community_name": "clamp01",
-      "norm_label": "etatcoutmoral"
-    },
-    {
-      "label": "ResultatCoutMoral",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r10-euphemisme.ts",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r10_euphemisme_resultatcoutmoral",
-      "community": 54,
-      "community_name": "clamp01",
-      "norm_label": "resultatcoutmoral"
     },
     {
       "label": "CibleBouc",
@@ -1265,19 +953,6 @@
       "norm_label": "resultatcaution"
     },
     {
-      "label": "ActiviteSemaine",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L387",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_activitesemaine",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "activitesemaine"
-    },
-    {
       "label": "Territoire",
       "file_type": "code",
       "source_file": "ui/sim/courrier.ts",
@@ -1287,34 +962,8 @@
       "_origin": "ast",
       "id": "ui_sim_courrier_territoire",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "territoire"
-    },
-    {
-      "label": "Dilemme",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L19",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_dilemme",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "dilemme"
-    },
-    {
-      "label": "Monde",
-      "file_type": "code",
-      "source_file": "ui/sim/engine.ts",
-      "source_location": "L72",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_engine_monde",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "monde"
     },
     {
       "label": "Partie",
@@ -1326,34 +975,8 @@
       "_origin": "ast",
       "id": "ui_sim_partie_partie",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "partie"
-    },
-    {
-      "label": "vuePartie",
-      "file_type": "code",
-      "source_file": "ui/sim/partie.ts",
-      "source_location": "L856",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_partie_vuepartie",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "vuepartie"
-    },
-    {
-      "label": "ManoeuvreParti",
-      "file_type": "code",
-      "source_file": "ui/sim/partis.ts",
-      "source_location": "L29",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_partis_manoeuvreparti",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "manoeuvreparti"
     },
     {
       "label": "Proposition",
@@ -1365,8 +988,21 @@
       "_origin": "ast",
       "id": "ui_sim_propositions_proposition",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "proposition"
+    },
+    {
+      "label": "Sauvegarde",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.ts",
+      "source_location": "L11",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_sauvegarde",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "sauvegarde"
     },
     {
       "label": "frappeAdverse",
@@ -1378,7 +1014,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_frappeadverse",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "frappeadverse"
     },
     {
@@ -1391,7 +1027,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_parti",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "parti"
     },
     {
@@ -1404,7 +1040,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r2_repetition_ciblefamiliarite",
       "community": 71,
-      "community_name": "rng.ts",
+      "community_name": "r2-repetition.ts",
       "norm_label": "ciblefamiliarite"
     },
     {
@@ -1417,21 +1053,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r2_repetition_resultatfamiliarite",
       "community": 71,
-      "community_name": "rng.ts",
+      "community_name": "r2-repetition.ts",
       "norm_label": "resultatfamiliarite"
-    },
-    {
-      "label": "EtatDetresse",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r4-detresse.ts",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r4_detresse_etatdetresse",
-      "community": 71,
-      "community_name": "rng.ts",
-      "norm_label": "etatdetresse"
     },
     {
       "label": "ResultatEtiquetage",
@@ -1573,7 +1196,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r7_obeissance_contexteordre",
       "community": 76,
-      "community_name": "r7-obeissance.ts",
+      "community_name": "rng.ts",
       "norm_label": "contexteordre"
     },
     {
@@ -1586,7 +1209,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r7_obeissance_resultatordre",
       "community": 76,
-      "community_name": "r7-obeissance.ts",
+      "community_name": "rng.ts",
       "norm_label": "resultatordre"
     },
     {
@@ -1598,8 +1221,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "ui_sim_rules_r8_impuissance_etatmobilisation",
-      "community": 77,
-      "community_name": "r8-impuissance.ts",
+      "community": 76,
+      "community_name": "rng.ts",
       "norm_label": "etatmobilisation"
     },
     {
@@ -1611,9 +1234,386 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "ui_sim_rules_r8_impuissance_resultatmobilisation",
-      "community": 77,
-      "community_name": "r8-impuissance.ts",
+      "community": 76,
+      "community_name": "rng.ts",
       "norm_label": "resultatmobilisation"
+    },
+    {
+      "label": "Carriere",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L174",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_carriere",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "carriere"
+    },
+    {
+      "label": "EffetDurable",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L202",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_effetdurable",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "effetdurable"
+    },
+    {
+      "label": "Dilemme",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L19",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_dilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "dilemme"
+    },
+    {
+      "label": "EffetsDelta",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L30",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_effetsdelta",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "effetsdelta"
+    },
+    {
+      "label": "ModeleDilemme",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L48",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_modeledilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "modeledilemme"
+    },
+    {
+      "label": "OptionDilemme",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L11",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_optiondilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "optiondilemme"
+    },
+    {
+      "label": "ResolutionDilemme",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L41",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_resolutiondilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "resolutiondilemme"
+    },
+    {
+      "label": "Monde",
+      "file_type": "code",
+      "source_file": "ui/sim/engine.ts",
+      "source_location": "L72",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_engine_monde",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "monde"
+    },
+    {
+      "label": "Personnage",
+      "file_type": "code",
+      "source_file": "ui/sim/personnages.ts",
+      "source_location": "L27",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_personnages_personnage",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "personnage"
+    },
+    {
+      "label": "poidsTraits",
+      "file_type": "code",
+      "source_file": "ui/sim/personnages.ts",
+      "source_location": "L180",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_personnages_poidstraits",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "poidstraits"
+    },
+    {
+      "label": "ConfigIdee",
+      "file_type": "code",
+      "source_file": "ui/app/nouvelle-partie/page.tsx",
+      "source_location": "L19",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_app_nouvelle_partie_page_configidee",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "configidee"
+    },
+    {
+      "label": "Ambition",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_ambition",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "ambition"
+    },
+    {
+      "label": "Origine",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L266",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_origine",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "origine"
+    },
+    {
+      "label": "EtatCoutMoral",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r10-euphemisme.ts",
+      "source_location": "L7",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r10_euphemisme_etatcoutmoral",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "etatcoutmoral"
+    },
+    {
+      "label": "ResultatCoutMoral",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r10-euphemisme.ts",
+      "source_location": "L12",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r10_euphemisme_resultatcoutmoral",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "resultatcoutmoral"
+    },
+    {
+      "label": "ResultatArgument",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r13-sophisme.ts",
+      "source_location": "L14",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r13_sophisme_resultatargument",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "resultatargument"
+    },
+    {
+      "label": "EtatColere",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r19-soupape.ts",
+      "source_location": "L7",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r19_soupape_etatcolere",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "etatcolere"
+    },
+    {
+      "label": "ResultatColere",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r19-soupape.ts",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r19_soupape_resultatcolere",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "resultatcolere"
+    },
+    {
+      "label": "EtatPreparation",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r22-preparation.ts",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r22_preparation_etatpreparation",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "etatpreparation"
+    },
+    {
+      "label": "ResultatPreparation",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r22-preparation.ts",
+      "source_location": "L12",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r22_preparation_resultatpreparation",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "resultatpreparation"
+    },
+    {
+      "label": "JournalTirage",
+      "file_type": "code",
+      "source_file": "ui/sim/types.ts",
+      "source_location": "L23",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_types_journaltirage",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "journaltirage"
+    },
+    {
+      "label": "Indicateur",
+      "file_type": "code",
+      "source_file": "ui/sim/data/france-2026.ts",
+      "source_location": "L4",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_data_france_2026_indicateur",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "indicateur"
+    },
+    {
+      "label": "ActionJeu",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L20",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_actions_actionjeu",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "actionjeu"
+    },
+    {
+      "label": "CategorieAction",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L5",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_actions_categorieaction",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "categorieaction"
+    },
+    {
+      "label": "EffetsAction",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L7",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_actions_effetsaction",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "effetsaction"
+    },
+    {
+      "label": "ActionJouable",
+      "file_type": "code",
+      "source_file": "ui/sim/engine.ts",
+      "source_location": "L23",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_engine_actionjouable",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "actionjouable"
+    },
+    {
+      "label": "GroupeVu",
+      "file_type": "code",
+      "source_file": "ui/sim/joueur.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_joueur_groupevu",
+      "community": 82,
+      "community_name": "joueur.ts",
+      "norm_label": "groupevu"
+    },
+    {
+      "label": "EtatDetresse",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r4-detresse.ts",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r4_detresse_etatdetresse",
+      "community": 83,
+      "community_name": "r4-detresse.ts",
+      "norm_label": "etatdetresse"
+    },
+    {
+      "label": "ResultatDetresse",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r4-detresse.ts",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r4_detresse_resultatdetresse",
+      "community": 83,
+      "community_name": "r4-detresse.ts",
+      "norm_label": "resultatdetresse"
     },
     {
       "label": ".next()",
@@ -1624,7 +1624,7 @@
       "_origin": "ast",
       "id": "ui_sim_rng_rng_next",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": ".next()"
     },
     {
@@ -1636,7 +1636,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r15_voie_legale_arbitrervoie",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "arbitrervoie()"
     },
     {
@@ -1648,7 +1648,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r16_salami_appliquertranche",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "appliquertranche()"
     },
     {
@@ -1660,7 +1660,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r17_armee_appliquerlevierarmee",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "appliquerlevierarmee()"
     },
     {
@@ -1672,20 +1672,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r18_choc_appliquerchoc",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "appliquerchoc()"
-    },
-    {
-      "label": "appliquerSoupape()",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r19-soupape.ts",
-      "source_location": "L18",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r19_soupape_appliquersoupape",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "appliquersoupape()"
     },
     {
       "label": "appliquerRally()",
@@ -1696,7 +1684,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r20_rally_appliquerrally",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "appliquerrally()"
     },
     {
@@ -1708,20 +1696,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r21_culte_appliquerculte",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "appliquerculte()"
-    },
-    {
-      "label": "Page()",
-      "file_type": "code",
-      "source_file": "ui/app/page.tsx",
-      "source_location": "L5",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_app_page_page",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "page()"
     },
     {
       "label": "PartiePage()",
@@ -1760,52 +1736,16 @@
       "norm_label": "peut()"
     },
     {
-      "label": "recommencer()",
-      "file_type": "code",
-      "source_file": "ui/app/partie/page.tsx",
-      "source_location": "L187",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_app_partie_page_partiepage_recommencer",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "recommencer()"
-    },
-    {
-      "label": "coutPalier()",
+      "label": "objectifsPour()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
-      "source_location": "L233",
+      "source_location": "L109",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_sim_carriere_coutpalier",
+      "id": "ui_sim_carriere_objectifspour",
       "community": 1,
       "community_name": "partie/page.tsx",
-      "norm_label": "coutpalier()"
-    },
-    {
-      "label": "adoptionMoyenne()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L104",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_adoptionmoyenne",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "adoptionmoyenne()"
-    },
-    {
-      "label": "genererAgenda()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L150",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_genereragenda",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "genereragenda()"
+      "norm_label": "objectifspour()"
     },
     {
       "label": "genererCourriels()",
@@ -1820,102 +1760,6 @@
       "norm_label": "generercourriels()"
     },
     {
-      "label": "matchingMarqueEnjeu()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L46",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_matchingmarqueenjeu",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "matchingmarqueenjeu()"
-    },
-    {
-      "label": "propagerTerritoires()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L88",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_propagerterritoires",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "propagerterritoires()"
-    },
-    {
-      "label": "sondageParId()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L176",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_sondageparid",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sondageparid()"
-    },
-    {
-      "label": "territoiresInitiaux()",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L68",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_courrier_territoiresinitiaux",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "territoiresinitiaux()"
-    },
-    {
-      "label": "variablesGroupesDepuisFrance()",
-      "file_type": "code",
-      "source_file": "ui/sim/data/france-2026.ts",
-      "source_location": "L78",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_data_france_2026_variablesgroupesdepuisfrance",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "variablesgroupesdepuisfrance()"
-    },
-    {
-      "label": "libelleGroupe()",
-      "file_type": "code",
-      "source_file": "ui/sim/joueur.ts",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_joueur_libellegroupe",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "libellegroupe()"
-    },
-    {
-      "label": "listeCoupsSemaine()",
-      "file_type": "code",
-      "source_file": "ui/sim/partie.ts",
-      "source_location": "L262",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_partie_listecoupssemaine",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "listecoupssemaine()"
-    },
-    {
-      "label": "risqueAction()",
-      "file_type": "code",
-      "source_file": "ui/sim/partie.ts",
-      "source_location": "L280",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_partie_risqueaction",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "risqueaction()"
-    },
-    {
       "label": "libelleMetier()",
       "file_type": "code",
       "source_file": "ui/sim/personnages.ts",
@@ -1926,30 +1770,6 @@
       "community": 1,
       "community_name": "partie/page.tsx",
       "norm_label": "libellemetier()"
-    },
-    {
-      "label": "deserialiser()",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.ts",
-      "source_location": "L32",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_deserialiser",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "deserialiser()"
-    },
-    {
-      "label": "serialiser()",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.ts",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_serialiser",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "serialiser()"
     },
     {
       "label": "ajouterTrace()",
@@ -2022,6 +1842,66 @@
       "community": 11,
       "community_name": "engine.ts",
       "norm_label": "utiliteoption()"
+    },
+    {
+      "label": "adoptionMoyenne()",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L104",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_adoptionmoyenne",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "adoptionmoyenne()"
+    },
+    {
+      "label": "genererAgenda()",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L150",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_genereragenda",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "genereragenda()"
+    },
+    {
+      "label": "matchingMarqueEnjeu()",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L46",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_matchingmarqueenjeu",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "matchingmarqueenjeu()"
+    },
+    {
+      "label": "propagerTerritoires()",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L88",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_propagerterritoires",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "propagerterritoires()"
+    },
+    {
+      "label": "sondageParId()",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L176",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_courrier_sondageparid",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "sondageparid()"
     },
     {
       "label": "ajusterEconomie()",
@@ -2156,30 +2036,6 @@
       "norm_label": "simuler()"
     },
     {
-      "label": "arrondirDizaine()",
-      "file_type": "code",
-      "source_file": "ui/sim/joueur.ts",
-      "source_location": "L25",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_joueur_arrondirdizaine",
-      "community": 11,
-      "community_name": "engine.ts",
-      "norm_label": "arrondirdizaine()"
-    },
-    {
-      "label": "filtrerVueJoueur()",
-      "file_type": "code",
-      "source_file": "ui/sim/joueur.ts",
-      "source_location": "L36",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_joueur_filtrervuejoueur",
-      "community": 11,
-      "community_name": "engine.ts",
-      "norm_label": "filtrervuejoueur()"
-    },
-    {
       "label": "raconterChronologie()",
       "file_type": "code",
       "source_file": "ui/sim/narrative/raconteur.ts",
@@ -2216,18 +2072,6 @@
       "norm_label": "raconterevenement()"
     },
     {
-      "label": "appliquerEtiquetage()",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r1-etiquetage.ts",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_rules_r1_etiquetage_appliqueretiquetage",
-      "community": 11,
-      "community_name": "engine.ts",
-      "norm_label": "appliqueretiquetage()"
-    },
-    {
       "label": "appliquerPreparation()",
       "file_type": "code",
       "source_file": "ui/sim/rules/r22-preparation.ts",
@@ -2240,18 +2084,6 @@
       "norm_label": "appliquerpreparation()"
     },
     {
-      "label": "activiteParId()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L421",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_activiteparid",
-      "community": 15,
-      "community_name": "partie.ts",
-      "norm_label": "activiteparid()"
-    },
-    {
       "label": "appliquerActivite()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -2262,18 +2094,6 @@
       "community": 15,
       "community_name": "partie.ts",
       "norm_label": "appliqueractivite()"
-    },
-    {
-      "label": "appliquerFatigue()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L374",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_appliquerfatigue",
-      "community": 15,
-      "community_name": "partie.ts",
-      "norm_label": "appliquerfatigue()"
     },
     {
       "label": "avancerEffetsDurees()",
@@ -2300,40 +2120,16 @@
       "norm_label": "clamp01b()"
     },
     {
-      "label": "competenceDeCategorie()",
+      "label": "coutPalier()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
-      "source_location": "L164",
+      "source_location": "L233",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_sim_carriere_competencedecategorie",
+      "id": "ui_sim_carriere_coutpalier",
       "community": 15,
       "community_name": "partie.ts",
-      "norm_label": "competencedecategorie()"
-    },
-    {
-      "label": "corruptionExpansion()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L240",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_corruptionexpansion",
-      "community": 15,
-      "community_name": "partie.ts",
-      "norm_label": "corruptionexpansion()"
-    },
-    {
-      "label": "efficaciteSemaine()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L367",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_efficacitesemaine",
-      "community": 15,
-      "community_name": "partie.ts",
-      "norm_label": "efficacitesemaine()"
+      "norm_label": "coutpalier()"
     },
     {
       "label": "gagnerCompetence()",
@@ -2358,6 +2154,18 @@
       "community": 15,
       "community_name": "partie.ts",
       "norm_label": "regenererhebdo()"
+    },
+    {
+      "label": "surcoutEffetsDurees()",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L461",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_surcouteffetsdurees",
+      "community": 15,
+      "community_name": "partie.ts",
+      "norm_label": "surcouteffetsdurees()"
     },
     {
       "label": "mediaParId()",
@@ -2480,52 +2288,52 @@
       "norm_label": "rootlayout()"
     },
     {
-      "label": "NouvellePartiePage()",
+      "label": "activiteParId()",
       "file_type": "code",
-      "source_file": "ui/app/nouvelle-partie/page.tsx",
-      "source_location": "L31",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L421",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage",
+      "id": "ui_sim_carriere_activiteparid",
       "community": 2,
       "community_name": "carriere.ts",
-      "norm_label": "nouvellepartiepage()"
+      "norm_label": "activiteparid()"
     },
     {
-      "label": "changerTrait()",
+      "label": "appliquerFatigue()",
       "file_type": "code",
-      "source_file": "ui/app/nouvelle-partie/page.tsx",
-      "source_location": "L44",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L374",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage_changertrait",
+      "id": "ui_sim_carriere_appliquerfatigue",
       "community": 2,
       "community_name": "carriere.ts",
-      "norm_label": "changertrait()"
+      "norm_label": "appliquerfatigue()"
     },
     {
-      "label": "creer()",
+      "label": "competenceDeCategorie()",
       "file_type": "code",
-      "source_file": "ui/app/nouvelle-partie/page.tsx",
-      "source_location": "L51",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L164",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage_creer",
+      "id": "ui_sim_carriere_competencedecategorie",
       "community": 2,
       "community_name": "carriere.ts",
-      "norm_label": "creer()"
+      "norm_label": "competencedecategorie()"
     },
     {
-      "label": "actionParId()",
+      "label": "efficaciteSemaine()",
       "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L251",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L367",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_sim_actions_actionparid",
+      "id": "ui_sim_carriere_efficacitesemaine",
       "community": 2,
       "community_name": "carriere.ts",
-      "norm_label": "actionparid()"
+      "norm_label": "efficacitesemaine()"
     },
     {
       "label": "libelleMetierOrigine()",
@@ -2552,18 +2360,6 @@
       "norm_label": "libellestatut()"
     },
     {
-      "label": "objectifsPour()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L109",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_objectifspour",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "objectifspour()"
-    },
-    {
       "label": "statutCible()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -2576,30 +2372,6 @@
       "norm_label": "statutcible()"
     },
     {
-      "label": "vecteurOrigine()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L295",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_vecteurorigine",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "vecteurorigine()"
-    },
-    {
-      "label": "nomJoueurAleatoire()",
-      "file_type": "code",
-      "source_file": "ui/sim/personnages.ts",
-      "source_location": "L95",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_personnages_nomjoueuraleatoire",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "nomjoueuraleatoire()"
-    },
-    {
       "label": "persuasionJoueur()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -2610,42 +2382,6 @@
       "community": 47,
       "community_name": "personnages.ts",
       "norm_label": "persuasionjoueur()"
-    },
-    {
-      "label": "genererDilemmes()",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L222",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_genererdilemmes",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "genererdilemmes()"
-    },
-    {
-      "label": "promesseDepuisDilemme()",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L292",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_promessedepuisdilemme",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "promessedepuisdilemme()"
-    },
-    {
-      "label": "resoudreDilemme()",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L251",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_resoudredilemme",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "resoudredilemme()"
     },
     {
       "label": "ajouterMemoire()",
@@ -2720,6 +2456,18 @@
       "norm_label": "interactionparid()"
     },
     {
+      "label": "base()",
+      "file_type": "code",
+      "source_file": "ui/sim/interactions.test.ts",
+      "source_location": "L15",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_interactions_test_base",
+      "community": 47,
+      "community_name": "personnages.ts",
+      "norm_label": "base()"
+    },
+    {
       "label": "arrondi2()",
       "file_type": "code",
       "source_file": "ui/sim/personnages.ts",
@@ -2780,6 +2528,30 @@
       "norm_label": "tirernom()"
     },
     {
+      "label": "recommencer()",
+      "file_type": "code",
+      "source_file": "ui/app/partie/page.tsx",
+      "source_location": "L187",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_app_partie_page_partiepage_recommencer",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "recommencer()"
+    },
+    {
+      "label": "actionParId()",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L251",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_actions_actionparid",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "actionparid()"
+    },
+    {
       "label": "creerCarriere()",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -2788,8 +2560,20 @@
       "_origin": "ast",
       "id": "ui_sim_carriere_creercarriere",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "creercarriere()"
+    },
+    {
+      "label": "palierDeStatut()",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L132",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_palierdestatut",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "palierdestatut()"
     },
     {
       "label": "carriere()",
@@ -2800,20 +2584,8 @@
       "_origin": "ast",
       "id": "ui_sim_dilemmes_test_carriere",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "carriere()"
-    },
-    {
-      "label": "base()",
-      "file_type": "code",
-      "source_file": "ui/sim/interactions.test.ts",
-      "source_location": "L15",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_interactions_test_base",
-      "community": 50,
-      "community_name": "jeu-profond.test.ts",
-      "norm_label": "base()"
     },
     {
       "label": "creerPartie()",
@@ -2824,8 +2596,32 @@
       "_origin": "ast",
       "id": "ui_sim_partie_creerpartie",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "creerpartie()"
+    },
+    {
+      "label": "listeCoupsSemaine()",
+      "file_type": "code",
+      "source_file": "ui/sim/partie.ts",
+      "source_location": "L262",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_partie_listecoupssemaine",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "listecoupssemaine()"
+    },
+    {
+      "label": "risqueAction()",
+      "file_type": "code",
+      "source_file": "ui/sim/partie.ts",
+      "source_location": "L280",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_partie_risqueaction",
+      "community": 50,
+      "community_name": "creerRng",
+      "norm_label": "risqueaction()"
     },
     {
       "label": "partir()",
@@ -2836,7 +2632,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_test_partir",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "partir()"
     },
     {
@@ -2848,7 +2644,7 @@
       "_origin": "ast",
       "id": "ui_sim_rng_creerrng",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "creerrng()"
     },
     {
@@ -3068,28 +2864,16 @@
       "norm_label": "appliquercaution()"
     },
     {
-      "label": "palierDeStatut()",
+      "label": "territoiresInitiaux()",
       "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L132",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L68",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_sim_carriere_palierdestatut",
+      "id": "ui_sim_courrier_territoiresinitiaux",
       "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "palierdestatut()"
-    },
-    {
-      "label": "surcoutEffetsDurees()",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L461",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "ui_sim_carriere_surcouteffetsdurees",
-      "community": 58,
-      "community_name": "vuePartie",
-      "norm_label": "surcouteffetsdurees()"
+      "community_name": "sauvegarde.ts",
+      "norm_label": "territoiresinitiaux()"
     },
     {
       "label": "dicibiliteBornee()",
@@ -3100,7 +2884,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_v2_test_dicibilitebornee",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "dicibilitebornee()"
     },
     {
@@ -3112,8 +2896,44 @@
       "_origin": "ast",
       "id": "ui_sim_partie_v2_test_partir",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "partir()"
+    },
+    {
+      "label": "deserialiser()",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.ts",
+      "source_location": "L32",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_deserialiser",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "deserialiser()"
+    },
+    {
+      "label": "serialiser()",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.ts",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_serialiser",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "serialiser()"
+    },
+    {
+      "label": "corruptionExpansion()",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L240",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_corruptionexpansion",
+      "community": 70,
+      "community_name": "jeu-profond.test.ts",
+      "norm_label": "corruptionexpansion()"
     },
     {
       "label": "brigner()",
@@ -3124,7 +2944,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_brigner",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "brigner()"
     },
     {
@@ -3136,7 +2956,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_majpartis",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "majpartis()"
     },
     {
@@ -3148,7 +2968,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_manoeuvrespartis",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "manoeuvrespartis()"
     },
     {
@@ -3160,7 +2980,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_relationsinitialespartis",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "relationsinitialespartis()"
     },
     {
@@ -3172,20 +2992,20 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r2_repetition_appliquerrepetition",
       "community": 71,
-      "community_name": "rng.ts",
+      "community_name": "r2-repetition.ts",
       "norm_label": "appliquerrepetition()"
     },
     {
-      "label": "appliquerDetresse()",
+      "label": "appliquerEtiquetage()",
       "file_type": "code",
-      "source_file": "ui/sim/rules/r4-detresse.ts",
-      "source_location": "L19",
+      "source_file": "ui/sim/rules/r1-etiquetage.ts",
+      "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
-      "id": "ui_sim_rules_r4_detresse_appliquerdetresse",
-      "community": 71,
-      "community_name": "rng.ts",
-      "norm_label": "appliquerdetresse()"
+      "id": "ui_sim_rules_r1_etiquetage_appliqueretiquetage",
+      "community": 72,
+      "community_name": "types.ts",
+      "norm_label": "appliqueretiquetage()"
     },
     {
       "label": "biaisAllocation()",
@@ -3268,7 +3088,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r7_obeissance_appliquerordre",
       "community": 76,
-      "community_name": "r7-obeissance.ts",
+      "community_name": "rng.ts",
       "norm_label": "appliquerordre()"
     },
     {
@@ -3279,9 +3099,189 @@
       "_callable": true,
       "_origin": "ast",
       "id": "ui_sim_rules_r8_impuissance_appliquersanction",
-      "community": 77,
-      "community_name": "r8-impuissance.ts",
+      "community": 76,
+      "community_name": "rng.ts",
       "norm_label": "appliquersanction()"
+    },
+    {
+      "label": "genererDilemmes()",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L222",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_genererdilemmes",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "genererdilemmes()"
+    },
+    {
+      "label": "promesseDepuisDilemme()",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L292",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_promessedepuisdilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "promessedepuisdilemme()"
+    },
+    {
+      "label": "resoudreDilemme()",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L251",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_resoudredilemme",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "resoudredilemme()"
+    },
+    {
+      "label": "NouvellePartiePage()",
+      "file_type": "code",
+      "source_file": "ui/app/nouvelle-partie/page.tsx",
+      "source_location": "L31",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "nouvellepartiepage()"
+    },
+    {
+      "label": "changerTrait()",
+      "file_type": "code",
+      "source_file": "ui/app/nouvelle-partie/page.tsx",
+      "source_location": "L44",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage_changertrait",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "changertrait()"
+    },
+    {
+      "label": "creer()",
+      "file_type": "code",
+      "source_file": "ui/app/nouvelle-partie/page.tsx",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_app_nouvelle_partie_page_nouvellepartiepage_creer",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "creer()"
+    },
+    {
+      "label": "vecteurOrigine()",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L295",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_carriere_vecteurorigine",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "vecteurorigine()"
+    },
+    {
+      "label": "nomJoueurAleatoire()",
+      "file_type": "code",
+      "source_file": "ui/sim/personnages.ts",
+      "source_location": "L95",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_personnages_nomjoueuraleatoire",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "nomjoueuraleatoire()"
+    },
+    {
+      "label": "appliquerSoupape()",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r19-soupape.ts",
+      "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r19_soupape_appliquersoupape",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "appliquersoupape()"
+    },
+    {
+      "label": "Page()",
+      "file_type": "code",
+      "source_file": "ui/app/page.tsx",
+      "source_location": "L5",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_app_page_page",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "page()"
+    },
+    {
+      "label": "variablesGroupesDepuisFrance()",
+      "file_type": "code",
+      "source_file": "ui/sim/data/france-2026.ts",
+      "source_location": "L78",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_data_france_2026_variablesgroupesdepuisfrance",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "variablesgroupesdepuisfrance()"
+    },
+    {
+      "label": "arrondirDizaine()",
+      "file_type": "code",
+      "source_file": "ui/sim/joueur.ts",
+      "source_location": "L25",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_joueur_arrondirdizaine",
+      "community": 82,
+      "community_name": "joueur.ts",
+      "norm_label": "arrondirdizaine()"
+    },
+    {
+      "label": "filtrerVueJoueur()",
+      "file_type": "code",
+      "source_file": "ui/sim/joueur.ts",
+      "source_location": "L36",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_joueur_filtrervuejoueur",
+      "community": 82,
+      "community_name": "joueur.ts",
+      "norm_label": "filtrervuejoueur()"
+    },
+    {
+      "label": "libelleGroupe()",
+      "file_type": "code",
+      "source_file": "ui/sim/joueur.ts",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_joueur_libellegroupe",
+      "community": 82,
+      "community_name": "joueur.ts",
+      "norm_label": "libellegroupe()"
+    },
+    {
+      "label": "appliquerDetresse()",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r4-detresse.ts",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "ui_sim_rules_r4_detresse_appliquerdetresse",
+      "community": 83,
+      "community_name": "r4-detresse.ts",
+      "norm_label": "appliquerdetresse()"
     },
     {
       "label": "lot-d.test.ts",
@@ -3291,7 +3291,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_lot_d_test",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "lot-d.test.ts"
     },
     {
@@ -3302,7 +3302,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r15_voie_legale",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r15-voie-legale.ts"
     },
     {
@@ -3313,7 +3313,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r16_salami",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r16-salami.ts"
     },
     {
@@ -3324,7 +3324,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r17_armee",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r17-armee.ts"
     },
     {
@@ -3335,19 +3335,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r18_choc",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r18-choc.ts"
-    },
-    {
-      "label": "r19-soupape.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r19-soupape.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rules_r19_soupape",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "r19-soupape.ts"
     },
     {
       "label": "r20-rally.ts",
@@ -3357,7 +3346,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r20_rally",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r20-rally.ts"
     },
     {
@@ -3368,30 +3357,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r21_culte",
       "community": 0,
-      "community_name": "JournalTirage",
+      "community_name": "Rng",
       "norm_label": "r21-culte.ts"
-    },
-    {
-      "label": "r22-preparation.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r22-preparation.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rules_r22_preparation",
-      "community": 0,
-      "community_name": "JournalTirage",
-      "norm_label": "r22-preparation.ts"
-    },
-    {
-      "label": "app/page.tsx",
-      "file_type": "code",
-      "source_file": "ui/app/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_app_page",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "app/page.tsx"
     },
     {
       "label": "partie/page.tsx",
@@ -3425,182 +3392,6 @@
       "community": 1,
       "community_name": "partie/page.tsx",
       "norm_label": "ordre_categories"
-    },
-    {
-      "label": "courrier.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_courrier",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "courrier.ts"
-    },
-    {
-      "label": "EXPEDITEURS",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L121",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_expediteurs",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "expediteurs"
-    },
-    {
-      "label": "LIBELLES_ENJEU",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_libelles_enjeu",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "libelles_enjeu"
-    },
-    {
-      "label": "NOMS_TERRITOIRES",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_noms_territoires",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "noms_territoires"
-    },
-    {
-      "label": "SONDAGES",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L170",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_sondages",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sondages"
-    },
-    {
-      "label": "courrier.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_test",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "courrier.test.ts"
-    },
-    {
-      "label": "VECTEURS",
-      "file_type": "code",
-      "source_file": "ui/sim/courrier.ts",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "ui_sim_courrier_vecteurs",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "vecteurs"
-    },
-    {
-      "label": "france-2026.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/data/france-2026.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_data_france_2026",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "france-2026.ts"
-    },
-    {
-      "label": "FRANCE_2026",
-      "file_type": "code",
-      "source_file": "ui/sim/data/france-2026.ts",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "ui_sim_data_france_2026_france_2026",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "france_2026"
-    },
-    {
-      "label": "france-2026.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/data/france-2026.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_data_france_2026_test",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "france-2026.test.ts"
-    },
-    {
-      "label": "VERSION_MOTEUR",
-      "file_type": "code",
-      "source_file": "ui/sim/engine.ts",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "ui_sim_engine_version_moteur",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "version_moteur"
-    },
-    {
-      "label": "VERSION_PARTIE",
-      "file_type": "code",
-      "source_file": "ui/sim/partie.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "ui_sim_partie_version_partie",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "version_partie"
-    },
-    {
-      "label": "sauvegarde.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sauvegarde.ts"
-    },
-    {
-      "label": "sauvegarde.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_test",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "sauvegarde.test.ts"
-    },
-    {
-      "label": "CONFIG",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.test.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_test_config",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "config"
-    },
-    {
-      "label": "VERSION_SAUVEGARDE",
-      "file_type": "code",
-      "source_file": "ui/sim/sauvegarde.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "ui_sim_sauvegarde_version_sauvegarde",
-      "community": 1,
-      "community_name": "partie/page.tsx",
-      "norm_label": "version_sauvegarde"
     },
     {
       "label": "traces.ts",
@@ -3823,6 +3614,83 @@
       "norm_label": "calibration.test.ts"
     },
     {
+      "label": "courrier.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_courrier",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "courrier.ts"
+    },
+    {
+      "label": "EXPEDITEURS",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_expediteurs",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "expediteurs"
+    },
+    {
+      "label": "LIBELLES_ENJEU",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_libelles_enjeu",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "libelles_enjeu"
+    },
+    {
+      "label": "NOMS_TERRITOIRES",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_noms_territoires",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "noms_territoires"
+    },
+    {
+      "label": "SONDAGES",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L170",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_sondages",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "sondages"
+    },
+    {
+      "label": "courrier.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_test",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "courrier.test.ts"
+    },
+    {
+      "label": "VECTEURS",
+      "file_type": "code",
+      "source_file": "ui/sim/courrier.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "ui_sim_courrier_vecteurs",
+      "community": 11,
+      "community_name": "engine.ts",
+      "norm_label": "vecteurs"
+    },
+    {
       "label": "economie.ts",
       "file_type": "code",
       "source_file": "ui/sim/data/economie.ts",
@@ -3898,17 +3766,6 @@
       "community": 11,
       "community_name": "engine.ts",
       "norm_label": "engine.test.ts"
-    },
-    {
-      "label": "joueur.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/joueur.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_joueur",
-      "community": 11,
-      "community_name": "engine.ts",
-      "norm_label": "joueur.ts"
     },
     {
       "label": "joueur.test.ts",
@@ -4824,50 +4681,6 @@
       "norm_label": "metadata"
     },
     {
-      "label": "nouvelle-partie/page.tsx",
-      "file_type": "code",
-      "source_file": "ui/app/nouvelle-partie/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_app_nouvelle_partie_page",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "nouvelle-partie/page.tsx"
-    },
-    {
-      "label": "actions.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_actions",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "actions.ts"
-    },
-    {
-      "label": "ACTIONS_JEU",
-      "file_type": "code",
-      "source_file": "ui/sim/actions.ts",
-      "source_location": "L33",
-      "_origin": "ast",
-      "id": "ui_sim_actions_actions_jeu",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "actions_jeu"
-    },
-    {
-      "label": "actions.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/actions.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_actions_test",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "actions.test.ts"
-    },
-    {
       "label": "carriere.ts",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -4888,17 +4701,6 @@
       "community": 2,
       "community_name": "carriere.ts",
       "norm_label": "activites_semaine"
-    },
-    {
-      "label": "AMBITIONS",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "ui_sim_carriere_ambitions",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "ambitions"
     },
     {
       "label": "AVERTISSEMENT_OUVERTURE",
@@ -4934,17 +4736,6 @@
       "norm_label": "libelles_competence"
     },
     {
-      "label": "LIBELLES_ORIGINE",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L268",
-      "_origin": "ast",
-      "id": "ui_sim_carriere_libelles_origine",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "libelles_origine"
-    },
-    {
       "label": "MENTION_DISCRETE",
       "file_type": "code",
       "source_file": "ui/sim/carriere.ts",
@@ -4965,17 +4756,6 @@
       "community": 2,
       "community_name": "carriere.ts",
       "norm_label": "objectifs_par_ambition"
-    },
-    {
-      "label": "ORIGINES",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L254",
-      "_origin": "ast",
-      "id": "ui_sim_carriere_origines",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "origines"
     },
     {
       "label": "STATUTS",
@@ -5009,17 +4789,6 @@
       "community": 2,
       "community_name": "carriere.ts",
       "norm_label": "config"
-    },
-    {
-      "label": "TRAITS_JOUEUR",
-      "file_type": "code",
-      "source_file": "ui/sim/carriere.ts",
-      "source_location": "L305",
-      "_origin": "ast",
-      "id": "ui_sim_carriere_traits_joueur",
-      "community": 2,
-      "community_name": "carriere.ts",
-      "norm_label": "traits_joueur"
     },
     {
       "label": "VECTEURS_ORIGINE",
@@ -6422,7 +6191,7 @@
       "label": "En attente",
       "file_type": "document",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L24",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "docs_suivi_attentes_en_attente",
       "community": 38,
@@ -6433,7 +6202,7 @@
       "label": "R\u00e9gl\u00e9es",
       "file_type": "document",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L17",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "docs_suivi_attentes_r\u00e9gl\u00e9es",
       "community": 38,
@@ -6444,9 +6213,9 @@
       "label": "R\u00e9gl\u00e9es",
       "file_type": "document",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L35",
+      "source_location": "L37",
       "_origin": "ast",
-      "id": "docs_suivi_attentes_r\u00e9gl\u00e9es_35",
+      "id": "docs_suivi_attentes_r\u00e9gl\u00e9es_37",
       "community": 38,
       "community_name": "Suivi des attentes",
       "norm_label": "reglees"
@@ -7272,28 +7041,6 @@
       "community": 46,
       "community_name": "next",
       "norm_label": "next"
-    },
-    {
-      "label": "dilemmes.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "dilemmes.ts"
-    },
-    {
-      "label": "CATALOGUE",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.ts",
-      "source_location": "L59",
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_catalogue",
-      "community": 47,
-      "community_name": "personnages.ts",
-      "norm_label": "catalogue"
     },
     {
       "label": "interactions.ts",
@@ -8770,50 +8517,6 @@
       "norm_label": "regle d'usage de cette bibliotheque"
     },
     {
-      "label": "dilemmes.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_test",
-      "community": 50,
-      "community_name": "jeu-profond.test.ts",
-      "norm_label": "dilemmes.test.ts"
-    },
-    {
-      "label": "CONFIG",
-      "file_type": "code",
-      "source_file": "ui/sim/dilemmes.test.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "ui_sim_dilemmes_test_config",
-      "community": 50,
-      "community_name": "jeu-profond.test.ts",
-      "norm_label": "config"
-    },
-    {
-      "label": "jeu-profond.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/jeu-profond.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_jeu_profond_test",
-      "community": 50,
-      "community_name": "jeu-profond.test.ts",
-      "norm_label": "jeu-profond.test.ts"
-    },
-    {
-      "label": "CONFIG",
-      "file_type": "code",
-      "source_file": "ui/sim/jeu-profond.test.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "ui_sim_jeu_profond_test_config",
-      "community": 50,
-      "community_name": "jeu-profond.test.ts",
-      "norm_label": "config"
-    },
-    {
       "label": "partie.test.ts",
       "file_type": "code",
       "source_file": "ui/sim/partie.test.ts",
@@ -8821,7 +8524,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_test",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "partie.test.ts"
     },
     {
@@ -8832,7 +8535,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_test_actions_loop",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "actions_loop"
     },
     {
@@ -8843,7 +8546,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_test_config",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "config"
     },
     {
@@ -8854,7 +8557,7 @@
       "_origin": "ast",
       "id": "ui_sim_semaine_test",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "semaine.test.ts"
     },
     {
@@ -8865,7 +8568,7 @@
       "_origin": "ast",
       "id": "ui_sim_semaine_test_config",
       "community": 50,
-      "community_name": "jeu-profond.test.ts",
+      "community_name": "creerRng",
       "norm_label": "config"
     },
     {
@@ -8927,7 +8630,7 @@
       "label": "Ce qui a \u00e9t\u00e9 fait en fin de session du 2026-09-16",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L78",
+      "source_location": "L89",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_ce_qui_a_\u00e9t\u00e9_fait_en_fin_de_session_du_2026_09_16",
       "community": 52,
@@ -8938,7 +8641,7 @@
       "label": "Contenu manquant",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L31",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_contenu_manquant",
       "community": 52,
@@ -8949,7 +8652,7 @@
       "label": "D\u00e9fauts constat\u00e9s, causes v\u00e9rifi\u00e9es dans le code",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L5",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
       "community": 52,
@@ -8957,10 +8660,21 @@
       "norm_label": "defauts constates, causes verifiees dans le code"
     },
     {
+      "label": "Nouveau retour d'Aaron : profondeur, navigation et ressources concr\u00e8tes",
+      "file_type": "document",
+      "source_file": "docs/retours-joueur-2026-09-16.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_retours_joueur_2026_09_16_nouveau_retour_d_aaron_profondeur_navigation_et_ressources_concr\u00e8tes",
+      "community": 52,
+      "community_name": "Contenu manquant",
+      "norm_label": "nouveau retour d'aaron : profondeur, navigation et ressources concretes"
+    },
+    {
       "label": "Priorit\u00e9 propos\u00e9e pour la prochaine session",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L69",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_priorit\u00e9_propos\u00e9e_pour_la_prochaine_session",
       "community": 52,
@@ -8971,7 +8685,7 @@
       "label": "R1. \u00ab Semaine suivante \u00bb ne fait rien",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L7",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r1_semaine_suivante_ne_fait_rien",
       "community": 52,
@@ -8982,7 +8696,7 @@
       "label": "R2. L'origine choisie ne se retrouve pas dans le statut",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L15",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r2_l_origine_choisie_ne_se_retrouve_pas_dans_le_statut",
       "community": 52,
@@ -8993,7 +8707,7 @@
       "label": "R3. Expliquer les graines",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L33",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r3_expliquer_les_graines",
       "community": 52,
@@ -9004,7 +8718,7 @@
       "label": "R4. Plus d'origines et plus de r\u00f4les de base",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L41",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r4_plus_d_origines_et_plus_de_r\u00f4les_de_base",
       "community": 52,
@@ -9015,7 +8729,7 @@
       "label": "R5. Plus d'objectifs, et une projection de long terme",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L47",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r5_plus_d_objectifs_et_une_projection_de_long_terme",
       "community": 52,
@@ -9026,7 +8740,7 @@
       "label": "R6. La progression doit \u00eatre par \u00e9tapes, jamais saut\u00e9e",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L53",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r6_la_progression_doit_\u00eatre_par_\u00e9tapes_jamais_saut\u00e9e",
       "community": 52,
@@ -9037,7 +8751,7 @@
       "label": "R7. Pas de limite de choix, mais des cons\u00e9quences",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L63",
+      "source_location": "L74",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r7_pas_de_limite_de_choix_mais_des_cons\u00e9quences",
       "community": 52,
@@ -9048,7 +8762,7 @@
       "label": "R8. Le texte de mise en garde n'a rien \u00e0 faire dans le jeu",
       "file_type": "document",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L23",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "docs_retours_joueur_2026_09_16_r8_le_texte_de_mise_en_garde_n_a_rien_\u00e0_faire_dans_le_jeu",
       "community": 52,
@@ -9142,17 +8856,6 @@
       "community": 54,
       "community_name": "clamp01",
       "norm_label": "lot-c.test.ts"
-    },
-    {
-      "label": "r10-euphemisme.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r10-euphemisme.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rules_r10_euphemisme",
-      "community": 54,
-      "community_name": "clamp01",
-      "norm_label": "r10-euphemisme.ts"
     },
     {
       "label": "r11-bouc.ts",
@@ -9290,7 +8993,7 @@
       "label": "2026-09-15, de la doctrine au code, deux erreurs techniques \u00e0 garder",
       "file_type": "document",
       "source_file": "docs/journaux-experts/design.md",
-      "source_location": "L56",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "docs_journaux_experts_design_2026_09_15_de_la_doctrine_au_code_deux_erreurs_techniques_\u00e0_garder",
       "community": 56,
@@ -9301,7 +9004,7 @@
       "label": "2026-09-15, ouverture du p\u00f4le, recherche au lieu de copie",
       "file_type": "document",
       "source_file": "docs/journaux-experts/design.md",
-      "source_location": "L35",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "docs_journaux_experts_design_2026_09_15_ouverture_du_p\u00f4le_recherche_au_lieu_de_copie",
       "community": 56,
@@ -9309,10 +9012,21 @@
       "norm_label": "2026-09-15, ouverture du pole, recherche au lieu de copie"
     },
     {
-      "label": "2026-09-16, \u00e9crans p3.0.0 : le jeu dense sans devenir illisible",
+      "label": "2026-09-16, correction de direction apr\u00e8s retour d'Aaron sur p3.1.0",
       "file_type": "document",
       "source_file": "docs/journaux-experts/design.md",
       "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_journaux_experts_design_2026_09_16_correction_de_direction_apr\u00e8s_retour_d_aaron_sur_p3_1_0",
+      "community": 56,
+      "community_name": "Journal design, FM politique",
+      "norm_label": "2026-09-16, correction de direction apres retour d'aaron sur p3.1.0"
+    },
+    {
+      "label": "2026-09-16, \u00e9crans p3.0.0 : le jeu dense sans devenir illisible",
+      "file_type": "document",
+      "source_file": "docs/journaux-experts/design.md",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "docs_journaux_experts_design_2026_09_16_\u00e9crans_p3_0_0_le_jeu_dense_sans_devenir_illisible",
       "community": 56,
@@ -9353,6 +9067,17 @@
       "norm_label": "telecharger-polices.ps1"
     },
     {
+      "label": "VERSION_MOTEUR",
+      "file_type": "code",
+      "source_file": "ui/sim/engine.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "ui_sim_engine_version_moteur",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "version_moteur"
+    },
+    {
       "label": "partie-v2.test.ts",
       "file_type": "code",
       "source_file": "ui/sim/partie-v2.test.ts",
@@ -9360,7 +9085,7 @@
       "_origin": "ast",
       "id": "ui_sim_partie_v2_test",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "partie-v2.test.ts"
     },
     {
@@ -9371,8 +9096,63 @@
       "_origin": "ast",
       "id": "ui_sim_partie_v2_test_config",
       "community": 58,
-      "community_name": "vuePartie",
+      "community_name": "sauvegarde.ts",
       "norm_label": "config"
+    },
+    {
+      "label": "VERSION_PARTIE",
+      "file_type": "code",
+      "source_file": "ui/sim/partie.ts",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "ui_sim_partie_version_partie",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "version_partie"
+    },
+    {
+      "label": "sauvegarde.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "sauvegarde.ts"
+    },
+    {
+      "label": "sauvegarde.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_test",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "sauvegarde.test.ts"
+    },
+    {
+      "label": "CONFIG",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.test.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_test_config",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "config"
+    },
+    {
+      "label": "VERSION_SAUVEGARDE",
+      "file_type": "code",
+      "source_file": "ui/sim/sauvegarde.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "ui_sim_sauvegarde_version_sauvegarde",
+      "community": 58,
+      "community_name": "sauvegarde.ts",
+      "norm_label": "version_sauvegarde"
     },
     {
       "label": "audit-parcours-joueur-2026-09-16.md",
@@ -10838,6 +10618,28 @@
       "norm_label": "verifications du jour"
     },
     {
+      "label": "jeu-profond.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/jeu-profond.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_jeu_profond_test",
+      "community": 70,
+      "community_name": "jeu-profond.test.ts",
+      "norm_label": "jeu-profond.test.ts"
+    },
+    {
+      "label": "CONFIG",
+      "file_type": "code",
+      "source_file": "ui/sim/jeu-profond.test.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "ui_sim_jeu_profond_test_config",
+      "community": 70,
+      "community_name": "jeu-profond.test.ts",
+      "norm_label": "config"
+    },
+    {
       "label": "partis.ts",
       "file_type": "code",
       "source_file": "ui/sim/partis.ts",
@@ -10845,7 +10647,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "partis.ts"
     },
     {
@@ -10856,7 +10658,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_libelles_options",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "libelles_options"
     },
     {
@@ -10867,7 +10669,7 @@
       "_origin": "ast",
       "id": "ui_sim_partis_partis",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "partis"
     },
     {
@@ -10878,19 +10680,8 @@
       "_origin": "ast",
       "id": "ui_sim_partis_test",
       "community": 70,
-      "community_name": "partis.ts",
+      "community_name": "jeu-profond.test.ts",
       "norm_label": "partis.test.ts"
-    },
-    {
-      "label": "rng.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rng.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rng",
-      "community": 71,
-      "community_name": "rng.ts",
-      "norm_label": "rng.ts"
     },
     {
       "label": "r2-repetition.ts",
@@ -10900,7 +10691,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r2_repetition",
       "community": 71,
-      "community_name": "rng.ts",
+      "community_name": "r2-repetition.ts",
       "norm_label": "r2-repetition.ts"
     },
     {
@@ -10911,30 +10702,8 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r2_repetition_test",
       "community": 71,
-      "community_name": "rng.ts",
+      "community_name": "r2-repetition.ts",
       "norm_label": "r2-repetition.test.ts"
-    },
-    {
-      "label": "r4-detresse.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r4-detresse.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rules_r4_detresse",
-      "community": 71,
-      "community_name": "rng.ts",
-      "norm_label": "r4-detresse.ts"
-    },
-    {
-      "label": "r4-detresse.test.ts",
-      "file_type": "code",
-      "source_file": "ui/sim/rules/r4-detresse.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "ui_sim_rules_r4_detresse_test",
-      "community": 71,
-      "community_name": "rng.ts",
-      "norm_label": "r4-detresse.test.ts"
     },
     {
       "label": "r1-etiquetage.ts",
@@ -11036,6 +10805,17 @@
       "norm_label": "r6-engagement.test.ts"
     },
     {
+      "label": "rng.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rng.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rng",
+      "community": 76,
+      "community_name": "rng.ts",
+      "norm_label": "rng.ts"
+    },
+    {
       "label": "r7-obeissance.ts",
       "file_type": "code",
       "source_file": "ui/sim/rules/r7-obeissance.ts",
@@ -11043,7 +10823,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r7_obeissance",
       "community": 76,
-      "community_name": "r7-obeissance.ts",
+      "community_name": "rng.ts",
       "norm_label": "r7-obeissance.ts"
     },
     {
@@ -11054,7 +10834,7 @@
       "_origin": "ast",
       "id": "ui_sim_rules_r7_obeissance_test",
       "community": 76,
-      "community_name": "r7-obeissance.ts",
+      "community_name": "rng.ts",
       "norm_label": "r7-obeissance.test.ts"
     },
     {
@@ -11064,8 +10844,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_sim_rules_r8_impuissance",
-      "community": 77,
-      "community_name": "r8-impuissance.ts",
+      "community": 76,
+      "community_name": "rng.ts",
       "norm_label": "r8-impuissance.ts"
     },
     {
@@ -11075,9 +10855,141 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_sim_rules_r8_impuissance_test",
-      "community": 77,
-      "community_name": "r8-impuissance.ts",
+      "community": 76,
+      "community_name": "rng.ts",
       "norm_label": "r8-impuissance.test.ts"
+    },
+    {
+      "label": "dilemmes.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "dilemmes.ts"
+    },
+    {
+      "label": "CATALOGUE",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.ts",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_catalogue",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "catalogue"
+    },
+    {
+      "label": "dilemmes.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_test",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "dilemmes.test.ts"
+    },
+    {
+      "label": "CONFIG",
+      "file_type": "code",
+      "source_file": "ui/sim/dilemmes.test.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "ui_sim_dilemmes_test_config",
+      "community": 77,
+      "community_name": "dilemmes.ts",
+      "norm_label": "config"
+    },
+    {
+      "label": "nouvelle-partie/page.tsx",
+      "file_type": "code",
+      "source_file": "ui/app/nouvelle-partie/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_app_nouvelle_partie_page",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "nouvelle-partie/page.tsx"
+    },
+    {
+      "label": "AMBITIONS",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "ui_sim_carriere_ambitions",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "ambitions"
+    },
+    {
+      "label": "LIBELLES_ORIGINE",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L268",
+      "_origin": "ast",
+      "id": "ui_sim_carriere_libelles_origine",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "libelles_origine"
+    },
+    {
+      "label": "ORIGINES",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L254",
+      "_origin": "ast",
+      "id": "ui_sim_carriere_origines",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "origines"
+    },
+    {
+      "label": "TRAITS_JOUEUR",
+      "file_type": "code",
+      "source_file": "ui/sim/carriere.ts",
+      "source_location": "L305",
+      "_origin": "ast",
+      "id": "ui_sim_carriere_traits_joueur",
+      "community": 78,
+      "community_name": "nouvelle-partie/page.tsx",
+      "norm_label": "traits_joueur"
+    },
+    {
+      "label": "r10-euphemisme.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r10-euphemisme.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rules_r10_euphemisme",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "r10-euphemisme.ts"
+    },
+    {
+      "label": "r19-soupape.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r19-soupape.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rules_r19_soupape",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "r19-soupape.ts"
+    },
+    {
+      "label": "r22-preparation.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r22-preparation.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rules_r22_preparation",
+      "community": 79,
+      "community_name": "JournalTirage",
+      "norm_label": "r22-preparation.ts"
     },
     {
       "label": "ui/package.json",
@@ -11320,6 +11232,116 @@
       "community": 8,
       "community_name": "ui/package.json",
       "norm_label": "typescript"
+    },
+    {
+      "label": "app/page.tsx",
+      "file_type": "code",
+      "source_file": "ui/app/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_app_page",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "app/page.tsx"
+    },
+    {
+      "label": "france-2026.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/data/france-2026.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_data_france_2026",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "france-2026.ts"
+    },
+    {
+      "label": "FRANCE_2026",
+      "file_type": "code",
+      "source_file": "ui/sim/data/france-2026.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "ui_sim_data_france_2026_france_2026",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "france_2026"
+    },
+    {
+      "label": "france-2026.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/data/france-2026.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_data_france_2026_test",
+      "community": 80,
+      "community_name": "france-2026.ts",
+      "norm_label": "france-2026.test.ts"
+    },
+    {
+      "label": "actions.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_actions",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "actions.ts"
+    },
+    {
+      "label": "ACTIONS_JEU",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.ts",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "ui_sim_actions_actions_jeu",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "actions_jeu"
+    },
+    {
+      "label": "actions.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/actions.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_actions_test",
+      "community": 81,
+      "community_name": "actions.ts",
+      "norm_label": "actions.test.ts"
+    },
+    {
+      "label": "joueur.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/joueur.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_joueur",
+      "community": 82,
+      "community_name": "joueur.ts",
+      "norm_label": "joueur.ts"
+    },
+    {
+      "label": "r4-detresse.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r4-detresse.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rules_r4_detresse",
+      "community": 83,
+      "community_name": "r4-detresse.ts",
+      "norm_label": "r4-detresse.ts"
+    },
+    {
+      "label": "r4-detresse.test.ts",
+      "file_type": "code",
+      "source_file": "ui/sim/rules/r4-detresse.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ui_sim_rules_r4_detresse_test",
+      "community": 83,
+      "community_name": "r4-detresse.ts",
+      "norm_label": "r4-detresse.test.ts"
     },
     {
       "label": "HISTORY.md",
@@ -24714,6 +24736,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_journaux_experts_design_journal_design_fm_politique",
+      "target": "docs_journaux_experts_design_2026_09_16_correction_de_direction_apr\u00e8s_retour_d_aaron_sur_p3_1_0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/journaux-experts/design.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_journaux_experts_design_journal_design_fm_politique",
       "target": "docs_journaux_experts_design_2026_09_16_\u00e9crans_p3_0_0_le_jeu_dense_sans_devenir_illisible",
       "confidence_score": 1.0
     },
@@ -24721,7 +24754,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/journaux-experts/design.md",
-      "source_location": "L35",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_journaux_experts_design_journal_design_fm_politique",
@@ -24743,7 +24776,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/journaux-experts/design.md",
-      "source_location": "L56",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_journaux_experts_design_journal_design_fm_politique",
@@ -25601,7 +25634,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L33",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_contenu_manquant",
@@ -25612,7 +25645,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L41",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_contenu_manquant",
@@ -25623,7 +25656,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L47",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_contenu_manquant",
@@ -25634,7 +25667,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L53",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_contenu_manquant",
@@ -25645,7 +25678,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L63",
+      "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_contenu_manquant",
@@ -25656,29 +25689,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
-      "target": "docs_retours_joueur_2026_09_16_r2_l_origine_choisie_ne_se_retrouve_pas_dans_le_statut",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
-      "target": "docs_retours_joueur_2026_09_16_r8_le_texte_de_mise_en_garde_n_a_rien_\u00e0_faire_dans_le_jeu",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L7",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
@@ -25689,7 +25700,40 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L31",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
+      "target": "docs_retours_joueur_2026_09_16_r2_l_origine_choisie_ne_se_retrouve_pas_dans_le_statut",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/retours-joueur-2026-09-16.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
+      "target": "docs_retours_joueur_2026_09_16_r8_le_texte_de_mise_en_garde_n_a_rien_\u00e0_faire_dans_le_jeu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/retours-joueur-2026-09-16.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_retours_joueur_2026_09_16_retours_de_jeu_d_aaron_recueil_du_2026_09_16",
+      "target": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/retours-joueur-2026-09-16.md",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_retours_de_jeu_d_aaron_recueil_du_2026_09_16",
@@ -25704,14 +25748,14 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_retours_de_jeu_d_aaron_recueil_du_2026_09_16",
-      "target": "docs_retours_joueur_2026_09_16_d\u00e9fauts_constat\u00e9s_causes_v\u00e9rifi\u00e9es_dans_le_code",
+      "target": "docs_retours_joueur_2026_09_16_nouveau_retour_d_aaron_profondeur_navigation_et_ressources_concr\u00e8tes",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L69",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_retours_de_jeu_d_aaron_recueil_du_2026_09_16",
@@ -25722,7 +25766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/retours-joueur-2026-09-16.md",
-      "source_location": "L78",
+      "source_location": "L89",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_retours_joueur_2026_09_16_retours_de_jeu_d_aaron_recueil_du_2026_09_16",
@@ -26052,7 +26096,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L17",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_suivi_attentes_suivi_des_attentes",
@@ -26063,7 +26107,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_suivi_attentes_suivi_des_attentes",
@@ -26085,11 +26129,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/suivi-attentes.md",
-      "source_location": "L35",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_suivi_attentes_suivi_des_attentes",
-      "target": "docs_suivi_attentes_r\u00e9gl\u00e9es_35",
+      "target": "docs_suivi_attentes_r\u00e9gl\u00e9es_37",
       "confidence_score": 1.0
     },
     {

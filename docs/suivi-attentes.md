@@ -2,6 +2,12 @@
 
 ## Attentes en cours
 
+- Mandat d'Aaron (2026-09-16, soir) : appliquer à fond les DEUX visions, gameplay (docs/vision-gameplay-fm-politique.md) et design (docs/vision-design-fm-politique.md, copie vérifiée de l'auteur). Plan d'application acté dans docs/plan-application-vision.md : six phases P1 à P6, une à la fois, tests et build à chaque phase, tensions portraits/paliers/fins laissées à l'arbitrage. P1 a été démarrée le 2026-09-16 soir puis coupée par un bug avant clôture : brouillon de référence ui/sim/monde-social.ts, non intégré, non testé ; clôture faite le 2026-09-17, dépôt rendu vert (172 tests, tsc propre, build 6 pages). La prochaine action est l'intégration de P1 (brancher le graphe dans creerPartie et la sauvegarde, carte visible pilotée par le palier, tests dédiés), en corrigeant au passage les résidus p3.1.0.
+
+- Nouveau retour prioritaire d'Aaron (2026-09-16, après p3.1.0) : sortir de la page unique, ressources concrètes en euros avec portefeuille et flux, temps intelligible, interactions plus riches, conséquences expliquées et consultables dans des dossiers reliés. Diagnostic et plan enregistrés dans docs/retours-joueur-2026-09-16.md et journal design. Pas de code exécuté pour ce nouveau périmètre. Prochaine proposition : boucle complète inbox → dossier → financement/rendez-vous → résultat → suites, pas un simple découpage de composants en pages. Audit de conformité à la vision à reprendre avec renvois de sections vérifiés.
+
+- État final vérifié du correctif p3.1.0 (2026-09-16) : 172 tests passés sur 34 fichiers, build Next.js aboutie. C1/C2/C4 sont PARTIELS, contrairement aux mentions « livrés » plus bas : plafond écran de 12 et répétition interdite, contrôle des moyens non cumulatif, aperçu des risques approximatif et total visible incomplet. Une seule interaction humaine et seule la première action transmise au monde. Ces limites doivent être corrigées avant de déclarer le rythme conforme à la vision. Pas de commit ni de push effectué pour ce chantier.
+
 - Audit sécurité sim : à lancer avant tout déploiement (audit parcours fait le 2026-09-16, verdict publiable avec retouches).
 - Tutoriel par courrier (J5 restant), puis déploiement GitHub et Vercel par Aaron avec Root Directory ui.
 - Arbitrage demandé : étude des jeux comparables (2026-09-16) propose quatre jalons d'enrichissement J11 info incarnée, J12 le monde te répond, J13 profondeur de carrière, J14 causalité profonde, recommandation J11 d'abord. Aucun ne démarre sans oui d'Aaron.
@@ -9,6 +15,8 @@
 
 - Arbitrage soldé le 2026-09-16 : GO d'Aaron pour une session unique de transformation, priorité au document vision (docs/vision-gameplay-fm-politique.md) puis aux jalons J11 à J14 (étude jeux comparables) et J15 à J17 (recherche hors politique). Consigne : tout appliquer dans la même session, commit et push seulement à la fin, une fois le jeu transformé. Exécuté : partie p3.0.0, 159 tests verts, build vert.
 - Restant dû après la transformation : file d'effets chiffrés retardés (J14 complet), revue adversariale des règles neuves (dilemmes, frappe adverse, investiture), vérification visuelle des nouveaux blocs par le pôle design.
+- Arbitrage soldé le 2026-09-16 (même session) : revue adversariale gameplay livrée (docs/revue-adversariale-gameplay-2026-09-16.md, G1 à G10 contre vision sections 1 à 63), puis exécution immédiate sur consigne d'Aaron : « une action principale par semaine, c'est une connerie, suivre voire dépasser le document vision ». C1 multi coups, C2 risque affiché avant le clic, C4 agenda comme file avec total, C5 fatigue intra-semaine : livrés, partie p3.1.0, 171 tests verts, tsc propre, build vert. Reste du chantier ordonné : C3 réunions, C6 initiatives de personnages, C7 vie interne d'organisation, C8 scandales nommés, C9 processus de réforme, C10 mouvements sociaux.
+
 
 ## Réglées
 
@@ -27,6 +35,8 @@
 | 2026-09-15 | Créer le dépôt GitHub fm-politique puis l'importer sur Vercel avec Root Directory ui, pour mettre le jeu en ligne et que chaque envoi redéploie | Choix d'Aaron session design | Aaron | Dès que possible |
 | 2026-09-16 | Audit sécurité de la simulation (/audit-securite-sim) avant toute mise en ligne, revue adversariale des points sensibles incluse | Plan de session, clôture audit parcours | Pôle sécurité | Avant déploiement Vercel |
 | 2026-09-16 | Tutoriel par courrier (J6), première semaine guidée dans la boîte mail | Plan d'implementation jalons | Pôles design et moteur | V1 publique |
+| 2026-09-17 | Intégration P1 : brancher creerMondeSocial (ui/sim/monde-social.ts) dans creerPartie et la sauvegarde, carte visible pilotée par le palier, tests dédiés ; reprendre du brouillon supprimé la mémoire par organisation fenêtrée et les alliances et rivalités initiales | Clôture 2026-09-17, HISTORY et journal développeur | Pôles développeur et design | Prochaine session |
+| 2026-09-17 | Arbitrage d'Aaron : commit et push du dépôt vert (p3.1.0 consignée, brouillon P1 monde-social.ts, docs de clôture) ou maintien en local | Clôture 2026-09-17 | Aaron | À arbitrer |
 
 ## Réglées
 

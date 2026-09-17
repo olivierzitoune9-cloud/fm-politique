@@ -29,7 +29,7 @@ import {
   type Carriere,
   type ConfigCarriere,
 } from "./carriere.js";
-import { appliquerInteraction, type InteractionId } from "./interactions.js";
+import { appliquerInteraction, interactionParId, type InteractionId } from "./interactions.js";
 import { dateISO as dateISODe, libelleSemaine as libelleSemaineDe, LIBELLES_SAISON, saisonDuTick, tickDeDate } from "./temps.js";
 import { filtrerVueJoueur } from "./joueur.js";
 import { genererPersonnages, nomComplet, poidsTraits, type Personnage } from "./personnages.js";
@@ -55,7 +55,7 @@ import {
 import { genererDilemmes, resoudreDilemme, promesseDepuisDilemme, type Dilemme } from "./dilemmes.js";
 import { echeancesAPartirDe } from "./temps.js";
 
-export const VERSION_PARTIE = "p3.0.0"; // le vrai jeu : richesse de semaine, dilemmes, monde qui répond
+export const VERSION_PARTIE = "p3.1.0"; // C1 : la semaine multi coups, risque affiché, agenda comme file
 
 export type FinId =
   | "elu"
@@ -98,8 +98,15 @@ export interface Partie {
   fin: Fin | null;
 }
 
-export interface TourSemaine {
+export interface CoupSemaine {
   actionId: string;
+  mediaId?: string;
+  pousserProposition?: boolean;
+}
+
+export interface TourSemaine {
+  actionId: string; // conservé : premier coup, compatibilité p3.0.0
+  actions?: CoupSemaine[]; // C1 : la semaine multi coups, dans l'ordre choisi
   activiteId?: string; // J15 F1 : la seconde étage de la semaine, activité de fond
   mediaId?: string; // routage des actions média, défaut le quotidien régional
   pousserProposition?: boolean; // R9 : pousser ta proposition en même temps
@@ -252,16 +259,110 @@ export function evaluerFins(c: Carriere, tick: number, dicibilite: number | null
   return null;
 }
 
+export function listeCoupsSemaine(tour: TourSemaine): CoupSemaine[] {
+  // C1 : la semaine multi coups. Ancien format (actionId seul) = un seul coup, comportement p3.0.0 conservé.
+  // Aucun plafond de coups dans le moteur : la limite du monde est le temps et l'argent, jamais un nombre.
+  // Le garde anti-spam reste un choix d'écran (MAX_COUPS_ECRAN dans ui/app/partie/page.tsx).
+  if (tour.actions !== undefined && tour.actions.length > 0) return tour.actions;
+  return [{ actionId: tour.actionId, mediaId: tour.mediaId, pousserProposition: tour.pousserProposition }];
+}
+
+// C2 : le risque affiché avant le clic. Même calcul que l'application à efficacité 1,
+// sans le bruit du monde. Fonction pure, testée contre jouerSemaine.
+export interface RisqueAffiche {
+  risqueEnquete: number; // 0..1 ajouté au risque d'enquête
+  exposition: number; // 0..1 d'audience gagnée par surexposition
+  reputation: number; // delta négatif possible sur la réputation
+  force: boolean; // vrai si le coup dépasse le temps ou l'argent disponibles
+  detail: string; // phrase lisible pour la liste des coups
+}
+
+export function risqueAction(
+  actionId: string,
+  tempsDisponible: number,
+  argentDisponible: number,
+  palier: number,
+): RisqueAffiche {
+  const action = actionParId(actionId);
+  const cout = coutPalier(palier);
+  const coutTemps = action.coutTemps * cout.temps;
+  const coutArgent = action.coutArgent * cout.argent;
+  const force = coutTemps > tempsDisponible + 1e-9 || coutArgent > argentDisponible + 1e-9;
+  let risqueEnquete = (action.effets.risque ?? 0) * 0.7; // à efficacité 1, sans amorti réputation
+  let reputation = action.effets.reputation ?? 0;
+  if (force) {
+    if (coutArgent > argentDisponible + 1e-9) {
+      risqueEnquete += 0.06;
+      reputation += -0.03;
+    }
+    if (coutTemps > tempsDisponible + 1e-9) {
+      risqueEnquete += 0.03;
+      reputation += -0.02;
+    }
+  }
+  const exposition = (action.effets.exposition ?? 0) * 0.3;
+  const morceaux: string[] = [];
+  if (risqueEnquete > 0.005) morceaux.push(`risque +${(risqueEnquete * 100).toFixed(0)}`);
+  if (exposition > 0.005) morceaux.push(`exposition +${(exposition * 100).toFixed(0)}`);
+  if (reputation < -0.005) morceaux.push(`réputation ${(reputation * 100).toFixed(0)}`);
+  if (force) morceaux.push("coup forcé : dette et fatigue");
+  return {
+    risqueEnquete: Math.max(0, risqueEnquete),
+    exposition: Math.max(0, exposition),
+    reputation: Math.min(0, reputation),
+    force,
+    detail: morceaux.length > 0 ? morceaux.join(", ") : "coup propre",
+  };
+}
+
+// C4 : l'agenda comme file. Total temps et argent de la semaine avant validation. Fonction pure.
+export interface TotalSemaine {
+  temps: number;
+  argent: number;
+  coups: number;
+}
+
+export function totalSemaine(tour: TourSemaine, palier: number): TotalSemaine {
+  const coups = listeCoupsSemaine(tour);
+  const cout = coutPalier(palier);
+  let temps = 0;
+  let argent = 0;
+  for (const c of coups) {
+    const a = actionParId(c.actionId);
+    temps += a.coutTemps * cout.temps;
+    argent += a.coutArgent * cout.argent;
+  }
+  if (tour.sondageId !== undefined) {
+    try {
+      const s = sondageParId(tour.sondageId);
+      temps += s.coutTemps;
+      argent += s.coutArgent;
+    } catch {
+      // sondage illisible : la semaine l'écrira, le total ne bloque pas
+    }
+  }
+  if (tour.interaction !== undefined) {
+    try {
+      const def = interactionParId(tour.interaction.interactionId);
+      temps += def.coutTemps;
+    } catch {
+      // interaction inconnue : la semaine lèvera, le total ne bloque pas
+    }
+  }
+  return { temps, argent, coups: coups.length };
+}
+
 export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   if (partie.fin !== null) {
     throw new Error(`La partie est terminée (${partie.fin.titre}). Recommence avec une nouvelle partie.`);
   }
-  const action = actionParId(tour.actionId);
+  const coups = listeCoupsSemaine(tour);
+  const action = actionParId(coups[0].actionId); // premier coup, pour le monde et le journal
   const c0 = partie.carriere;
   const tick = partie.tick + 1;
   const rng = creerRng((partie.graine * 2654435761 + tick) >>> 0);
 
-  // 1. Le monde tourne : économie mensuelle branchée (R4), ton coup passe dans la boucle.
+  // 1. Le monde tourne : économie mensuelle branchée (R4), ton premier coup passe dans la boucle.
   // J4 : le sondage commandé est débité chaque semaine, même gratuit au bar en temps passé à écouter.
   let carriereSondee = c0;
   const journal: JournalPartie[] = [{ tick, texte: `${action.libelle} : fait.` }];
@@ -283,72 +384,97 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   }
   const monde = pas(ajusterEconomie(partie.monde, tick), { optionId: action.moteur ?? "preparer-silencieux" });
 
-  // 2. Multiplicateurs : état intérieur (J15 F2), compétence répétée (J15 F3), caution R14,
-  // micro ciblage IA, routage média avec fact checking. Coûts croissants par palier (E4).
+  // 2. Multi coups (C1, C5) : chaque coup se résout dans l'ordre choisi, la fatigue
+  // et l'efficacité se mettent à jour entre deux coups. Le 3e coup d'une semaine
+  // chargée paie moins que le 1er. Coûts croissants par palier (E4).
   const coutPalierActuel = coutPalier(palierDeStatut(c0.statut));
   const surcoutDurees = surcoutEffetsDurees(c0);
-  const coutTempsTotal = action.coutTemps * coutPalierActuel.temps + surcoutDurees;
-  const manqueTemps = coutTempsTotal > c0.ressources.temps + 1e-9;
-  const manqueArgent = action.coutArgent * coutPalierActuel.argent > c0.ressources.argent + 1e-9;
-  const coupForce = manqueTemps || manqueArgent;
-  const competenceJouee = c0.competences[competenceDeCategorie(action.categorie)] ?? 0;
-  const cautionVive = partie.personnages.some(
-    (p) => p.cautionActive !== null && p.cautionActive.jusqua >= tick && action.categorie === "media",
-  );
-  const multiplicateurCaution = cautionVive ? 1.6 : 1;
-  const multiplicateurMedia = action.categorie === "media" ? 1 + c0.bonusMedia : 1;
-  const multiplicateurCompetence = 1 + 0.25 * competenceJouee; // J15 F3 : la répétition paie
-  let multiplicateur = Math.min(
-    3.2,
-    multiplicateurCaution * multiplicateurMedia * multiplicateurCompetence * efficaciteSemaine(c0),
-  );
-  if (coupForce) {
-    journal.push({
-      tick,
-      texte: manqueArgent && manqueTemps
-        ? `Tu as forcé « ${action.libelle} » sans temps ni argent : dette, fatigue et réputation entamée.`
-        : manqueArgent
-          ? `Tu as forcé « ${action.libelle} » sans argent : tu t'endettes et ta réputation s'entame.`
-          : `Tu as forcé « ${action.libelle} » sans temps : semaine bâclée, soutiens et réputation en berne.`,
-    });
-  }
-  let risqueFactCheck = 0;
-  if (action.categorie === "media") {
-    const media = mediaParId(tour.mediaId ?? "med.quotidien-regional");
-    const routage = routerMedia(media, "media", c0.bonusMedia, partie.proposition.statutPreuve);
-    multiplicateur = Math.min(2.6, multiplicateur * routage.multiplicateur);
-    risqueFactCheck = routage.risqueFactCheck;
-    journal.push({ tick, texte: `Passage par ${routage.detail}.` });
-  }
+  let carriere = carriereSondee;
+  let coupsForces = 0;
+  coups.forEach((coup, index) => {
+    const a = actionParId(coup.actionId);
+    const coutTempsCoup = a.coutTemps * coutPalierActuel.temps + (index === 0 ? surcoutDurees : 0);
+    const manqueArgent = a.coutArgent * coutPalierActuel.argent > carriere.ressources.argent + 1e-9;
+    const manqueTemps = coutTempsCoup > carriere.ressources.temps + 1e-9;
+    const coupForce = manqueTemps || manqueArgent;
+    if (coupForce) coupsForces += 1;
+    const competenceJouee = carriere.competences[competenceDeCategorie(a.categorie)] ?? 0;
+    const cautionVive = partie.personnages.some(
+      (p) => p.cautionActive !== null && p.cautionActive.jusqua >= tick && a.categorie === "media",
+    );
+    const multiplicateurCaution = cautionVive ? 1.6 : 1;
+    const multiplicateurMedia = a.categorie === "media" ? 1 + carriere.bonusMedia : 1;
+    const multiplicateurCompetence = 1 + 0.25 * competenceJouee; // J15 F3 : la répétition paie
+    let multiplicateur = Math.min(
+      3.2,
+      multiplicateurCaution * multiplicateurMedia * multiplicateurCompetence * efficaciteSemaine(carriere),
+    );
+    if (coupForce) {
+      journal.push({
+        tick,
+        texte: manqueArgent && manqueTemps
+          ? `Tu as forcé « ${a.libelle} » sans temps ni argent : dette, fatigue et réputation entamée.`
+          : manqueArgent
+            ? `Tu as forcé « ${a.libelle} » sans argent : tu t'endettes et ta réputation s'entame.`
+            : `Tu as forcé « ${a.libelle} » sans temps : semaine bâclée, soutiens et réputation en berne.`,
+      });
+    }
+    let risqueFactCheck = 0;
+    if (a.categorie === "media") {
+      const media = mediaParId(coup.mediaId ?? tour.mediaId ?? "med.quotidien-regional");
+      const routage = routerMedia(media, "media", carriere.bonusMedia, partie.proposition.statutPreuve);
+      multiplicateur = Math.min(2.6, multiplicateur * routage.multiplicateur);
+      risqueFactCheck = routage.risqueFactCheck;
+      journal.push({ tick, texte: `Passage par ${routage.detail}.` });
+    }
 
-  // 3. Effets de l'action, risque amorti par les contacts croisés (atténuateur R1).
-  // R7 J8 : le coup forcé paie en dette d'argent, risque d'enquête et réputation entamée.
-  let carriere = appliquerEffets(carriereSondee, action.effets, multiplicateur * (coupForce ? 0.5 : 1));
-  if (coupForce) {
-    if (manqueArgent) {
+    // 3. Effets du coup, risque amorti par les contacts croisés (atténuateur R1).
+    // R7 J8 : le coup forcé paie en dette d'argent, risque d'enquête et réputation entamée.
+    carriere = appliquerEffets(carriere, a.effets, multiplicateur * (coupForce ? 0.5 : 1));
+    if (coupForce) {
+      if (manqueArgent) {
+        carriere = {
+          ...carriere,
+          ressources: { ...carriere.ressources, argent: clamp01b(carriere.ressources.argent - 0.08) },
+          risqueEnquete: clamp01b(carriere.risqueEnquete + 0.06),
+        };
+        carriere = appliquerDelta(carriere, "reputation", -0.03);
+      }
+      if (manqueTemps) {
+        carriere = appliquerDelta(carriere, "soutiens", -0.02);
+        carriere = appliquerDelta(carriere, "reputation", -0.02);
+        carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + 0.03) };
+      }
+    }
+    if (a.effets.risque !== undefined && a.regle === "R1") {
       carriere = {
         ...carriere,
-        ressources: { ...carriere.ressources, argent: clamp01b(carriere.ressources.argent - 0.08) },
-        risqueEnquete: clamp01b(carriere.risqueEnquete + 0.06),
+        risqueEnquete: clamp01b(carriere.risqueEnquete * (1 - Math.min(0.5, c0.contactsCroises * 0.3))),
       };
-      carriere = appliquerDelta(carriere, "reputation", -0.03);
     }
-    if (manqueTemps) {
-      carriere = appliquerDelta(carriere, "soutiens", -0.02);
-      carriere = appliquerDelta(carriere, "reputation", -0.02);
-      carriere = { ...carriere, risqueEnquete: clamp01b(carriere.risqueEnquete + 0.03) };
+    // J15 F3 : la répétition construit la compétence, quel que soit le résultat du coup.
+    carriere = gagnerCompetence(carriere, competenceDeCategorie(a.categorie));
+    // J15 F2 + C5 : le coup fatigue, et la fatigue pèse le coup suivant de la même semaine.
+    carriere = appliquerFatigue(carriere, coutTempsCoup, coupForce);
+    // Compatibilité p3.0.0 : pousserProposition au niveau du tour = poussée du premier coup.
+    const pousserPremier = tour.pousserProposition === true && coups.length > 0 && coups[0].pousserProposition !== true;
+    // Proposition poussée avec ce coup (R9), fact checking des médias.
+    if (coup.pousserProposition === true || a.regle === "R9" || (pousserPremier && index === 0)) {
+      const force = persuasionJoueur(carriere) * 0.5 + carriere.progression.notoriete * 0.5;
+      const deni = carriere.progression.reputation * 0.6 + 0.2;
+      for (const g of partie.monde.groupes) {
+        const poussee = pousserProposition(partie.proposition, g.id, force, deni, rng, partie.graine);
+        partie.proposition = poussee.proposition;
+      }
     }
-  }
-  if (action.effets.risque !== undefined && action.regle === "R1") {
-    carriere = {
-      ...carriere,
-      risqueEnquete: clamp01b(carriere.risqueEnquete * (1 - Math.min(0.5, c0.contactsCroises * 0.3))),
-    };
-  }
-  // J15 F3 : la répétition construit la compétence, quel que soit le résultat de la semaine.
-  carriere = gagnerCompetence(carriere, competenceDeCategorie(action.categorie));
-  // J15 F2 : le coup fatigue, les coups forcés usent le moral en plus.
-  carriere = appliquerFatigue(carriere, coutTempsTotal, coupForce);
+    if (index === 0) {
+      journal.unshift({ tick, texte: `${a.libelle} : fait.` });
+    } else {
+      journal.push({ tick, texte: `${a.libelle} : fait aussi (coup ${index + 1} de la semaine).` });
+    }
+    void risqueFactCheck;
+    void coupsForces;
+  });
   // E5 (J13) : croître en soutiens sans croître en organisation convertit la dette en risque.
   const corruption = corruptionExpansion(carriere.progression);
   if (corruption > 0) {
@@ -409,17 +535,24 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     }
   }
 
-  // 4bis. Proposition poussée (R9) et fact checking des médias.
+  // 4bis. Journal de la proposition : les coups l'ont déjà poussée un par un (R9),
+  // on ne fait qu'écrire la ligne quand un coup l'a poussée. Le fact checking des coups
+  // média s'applique ici, recalculé sur les coups média de la semaine.
   let proposition = partie.proposition;
-  const veutPousser = tour.pousserProposition === true || action.regle === "R9";
-  if (veutPousser) {
-    const force = persuasionJoueur(carriere) * 0.5 + carriere.progression.notoriete * 0.5;
-    const deni = carriere.progression.reputation * 0.6 + 0.2;
-    let deltas: string[] = [];
+  let risqueFactCheck = 0;
+  let propositionPoussee = false;
+  for (const coup of coups) {
+    const a = actionParId(coup.actionId);
+    if (coup.pousserProposition === true || a.regle === "R9" || tour.pousserProposition === true) propositionPoussee = true;
+    if (a.categorie !== "media") continue;
+    const media = mediaParId(coup.mediaId ?? tour.mediaId ?? "med.quotidien-regional");
+    const routage = routerMedia(media, "media", carriere.bonusMedia, proposition.statutPreuve);
+    risqueFactCheck = Math.max(risqueFactCheck, routage.risqueFactCheck);
+  }
+  if (propositionPoussee) {
+    const deltas: string[] = [];
     for (const g of partie.monde.groupes) {
-      const p = pousserProposition(proposition, g.id, force, deni, rng, partie.graine);
-      proposition = p.proposition;
-      deltas.push(`${g.id} ${p.delta >= 0 ? "+" : ""}${p.delta.toFixed(3)}`);
+      deltas.push(`${g.id} ${(proposition.dicibilite[g.id] ?? 0).toFixed(3)}`);
     }
     journal.push({ tick, texte: `Proposition « ${proposition.texte} » poussée (${deltas.join(", ")}).` });
   }
@@ -433,8 +566,16 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
 
   // 5. Coûts de la semaine (coûts croissants par palier E4, surcoûts d'effets durables F6),
   // activité de fond (J15 F1), promesses réglées (E10), régénération pour la suivante.
-  const coutTemps = coutTempsTotal + (tour.interaction !== undefined ? 0.2 : 0);
-  const coutArgent = action.coutArgent * coutPalierActuel.argent;
+  // C1 : chaque coup a déjà payé sa fatigue entre deux coups, les coûts se débitent ici en une fois.
+  let coutTempsSemaine = surcoutDurees + (tour.interaction !== undefined ? 0.2 : 0);
+  let coutArgentSemaine = 0;
+  for (const coup of coups) {
+    const a = actionParId(coup.actionId);
+    coutTempsSemaine += a.coutTemps * coutPalierActuel.temps;
+    coutArgentSemaine += a.coutArgent * coutPalierActuel.argent;
+  }
+  const coutTemps = coutTempsSemaine;
+  const coutArgent = coutArgentSemaine;
   carriere = {
     ...carriere,
     ressources: {
@@ -453,7 +594,14 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
     ...carriere,
     promesses: carriere.promesses.map((pr) => {
       if (pr.statut !== "en-cours") return pr;
-      if (action.categorie === pr.categorieAttendue) {
+      const tientCetteSemaine = coups.some((coup) => {
+        try {
+          return actionParId(coup.actionId).categorie === pr.categorieAttendue;
+        } catch {
+          return false;
+        }
+      });
+      if (tientCetteSemaine) {
         const cible = persoParId(pr.persoId);
         if (cible !== undefined) {
           const marque = cible.memoire.filter((m) => m.type === "promesse").reduce((s, m) => s + m.gravite, 0);
@@ -612,7 +760,17 @@ export function jouerSemaine(partie: Partie, tour: TourSemaine): Partie {
   }
 
   // E13 (J14) : le bruit de la semaine ressort des semaines plus tard. Effet retardé annoncé.
-  if (action.categorie === "media" && multiplicateur > 1.3) {
+  // C1 : n'importe quel coup média fort de la semaine peut faire résonner l'écho.
+  const coupMediaFort = coups.some((coup) => {
+    try {
+      if (actionParId(coup.actionId).categorie !== "media") return false;
+    } catch {
+      return false;
+    }
+    const risque = risqueAction(coup.actionId, carriere.ressources.temps, carriere.ressources.argent, 1);
+    return risque.exposition > 0.02;
+  });
+  if (coupMediaFort) {
     journal.push({
       tick,
       texte: `L'écho de « ${action.libelle} » ressortira : des relais le reprendront, le monde s'y référera.`,

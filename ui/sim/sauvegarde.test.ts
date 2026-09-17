@@ -60,4 +60,15 @@ describe("sauvegarde locale versionnée", () => {
     expect(charge.carriere.investiture).toBe("non-posee");
     expect(charge.personnages[0].connaissance).toBeGreaterThan(0);
   });
+
+  it("migration douce p3.0.0 vers p3.1.0 : l'ancien format a un coup reste jouable", () => {
+    const p = creerPartie(42, CONFIG);
+    const brut = JSON.parse(serialiser(p));
+    brut.partieVersion = "p3.0.0";
+    brut.partie.version = "p3.0.0";
+    const charge = deserialiser(JSON.stringify(brut));
+    expect(charge.version).toBe(VERSION_PARTIE);
+    const jouee = jouerSemaine(charge, { actionId: "tractage-marche" });
+    expect(jouee.tick).toBe(1);
+  });
 });

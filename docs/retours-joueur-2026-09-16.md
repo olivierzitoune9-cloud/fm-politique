@@ -2,6 +2,17 @@
 
 > Recueil intégral des retours d'Aaron en fin de session, pour ne rien perdre. Chaque point est un défaut constaté ou un arbitrage de design. Consigne associée : au prochain `/pilote-sim`, exécuter d'une traite tous les jalons restants, sans s'arrêter à un jalon par session.
 
+## Nouveau retour d'Aaron : profondeur, navigation et ressources concrètes
+
+Retour après p3.1.0, 2026-09-16 : tout concentrer sur une même page donne une impression de densité sans profondeur suffisante. Conséquences des actions difficiles à comprendre ; « temps + argent » abstraits vécus comme du bruit cognitif. Aaron demande un portefeuille concret (exemple illustratif : 15 000 € disponibles, une action à 3 000 €), des moyens de gagner de l'argent, davantage d'interactions, de détails et de conséquences lisibles dans des pages dédiées, comme dans FM. Ces montants sont des exemples, pas des paramètres validés.
+
+Correction de direction : ne pas seulement répartir les blocs actuels sur plusieurs pages. Relier une inbox à des dossiers d'action, des fiches de personnes et d'organisations, un agenda et des comptes détaillés. Une décision doit exposer ses engagements certains, ses effets espérés et ses risques incertains ; son compte rendu doit montrer les faits observables et permettre de suivre les suites. Les textes doivent refléter le moteur, pas ajouter une profondeur fictive.
+
+Constat documentaire vérifié : vision §14 inbox, §15 navigation profonde, §16 recherche de personnes ; design-system §2 impose déjà les euros plutôt que des points abstraits. Aucun pourcentage global de conformité à la vision établi. L'ancienne revue doit être reprise : ses renvois de sections ne correspondent pas tous aux titres du document réel.
+
+Plan proposé, non implémenté : boucle complète inbox → dossier → finances/personnes → engagement daté → compte rendu → suites ; argent en euros avec flux persistants, comptes personnel et organisation séparés, disponibilités en heures et rendez-vous. Chiffrage à documenter comme hypothèses de gameplay, règles légales de financement à sourcer avant modélisation. Ne pas remplacer les indices actuels par une simple multiplication d'affichage.
+
+
 ## Défauts constatés, causes vérifiées dans le code
 
 ### R1. « Semaine suivante » ne fait rien

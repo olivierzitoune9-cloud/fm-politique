@@ -63,6 +63,10 @@ Le prototype p2.1.0 était un MVP : une action par semaine, tout visible, un mon
 
 Niveaux de preuve : chaque mécanisme porte son origine (F1 à F10 de la recherche hors politique, E1 à E14 de l'étude des jeux comparables), tous sont des hypothèses de modélisation de gameplay, jamais des faits sur la France réelle.
 
+## 6.3 Mandat vision design (Aaron, 2026-09-16)
+
+Aaron mandate l'application à fond de `docs/vision-gameplay-fm-politique.md` ET de `docs/vision-design-fm-politique.md` (copie fidèle vérifiée du document de l'auteur de la vision design). Le plan d'application est `docs/plan-application-vision.md` : six phases, P1 fondations du monde (graphe d'entités, mémoire des organisations), P2 boucle d'enquête (inbox, dossiers reliés, recherche, signaux faibles), P3 action riche (réunions, initiatives, délégation), P4 économie politique (euros, comptes, donneurs), P5 monde adaptatif, P6 fins racontables et stress test. Règle directrice permanente reprise du design §118 : jamais une mécanique spéciale quand une mécanique générale produit le même phénomène. Les écarts de p3.1.0 listés plus haut ne ferment rien : ils s'intègrent dans ces phases.
+
 ## 6.1 Personnages et objectif (validé le 2026-09-15, session V1 V2)
 
 - Personnages fictifs uniquement, prénoms et noms français aléatoires seedés, jamais de personne réelle. Pas de portraits ni d'images : nom, métier, traits, relation, mémoire. Avec des personnages au delà du politique : chercheurs, historiens, ingénieurs, expertes IA, journalistes, élus, syndicalistes, entrepreneurs, fonctionnaires. Les métiers portent des hooks mécaniques (caution savante R14, amplification numérique R2, accès institutionnel, micro ciblage, fact checking).
